@@ -94,6 +94,10 @@ describe('Recipe', () => {
             ])
     });
 
+    it('Should return names of ingredients', () => {
+        expect(recipe.listIngredients()).to.equal('Ham')
+    })
+
 
 
 

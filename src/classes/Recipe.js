@@ -20,10 +20,16 @@
 //     "tags": [ ]
 //   }
 
+//          [
+    //       {
+    //         "id": 20081,
+    //         "quantity": {
+    //           "amount": 1.5,
+    //           "unit": "c"
+    //         }
+    //       ]
 
-
-
-
+var ingredientsData = require('../data/ingredients');
 
 class Recipe{
     constructor(id,image,ingredients,instructions,name,tags){
@@ -34,5 +40,21 @@ class Recipe{
         this.name = name;
         this.tags = tags;
     }
+    listIngredients(){
+        const filtered = this.ingredients.map(ingredient => ingredient.id);
+        const nameIng = [];
+        const result = ingredientsData.find( ( { id } ) => id === filtered[0])
+
+        console.log(result)
+
+    };
+
+    costOfIngredients(){
+
+    };
+
+    returnInstructions(){
+
+    };
 }
 export default Recipe
