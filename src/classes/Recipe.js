@@ -42,10 +42,14 @@ class Recipe{
     }
     listIngredients(){
         const filtered = this.ingredients.map(ingredient => ingredient.id);
-        const nameIng = [];
-        const result = ingredientsData.find( ( { id } ) => id === filtered[0])
 
-        console.log(result)
+        const ingredientObj = filtered.map(ingredientId => {
+                return ingredientsData.find( ( { id } ) => id === ingredientId)
+        });
+
+        const ingredientsName = ingredientObj.map(ingredient => ingredient.name)
+
+        return ingredientsName
 
     };
 

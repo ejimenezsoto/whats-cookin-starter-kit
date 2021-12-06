@@ -95,7 +95,7 @@ describe('Recipe', () => {
     });
 
     it('Should return names of ingredients', () => {
-        expect(recipe.listIngredients()).to.equal('Ham')
+        expect(recipe.listIngredients()).to.deep.equal([ 'apple cider', 'apple' ])
     })
 
 
