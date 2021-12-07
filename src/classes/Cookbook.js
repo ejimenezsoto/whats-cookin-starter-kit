@@ -3,23 +3,24 @@ class Cookbook {
   constructor(recipes) {
     this.recipes = recipes;
     this.tags = [];
+    this.filteredRecipes = [];
   }
   filterByTags(tag) {
     this.tags.push(tag);
     //were pushing a string (tag) into an array 
-    this.tags.forEach(tag => {
-      const filterdRecipes = (recipes, tag) => {
-        console.log(this.recipes, tag);
-      }
-      return filterdRecipes
-    })
-    // we want to filter through that array
-    // return a new array of recipes that include tags from tags array
+    
+    const filteredTags = this.tags.forEach(tag => {
+        const filteredRecipes = this.recipes.forEach(recipe => {
+          if(recipe.tags.includes(tag)){
+            this.filteredRecipes.push(recipe)
+          }
+        });
+    });
+    return this.filteredRecipes;
   }
-
   filterByNameAndIngredients() {
 
-  }
+  };
   
 }
 
