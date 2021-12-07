@@ -96,6 +96,10 @@ describe('Recipe', () => {
 
     it('Should return names of ingredients', () => {
         expect(recipe.listIngredients()).to.deep.equal([ 'apple cider', 'apple' ])
+    });
+
+    it('Should return cost of ingredients', () => {
+        expect(recipe.costOfIngredients()).to.deep.equal(3)
     })
 
 

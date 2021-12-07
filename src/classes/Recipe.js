@@ -44,7 +44,7 @@ class Recipe{
         const filtered = this.ingredients.map(ingredient => ingredient.id);
 
         const ingredientObj = filtered.map(ingredientId => {
-                return ingredientsData.find( ( { id } ) => id === ingredientId)
+            return ingredientsData.find( ( { id } ) => id === ingredientId)
         });
 
         const ingredientsName = ingredientObj.map(ingredient => ingredient.name)
@@ -54,8 +54,26 @@ class Recipe{
     };
 
     costOfIngredients(){
+        const ingredientAmount = this.ingredients.map(ingredient => ingredient.quantity.amount);
+
+        const filtered = this.ingredients.map(ingredient => ingredient.id);
+
+        const ingredientObj = filtered.map(ingredientId => {
+            return ingredientsData.find( ( { id } ) => id === ingredientId)
+        });
+
+        const ingredientCost = ingredientObj.map(ingredient => ingredient.estimatedCostInCents)
+        
+
+        const totalCost = ingredientAmount.reduce( (r,a,i) => {
+            const total = r + a * ingredientCost[i]
+            return total / 100
+        });
+        
+        return totalCost.toFixed(2)
 
     };
+
 
     returnInstructions(){
 
