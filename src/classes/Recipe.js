@@ -1,34 +1,4 @@
 
-// {
-//     "id": 595736,
-//     "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
-//     "ingredients": [
-//       {
-//         "id": 20081,
-//         "quantity": {
-//           "amount": 1.5,
-//           "unit": "c"
-//         }.
-//       ]
-//     "instructions": [
-//       {
-//         "instruction": "Remove the pan from the oven and let sit for 10 minutes before removing onto a cooling rack.Top with ice cream and a drizzle of chocolate sauce.",
-//         "number": 6
-//       }
-//     ],
-//     "name": "Loaded Chocolate Chip Pudding Cookie Cups",
-//     "tags": [ ]
-//   }
-
-//          [
-    //       {
-    //         "id": 20081,
-    //         "quantity": {
-    //           "amount": 1.5,
-    //           "unit": "c"
-    //         }
-    //       ]
-
 var ingredientsData = require('../data/ingredients');
 
 class Recipe{
@@ -41,42 +11,46 @@ class Recipe{
         this.tags = tags;
     }
     listIngredients(){
-        const filtered = this.ingredients.map(ingredient => ingredient.id);
+        const ingredientIds = this.ingredients.map(ingredient => ingredient.id);
 
-        const ingredientObj = filtered.map(ingredientId => {
-            return ingredientsData.find( ( { id } ) => id === ingredientId)
+        const ingredientDataObjs = ingredientIds.map(ingredientId => {
+            return ingredientsData.find( ( { id } ) => id === ingredientId);
         });
 
-        const ingredientsName = ingredientObj.map(ingredient => ingredient.name)
+        const ingredientNames = ingredientDataObjs.map(ingredient => ingredient.name);
 
-        return ingredientsName
+        return ingredientNames;
 
     };
 
     costOfIngredients(){
         const ingredientAmount = this.ingredients.map(ingredient => ingredient.quantity.amount);
 
-        const filtered = this.ingredients.map(ingredient => ingredient.id);
+        const ingredientIds = this.ingredients.map(ingredient => ingredient.id);
 
-        const ingredientObj = filtered.map(ingredientId => {
-            return ingredientsData.find( ( { id } ) => id === ingredientId)
+        const ingredientDataObjs = ingredientIds.map(ingredientId => {
+            return ingredientsData.find( ( { id } ) => id === ingredientId);
         });
 
-        const ingredientCost = ingredientObj.map(ingredient => ingredient.estimatedCostInCents)
-        
+        const ingredientCost = ingredientDataObjs.map(ingredient => ingredient.estimatedCostInCents);
 
-        const totalCost = ingredientAmount.reduce( (r,a,i) => {
-            const total = r + a * ingredientCost[i]
-            return total / 100
+        const totalCost = ingredientAmount.reduce( ( acc, amount,i ) => {
+
+            const total = acc + amount * ingredientCost[i];
+
+            return total / 100;
+
         });
-        
-        return totalCost.toFixed(2)
 
+        return totalCost.toFixed(2);
     };
 
 
     returnInstructions(){
+        const instructions = this.instructions.map(instruction => instruction.instruction);
 
+        return instructions;
+        
     };
 }
 export default Recipe
