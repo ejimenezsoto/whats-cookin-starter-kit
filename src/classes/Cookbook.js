@@ -14,7 +14,9 @@ class Cookbook {
           }
         });
     });
-    return this.filteredRecipes;
+    const filteredWithoutDuplicates = [... new Map(this.filteredRecipes.map(recipe => [recipe.id, recipe])).values()]
+
+    return filteredWithoutDuplicates;
   }
     filterByKeyWord(userInput) {
 
@@ -36,7 +38,8 @@ class Cookbook {
     })
 
     const filteredWithoutDuplicates = [... new Map(filtered.map(recipe => [recipe.id, recipe])).values()]
-    filtered.push(recipe)
+
+    return filteredWithoutDuplicates
   }
 }
 
