@@ -253,6 +253,6 @@ describe('Cookbook', () => {
   });
 
   it('should filter by ingredients', () => {
-    expect(cookbook.filterByKeyWord('a')).to.deep.equal('')
+    expect(cookbook.filterByKeyWord('egg')).to.deep.equal('')
   })
 });

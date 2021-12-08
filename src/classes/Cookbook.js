@@ -26,14 +26,17 @@ class Cookbook {
       const list = recipe.listIngredients().map(ingredient => {
       return ingredient.toLowerCase()
       })
-        if(list.includes(userInput)){
-          filtered.push(recipe)
-        }
+
+      const filterIngredientsName = list.forEach(ingredient => {
+          if(ingredient.indexOf(userInput.toLowerCase()) !== -1){
+            return filtered.push(recipe)
+          }
+      })
+        
     })
 
     const filteredWithoutDuplicates = [... new Map(filtered.map(recipe => [recipe.id, recipe])).values()]
-    
-    return filteredWithoutDuplicates
+    filtered.push(recipe)
   }
 }
 
