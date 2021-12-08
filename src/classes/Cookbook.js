@@ -17,17 +17,23 @@ class Cookbook {
     return this.filteredRecipes;
   }
     filterByKeyWord(userInput) {
-      const filtered = []
-    // const filterByName = this.recipes.filter(recipe => recipe.name.toLowerCase().indexOf(userInput.toLowerCase()) !== -1);
+
+    const filterByName = this.recipes.filter(recipe => recipe.name.toLowerCase().indexOf(userInput.toLowerCase()) !== -1);
+
+    const filtered = filterByName.slice()
 
       const filterByIngredients = this.recipes.forEach(recipe => {
-
       const list = recipe.listIngredients().map(ingredient => {
       return ingredient.toLowerCase()
-
       })
-        if(list.includes(userInput))
+        if(list.includes(userInput)){
+          filtered.push(recipe)
+        }
     })
+
+    const filteredWithoutDuplicates = [... new Map(filtered.map(recipe => [recipe.id, recipe])).values()]
+    
+    return filteredWithoutDuplicates
   }
 }
 
