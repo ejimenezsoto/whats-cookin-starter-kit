@@ -1,3 +1,12 @@
 body {
   background-color: blueviolet;
 }
+
+.search,
+.recipies, 
+.favorites, 
+.grocery-list, 
+.planner {
+  border-radius: 3px;
+  box-shadow: 2px black;
+}
