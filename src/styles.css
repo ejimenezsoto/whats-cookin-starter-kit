@@ -128,9 +128,8 @@ width: 20%;
 
 .ingredient-list,
 .instructions {
-  height: 100%;
+  height: 50vh;
   width: 50%;
-
 }
 
 .ingredient-instructions-section {
