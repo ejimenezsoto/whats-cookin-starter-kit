@@ -43,4 +43,4 @@ class Cookbook {
   }
 }
 
-module.export = Cookbook;
+module.exports = Cookbook;

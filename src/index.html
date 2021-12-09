@@ -4,33 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" src="styles.css">
+    <link rel="stylesheet" src="src/styles.css">
     <title>Whats Cookin</title>
   </head>
   <body>
-    <div class="side-nav">
-      <nav class="nav-search"> 
-        <button class="search">SEARCH</button>
-        <input></input>
-      </nav>
-    </div>
-    <div class="top-nav-main">
-      <nav class="main-nav">
+    <nav class="top-nav">
+      <button class="search">SEARCH</button>
+      <div class="nav-buttons">
+        <h3 class="whats-cookin-title">Whats Cookin'<img class="whats-cooking-img" src="./images/cooking.png" alt="Frying pan">
+        </h3>
         <button class="recipies">All Recipies</button>
         <button class="favorites">My Favorite Recipies</button>
         <button class="grocery-list">Your Grocery List</button>
         <button class="planner">Meal PLan</button>
-      </nav>    
+      </div>
+    </nav>
+    <div class="main-section">   
       <main>
-        <section class="main-section">
-          <h1>Whats Cookin'<img src="assets/cooking (1).png" alt="Frying pan"></h1>
-          <h3>All Recipes</h3>
-          <p class="show-recipies">
-          </p>
+        <div class="side-nav">
+          <nav class="nav-search">
+            <input></input>
+          </nav>
+        </div>
+        <section class="section-titles">
+          <h1 class="all-recipes-title">All Recipes</h1>
+          <p class="show-recipies"></p>
+          <section class="all-recipes-section hidden">
+            <div class="row">
+              <div class="recipe" id="1"> </div>
+              <div class="recipe" id="2"> </div>
+              <div class="recipe" id="3"> </div>
+              <div class="recipe" id="4"> </div>
+            </div>
+            <div class="row">
+              <div class="recipe" id="5"> </div>
+              <div class="recipe" id="6"> </div>
+              <div class="recipe" id="7"> </div>
+              <div class="recipe" id="8"> </div>
+            </div>
+            <div class="row">
+              <div class="recipe" id="10"> </div>
+              <div class="recipe" id="11"> </div>
+              <div class="recipe" id="12"> </div>
+              <div class="recipe" id="13"> </div>
+            </div>
+            <div class="row">
+              <div class="recipe" id="14"> </div>
+              <div class="recipe" id="15"> </div>
+              <div class="recipe" id="16"> </div>
+              <div class="recipe" id="17"> </div>
+            </div>
         </section>
+        <section class="single-recipe">
+          <div class="single-recipe-img"> </div>
+          <div class="ingredient-instructions-section">
+            <div class="ingredient-list"> </div>
+            <div class="instructions"> </div>
+          </div>
+        </section>
+      </section>
       </main>
     </div>
-
   </body>
   <script type="text/JavaScript" src="src/classes/Cookbook.js"></script>
   <script type="text/javascript" src="src/classes/Recipe.js"></script>
