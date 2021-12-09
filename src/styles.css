@@ -1,3 +1,59 @@
+* {
+  border: 1px solid;
+  border-color: crimson;
+};
+
+html {
+  height: 100vh;
+  width: 100vw;
+};
+
 body {
-  background-color: blueviolet;
+  background-color: #F5F5F5;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+};
+
+.search,
+.recipies, 
+.favorites, 
+.grocery-list, 
+.planner {
+  border-radius: 20px;
+  background-color: burlywood
+};
+
+.nav-search {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+};
+
+.nav-buttons {
+  display: flex;
+};
+
+.side-nav {
+  background-color: lightgray;
 }
+
+.top-nav-main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+};
+
+.main-nav {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 18em;
+  justify-content: space-around;
+};
+
+.main-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 25vh;
+};

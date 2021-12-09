@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
   <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" src="styles.css">
     <title>Whats Cookin</title>
   </head>
   <body>
-    <h1>Whats Cookin</h1>
+    <div class="side-nav">
+      <nav class="nav-search"> 
+        <button class="search">SEARCH</button>
+        <input></input>
+      </nav>
+    </div>
+    <div class="top-nav-main">
+      <nav class="main-nav">
+        <button class="recipies">All Recipies</button>
+        <button class="favorites">My Favorite Recipies</button>
+        <button class="grocery-list">Your Grocery List</button>
+        <button class="planner">Meal PLan</button>
+      </nav>    
+      <main>
+        <section class="main-section">
+          <h1>Whats Cookin'<img src="assets/cooking (1).png" alt="Frying pan"></h1>
+          <h3>All Recipes</h3>
+          <p class="show-recipies">
+          </p>
+        </section>
+      </main>
+    </div>
+
   </body>
+  <script type="text/JavaScript" src="src/classes/Cookbook.js"></script>
+  <script type="text/javascript" src="src/classes/Recipe.js"></script>
+  <script type="text/JavaScript" src="scripts.js"></script>
 </html>
