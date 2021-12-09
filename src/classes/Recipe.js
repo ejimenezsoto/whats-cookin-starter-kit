@@ -53,4 +53,6 @@ class Recipe{
         
     };
 }
-module.export = Recipe;
+
+module.exports = Recipe;
+
