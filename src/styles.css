@@ -46,6 +46,14 @@ main {
   height: 100%;
   margin-top: 0%;
   width: 30%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.tag-container {
+  width: 30%;
+  height: 5%;
 }
 
 /* top navigation */
