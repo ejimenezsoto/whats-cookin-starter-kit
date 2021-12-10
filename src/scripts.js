@@ -6,75 +6,76 @@ import Recipe from './classes/Recipe';
 import recipeData from './data/recipes.js'
 
 const recipes = recipeData.map(recipe => {
-    return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags)
+  return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags)
 });
 
 const allRecipesSection = document.querySelector('.all-recipes-section');
 const singleRecipeSection = document.querySelector('.single-recipe');
-const filterBox = document.querySelector('.filter-box');
+const filterBox = document.querySelector('.side-nav');
 
 
 const cookBook = new Cookbook(recipeData)
 
 
 const hide = (element) => {
-    element.classList.add('hidden')
+  element.classList.add('hidden')
 }
 
 const show = (element) => {
-    element.classList.remove('hidden')
+  element.classList.remove('hidden')
 }
 
 const getTags = recipes.reduce((acc, recipe) => {
-    recipe.tags.forEach(tag => {
-        if (!acc.includes(tag)) {
-            acc.push(tag);
-        }
-    });
-    return acc;
+  recipe.tags.forEach(tag => {
+    if (!acc.includes(tag)) {
+      acc.push(tag);
+    }
+  });
+  return acc;
 }, []);
     
 const filterTags = () => {
-    const filteredTags = getTags.forEach(tag => {
-        return filterBox.innertHTML += `
-            <div>
-                <input type="checkbox" id='${tag}' name='${tag}'>
-                <label for='${tag}'>'${tag}'</label>
-            </div>`
-    })
-    return filteredTags;
-}
-console.log(filterTags())
-console.log(getTags)
+  const filteredTags = getTags.forEach(tag => {
+    console.log(tag, "TAG")
+    return filterBox.innerHTML += `
+        <div class="tag-container">    
+        <input type="checkbox" id='${tag}' name='${tag}'>
+            <label for='${tag}'>'${tag}'</label>
+        </div>
+        `
+  })
+  return filteredTags;
+};
+
 const displayRecipes = () => {
-    const allRecipies = cookBook.recipes.forEach(recipe => {
-        return allRecipesSection.innerHTML += `
+  const allRecipies = cookBook.recipes.forEach(recipe => {
+    return allRecipesSection.innerHTML += `
         <div class='recipe'>
         <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
         <h5>${recipe.name}</h5>
         </div>` 
-    });
-    return allRecipies;
+  });
+  return allRecipies;
 }
 
 const clickRecipe = (event) => {
     
-    hide(allRecipesSection)
-    show(singleRecipeSection)
-    const findRecipeId =  recipes.find( ( { id} ) => id == event.target.id)
-    const recipeInstructions = findRecipeId.instructions.reduce((acc,instruction) => {
-        acc += `<li>${instruction.instruction}</li>`
-        return acc
-    }, '' )
+  hide(allRecipesSection)
+  show(singleRecipeSection)
+  const findRecipeId =  recipes.find( ( { id} ) => id == event.target.id)
+  const recipeInstructions = findRecipeId.instructions.reduce((acc, instruction) => {
+    acc += `<li>${instruction.instruction}</li>`
+    return acc
+  }, '' )
 
-    const ingredientList  = findRecipeId.listIngredients().reduce((acc,ingredient) => {
-        acc += `<li>${ingredient}</li>`
-        return acc
-    }, '');
+  const ingredientList  = findRecipeId.listIngredients().reduce((acc, ingredient) => {
+    acc += `<li>${ingredient}</li>`
+    return acc
+  }, '');
 
     
 
-    singleRecipeSection.innerHTML = `
+  singleRecipeSection.innerHTML = `
             <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
             <div class="ingredient-instructions-section">${recipeInstructions} </div>
             <div class="ingredient-list"><p> ${ingredientList} </p> </div>
@@ -85,7 +86,7 @@ const clickRecipe = (event) => {
 
 
 window.addEventListener('load', function () {
-    displayRecipes();
-    filterTags();
+  displayRecipes();
+  filterTags();
 })
 allRecipesSection.addEventListener('click', clickRecipe);
