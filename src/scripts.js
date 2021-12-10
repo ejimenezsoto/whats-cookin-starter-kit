@@ -94,22 +94,6 @@ const clickRecipe = (event) => {
 // }
 
 
-const showFilteredRecipes = () => {
-    const empty = ``
-    filteredRecipesSection.innerHTML = empty
-    const filteredRecipes = cookBook.filterByTags(tagList).reduce((acc,recipe) => {
-        acc += `
-        <div class="single-recipe-img"> <img src="${recipe.image}" alt=""> ${recipe.name} </div>
-        
-        `
-        return acc
-    }, '');
-    
-    
-    filteredRecipesSection.innerHTML = filteredRecipes
-}
-
-
 
 
 
@@ -130,16 +114,30 @@ checkboxes.forEach(checkbox => {
         .filter(i => i.checked)
         .map(i => i.id)
         
-        
-        showFilteredRecipes()
+    
     })
     
 })
+let timeOut;
+const showFilteredRecipes = () => {
 
 
+    timeOut = setTimeout(timeOutFunction, 4000)
+    
+        
+        
+}
 
 
-console.log(checkboxes, '!!!!')
-// checkboxes.addEventListener('change', function() {
-//     console.log("click")
-// })
+function timeOutFunction() {
+    const filteredRecipes =  cookBook.filterByTags
+    (tagList).reduce((acc,recipe) => {
+        acc += `
+        <div class="single-recipe-img"> <img src="${recipe.image}" alt=""> ${recipe.name} </div>
+        `
+        
+        return acc
+    }, '');
+
+    filteredRecipesSection.innerHTML = filteredRecipes
+}
