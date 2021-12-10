@@ -3,7 +3,7 @@ import apiCalls from './apiCalls';
 import Cookbook from './classes/Cookbook';
 import './images/cooking.png'
 import Recipe from './classes/Recipe';
-import recipeData from './data/recipes'
+import recipeData from './data/recipes.js'
     
 console.log(recipeData, "!!!!!!!!")
 
@@ -13,19 +13,19 @@ console.log(recipeData, "!!!!!!!!")
 
 const recipeRow = document.querySelector('.all-recipes-section')
 
-const cookBook = new Cookbook(recipes)
+const cookBook = new Cookbook(recipeData)
 
-window.onload = displayRecipes();
 
 const displayRecipes = () => {
   const allRecipies = cookBook.recipies.forEach(recipe => {
     recipeRow.innerHTML += `
     <div >
-        <img src="${recipe.image}" alt="${recipe.name}">
-        <h3>${recipe.name}</h3>
+    <img src="${recipe.image}" alt="${recipe.name}">
+    <h3>${recipe.name}</h3>
     </div>` 
   });
   return allRecipies;
 }
+window.addEventListener('load', displayRecipes)
 
 console.log('Hello world');
