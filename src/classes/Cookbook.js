@@ -5,9 +5,9 @@ class Cookbook {
     this.tags = [];
     this.filteredRecipes = [];
   }
-  filterByTags(tag) {
-    this.tags.push(tag);
-    const filteredTags = this.tags.forEach(tag => {
+  filterByTags(tagList) {
+    
+    const filteredTags = tagList.forEach(tag => {
       const filteredRecipes = this.recipes.forEach(recipe => {
         if (recipe.tags.includes(tag)) {
           this.filteredRecipes.push(recipe)

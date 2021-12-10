@@ -6,12 +6,14 @@ import Recipe from './classes/Recipe';
 import recipeData from './data/recipes.js'
 
 const recipes = recipeData.map(recipe => {
-  return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags)
+    return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags)
 });
 
 const allRecipesSection = document.querySelector('.all-recipes-section');
 const singleRecipeSection = document.querySelector('.single-recipe');
 const filterBox = document.querySelector('.side-nav');
+const filteredRecipesSection = document.querySelector('.filter-recipes-section');
+let tagList = [];
 
 
 
@@ -77,8 +79,6 @@ const clickRecipe = (event) => {
     return acc
   }, '');
 
-    
-
   singleRecipeSection.innerHTML = `
             <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
             <div class="ingredient-instructions-section">${recipeInstructions} </div>
@@ -87,24 +87,58 @@ const clickRecipe = (event) => {
     `
 }
 
+// const showFilteredRecipes = () => {
+//     const filteredTagRecipes = cookBook.filterByTags(tagList).reduce((acc,recipe) =>{
+
+//     })
+// }
+
+
+const showFilteredRecipes = () => {
+    const empty = ``
+    filteredRecipesSection.innerHTML = empty
+    const filteredRecipes = cookBook.filterByTags(tagList).reduce((acc,recipe) => {
+        acc += `
+        <div class="single-recipe-img"> <img src="${recipe.image}" alt=""> ${recipe.name} </div>
+        
+        `
+        return acc
+    }, '');
+    
+    
+    filteredRecipesSection.innerHTML = filteredRecipes
+}
+
+
+
+
+
 
 
 window.addEventListener('load', function () {
-  displayRecipes();
-  filterTags();
+    displayRecipes();
 })
+
 allRecipesSection.addEventListener('click', clickRecipe);
 const checkboxes = document.querySelectorAll('input[type=checkbox][name=tag]')
 
-let tagList = [];
+
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function () {
+        
         tagList = Array.from(checkboxes)
-            .filter(i => i.checked)
-            .map(i => i.value)
-        console.log(tagList);
+        .filter(i => i.checked)
+        .map(i => i.id)
+        
+        
+        showFilteredRecipes()
     })
+    
 })
+
+
+
+
 console.log(checkboxes, '!!!!')
 // checkboxes.addEventListener('change', function() {
 //     console.log("click")

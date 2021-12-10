@@ -111,9 +111,11 @@ main {
 height: 100%;
 display: flex;
 flex-wrap: wrap;
-
-
-
+}
+.filter-recipes-section{
+  height: 100%;
+display: flex;
+flex-wrap: wrap;
 }
 .row {
   display: flex;
