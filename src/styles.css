@@ -38,12 +38,14 @@ main {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  width: 20%;
 };
 
 .side-nav {
   background-color: lightgray;
   height: 100%;
   margin-top: 0%;
+  width: 30%;
 }
 
 /* top navigation */
