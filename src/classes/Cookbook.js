@@ -5,34 +5,34 @@ class Cookbook {
     this.tags = [];
     this.filteredRecipes = [];
   }
-  filterByTags(tag) {
-    this.tags.push(tag);
-    const filteredTags = this.tags.forEach(tag => {
-        const filteredRecipes = this.recipes.forEach(recipe => {
-          if(recipe.tags.includes(tag)){
-            this.filteredRecipes.push(recipe)
-          }
-        });
+  filterByTags(tagList) {
+    
+    const filteredTags = tagList.forEach(tag => {
+      const filteredRecipes = this.recipes.forEach(recipe => {
+        if (recipe.tags.includes(tag)) {
+          this.filteredRecipes.push(recipe)
+        }
+      });
     });
     const filteredWithoutDuplicates = [... new Map(this.filteredRecipes.map(recipe => [recipe.id, recipe])).values()]
 
     return filteredWithoutDuplicates;
   }
-    filterByKeyWord(userInput) {
+  filterByKeyWord(userInput) {
 
     const filterByName = this.recipes.filter(recipe => recipe.name.toLowerCase().indexOf(userInput.toLowerCase()) !== -1);
 
     const filtered = filterByName.slice()
 
-      const filterByIngredients = this.recipes.forEach(recipe => {
+    const filterByIngredients = this.recipes.forEach(recipe => {
       const list = recipe.listIngredients().map(ingredient => {
-      return ingredient.toLowerCase()
+        return ingredient.toLowerCase()
       })
 
       const filterIngredientsName = list.forEach(ingredient => {
-          if(ingredient.indexOf(userInput.toLowerCase()) !== -1){
-            return filtered.push(recipe)
-          }
+        if (ingredient.indexOf(userInput.toLowerCase()) !== -1) {
+          return filtered.push(recipe)
+        }
       })
         
     })

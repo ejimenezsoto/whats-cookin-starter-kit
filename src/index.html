@@ -21,52 +21,82 @@
     </nav>
     <div class="main-section">   
       <main>
-        <div class="side-nav">
-          <nav class="nav-search">
-            <input></input>
-          </nav>
-        </div>
+        <nav class="side-nav">
+          <div class="tag-container">
+            <input class="checkbox" type="checkbox" id='antipasti' name='tag'>
+            <label for='antipasti'>Antipasti</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='starter' name='tag'>
+            <label for='starter'>Starter</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='snack' name='tag'>
+            <label for='snack'>Snack</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='appetizer' name='tag'>
+            <label for='appetizer'>Appetizer</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='antipasto' name='tag'>
+            <label for='antipasto'>Antipasto</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id="hor d'oeuvre" name='tag'>
+            <label for="hor d'oeuvre">'Hor D'oeuvre</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='lunch' name='tag'>
+            <label for='lunch'>Lunch</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='main course' name='tag'>
+            <label for='main course'>Main Course</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='main dish' name='tag'>
+            <label for='main dish'>Main Dish</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='dinner' name='tag'>
+            <label for='dinner'>Dinner</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='sauce' name='tag'>
+            <label for='$sauce'>Sauce</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='side dish' name='tag'>
+            <label for='side dish'>Side Dish</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='morning meal' name='tag'>
+            <label for='morning meal'>Morning Meal</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='brunch' name='tag'>
+            <label for='brunch'>Brunch</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='breakfast' name='tag'>
+            <label for='breakfast'>Breakfast</label>
+          </div>
+          <div class="tag-container">
+            <input class="checkbox" type="checkbox" id='salad' name='tag'>
+            <label for='salad'>Salad</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='condiment' name='tag'>
+            <label for='condiment'>Condiment</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='dip'dip name='tag'>
+            <label for='dip'>Dip</label>
+          </div><div class="tag-container">
+            <input class="checkbox" type="checkbox" id='spread' name='tag'>
+            <label for='$spread'>Spread</label>
+        </nav>
         <section class="section-titles">
           <h1 class="all-recipes-title">All Recipes</h1>
           <p class="show-recipies"></p>
-          <section class="all-recipes-section hidden">
-            <div class="row">
-              <div class="recipe" id="1"> </div>
-              <div class="recipe" id="2"> </div>
-              <div class="recipe" id="3"> </div>
-              <div class="recipe" id="4"> </div>
-            </div>
-            <div class="row">
-              <div class="recipe" id="5"> </div>
-              <div class="recipe" id="6"> </div>
-              <div class="recipe" id="7"> </div>
-              <div class="recipe" id="8"> </div>
-            </div>
-            <div class="row">
-              <div class="recipe" id="10"> </div>
-              <div class="recipe" id="11"> </div>
-              <div class="recipe" id="12"> </div>
-              <div class="recipe" id="13"> </div>
-            </div>
-            <div class="row">
-              <div class="recipe" id="14"> </div>
-              <div class="recipe" id="15"> </div>
-              <div class="recipe" id="16"> </div>
-              <div class="recipe" id="17"> </div>
-            </div>
+          <section class="all-recipes-section row">
+
+          </section>
+        <section class="single-recipe hidden">
+          
         </section>
-        <section class="single-recipe">
-          <div class="single-recipe-img"> </div>
-          <div class="ingredient-instructions-section">
-            <div class="ingredient-list"> </div>
-            <div class="instructions"> </div>
-          </div>
+
+        <section class="filter-recipes-section" id='filter-recipes-section'>
+
         </section>
       </section>
       </main>
     </div>
   </body>
-  <script type="text/JavaScript" src="src/classes/Cookbook.js"></script>
-  <script type="text/javascript" src="src/classes/Recipe.js"></script>
-  <script type="text/JavaScript" src="scripts.js"></script>
 </html>
+
