@@ -13,7 +13,7 @@ const allRecipesSection = document.querySelector('.all-recipes-section');
 const singleRecipeSection = document.querySelector('.single-recipe');
 const filterBox = document.querySelector('.side-nav');
 const filteredRecipesSection = document.querySelector('#filter-recipes-section');
-const searchButton = document.querySelector('.search-button')
+const clearButton = document.querySelector('.clear-button')
 const searchInput = document.querySelector('#userInput')
 let tagList = [];
 
@@ -34,10 +34,15 @@ searchInput.addEventListener('input', (e) => {
       
     return acc
   }, '')
-  
+
   } else {
     console.log('Input is invalid')
   }
+})
+
+clearButton.addEventListener("click", () => {
+  searchInput.value = ''
+  displayRecipes()
 })
 
 const cookBook = new Cookbook(recipes)
