@@ -12,7 +12,7 @@ const recipes = recipeData.map(recipe => {
 const allRecipesSection = document.querySelector('.all-recipes-section');
 const singleRecipeSection = document.querySelector('.single-recipe');
 const filterBox = document.querySelector('.side-nav');
-const filteredRecipesSection = document.querySelector('.filter-recipes-section');
+const filteredRecipesSection = document.querySelector('#filter-recipes-section');
 let tagList = [];
 
 
@@ -38,21 +38,6 @@ const getTags = recipes.reduce((acc, recipe) => {
   return acc;
 }, []);
     
-// const filterTags = () => {
-//   const filteredTags = getTags.forEach(tag => {
-
-//     return filterBox.innerHTML += `
-//         <div class="tag-container">    
-//         <input class="checkbox" type="checkbox" id='${tag}' name='tag'>
-//             <label for='${tag}'>'${tag}'</label>
-//         </div>
-//         `
-//   })
-//   return filteredTags;
-// };
-
-
-
 const displayRecipes = () => {
   const allRecipies = cookBook.recipes.forEach(recipe => {
     return allRecipesSection.innerHTML += `
@@ -87,17 +72,6 @@ const clickRecipe = (event) => {
     `
 }
 
-// const showFilteredRecipes = () => {
-//     const filteredTagRecipes = cookBook.filterByTags(tagList).reduce((acc,recipe) =>{
-
-//     })
-// }
-
-
-
-
-
-
 
 window.addEventListener('load', function () {
     displayRecipes();
@@ -109,35 +83,35 @@ const checkboxes = document.querySelectorAll('input[type=checkbox][name=tag]')
 
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function () {
-        
         tagList = Array.from(checkboxes)
         .filter(i => i.checked)
         .map(i => i.id)
-        
+        updatedFilteredRecipes()
+        showFilteredRecipes()
+        console.log(tagList)
+    });
     
-    })
-    
-})
-let timeOut;
-const showFilteredRecipes = () => {
+});
 
-
-    timeOut = setTimeout(timeOutFunction, 4000)
+const updatedFilteredRecipes = () => {
+    console.log('click')
     
-        
-        
+    filteredRecipesSection.innerHTML = ``
 }
 
+const showFilteredRecipes = () => {
 
-function timeOutFunction() {
     const filteredRecipes =  cookBook.filterByTags
+    
     (tagList).reduce((acc,recipe) => {
+        filteredRecipesSection.innerHTML = ``
         acc += `
         <div class="single-recipe-img"> <img src="${recipe.image}" alt=""> ${recipe.name} </div>
         `
         
         return acc
     }, '');
-
-    filteredRecipesSection.innerHTML = filteredRecipes
+        
+        console.log(filteredRecipesSection)
+        filteredRecipesSection.innerHTML = filteredRecipes
 }
