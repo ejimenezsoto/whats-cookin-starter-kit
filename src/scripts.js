@@ -4,6 +4,9 @@ import Cookbook from './classes/Cookbook';
 import './images/cooking.png'
 import Recipe from './classes/Recipe';
 import recipeData from './data/recipes.js'
+import User from './classes/User';
+
+const user = new User('Sam', 1, []);
 
 const recipes = recipeData.map(recipe => {
     return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags)
