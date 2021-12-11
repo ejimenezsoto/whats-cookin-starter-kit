@@ -90,25 +90,26 @@ checkboxes.forEach(checkbox => {
             tagList = Array.from(checkboxes)
                 .filter(i => i.checked)
                 .map(i => i.id)
-            // updatedFilteredRecipes()
             showFilteredRecipes()
+
+              checkboxes.forEach(checkbox => {
+                if(!checkbox.checked){
+                  checkbox.disabled = true;
+                }
+              })
+
         } else if (!this.checked) {
-            cookBook.filteredRecipes = []
-            allRecipesSection.innerHTML = ``
-            hide(allRecipesSection)
-            displayRecipes()
-            show(allRecipesSection)
+          cookBook.filteredRecipes = []
+          allRecipesSection.innerHTML = ''
+          displayRecipes()
+          checkboxes.forEach(checkbox => {
+            checkbox.disabled = false
+          })
         }
-        
+        console.log(this)
     });
     
 });
-
-// const updatedFilteredRecipes = () => {
-//     console.log('click')
-    
-//     filteredRecipesSection.innerHTML = ``
-// }
 
 const showFilteredRecipes = () => {
 
@@ -117,7 +118,7 @@ const showFilteredRecipes = () => {
     (tagList).reduce((acc,recipe) => {
         allRecipesSection.innerHTML = ``
         acc += `
-         <div class='recipe'>
+          <div class='recipe'>
         <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
         <h5>${recipe.name}</h5>
         </div> 
@@ -125,7 +126,7 @@ const showFilteredRecipes = () => {
         
         return acc
     }, '');
-        
+        console.log(tagList)
         console.log(filteredRecipesSection)
         allRecipesSection.innerHTML = filteredRecipes
 }
