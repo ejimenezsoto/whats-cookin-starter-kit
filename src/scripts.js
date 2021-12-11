@@ -13,39 +13,39 @@ const allRecipesSection = document.querySelector('.all-recipes-section');
 const singleRecipeSection = document.querySelector('.single-recipe');
 const filterBox = document.querySelector('.side-nav');
 const filteredRecipesSection = document.querySelector('#filter-recipes-section');
-const searchButton = document.querySelector('.search-button')
+const clearButton = document.querySelector('.clear-button')
 const searchInput = document.querySelector('#userInput')
 let tagList = [];
 
-// searchInput.addEventListener('input', (e) => {
-//   let input = e.target.value
+searchInput.addEventListener('input', (e) => {
+  let input = e.target.value
 
-//   if(input && input.trim().length > 0){
-//     input = input.trim().toLowerCase()
-//     allRecipesSection.innerHTML = ''
-//     cookBook.filterByKeyWord(input).reduce((acc,recipe) => {
-//       allRecipesSection.innerHTML = ``
-//         acc += `
-//           <div class='recipe'>
-//         <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
-//         <h5>${recipe.name}</h5>
-//         </div> 
-//         `
-//       return acc
-//     }, '')
+  if(input && input.trim().length > 0){
+    input = input.trim().toLowerCase()
+    allRecipesSection.innerHTML = ''
 
+    allRecipesSection.innerHTML = cookBook.filterByKeyWord(input).reduce((acc,recipe) => {
+      acc += `
+        <div class='recipe'>
+      <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
+      <h5>${recipe.name}</h5>
+      </div> 
+      `
+      
+    return acc
+  }, '')
 
-//   } else {
-//     console.log('Input is invalid')
-//   }
-// })
+  } else {
+    console.log('Input is invalid')
+  }
+})
 
-const cookBook = new Cookbook(recipeData)
+clearButton.addEventListener("click", () => {
+  searchInput.value = ''
+  displayRecipes()
+})
 
-console.log(cookBook.filterByKeyWord('cookies'))
-
-
-
+const cookBook = new Cookbook(recipes)
 
 
 const hide = (element) => {
