@@ -83,35 +83,49 @@ const checkboxes = document.querySelectorAll('input[type=checkbox][name=tag]')
 
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function () {
-        tagList = Array.from(checkboxes)
-        .filter(i => i.checked)
-        .map(i => i.id)
-        updatedFilteredRecipes()
-        showFilteredRecipes()
-        console.log(tagList)
+        document.querySelectorAll('.checkbox').checked = true;
+        document.querySelectorAll('.checkbox').checked = false;
+
+        if (this.checked) {
+            tagList = Array.from(checkboxes)
+                .filter(i => i.checked)
+                .map(i => i.id)
+            // updatedFilteredRecipes()
+            showFilteredRecipes()
+        } else if (!this.checked) {
+            cookBook.filteredRecipes = []
+            allRecipesSection.innerHTML = ``
+            hide(allRecipesSection)
+            displayRecipes()
+            show(allRecipesSection)
+        }
+        
     });
     
 });
 
-const updatedFilteredRecipes = () => {
-    console.log('click')
+// const updatedFilteredRecipes = () => {
+//     console.log('click')
     
-    filteredRecipesSection.innerHTML = ``
-}
+//     filteredRecipesSection.innerHTML = ``
+// }
 
 const showFilteredRecipes = () => {
 
     const filteredRecipes =  cookBook.filterByTags
     
     (tagList).reduce((acc,recipe) => {
-        filteredRecipesSection.innerHTML = ``
+        allRecipesSection.innerHTML = ``
         acc += `
-        <div class="single-recipe-img"> <img src="${recipe.image}" alt=""> ${recipe.name} </div>
+         <div class='recipe'>
+        <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
+        <h5>${recipe.name}</h5>
+        </div> 
         `
         
         return acc
     }, '');
         
         console.log(filteredRecipesSection)
-        filteredRecipesSection.innerHTML = filteredRecipes
+        allRecipesSection.innerHTML = filteredRecipes
 }
