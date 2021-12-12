@@ -24,6 +24,7 @@ const allRecipesSection = document.querySelector('.all-recipes-section');
 const singleRecipeSection = document.querySelector('.single-recipe');
 const filterBox = document.querySelector('.side-nav');
 const favoriteRecipeSection = document.querySelector('.my-favorites-section')
+const mealsToCookSection = document.querySelector('.meals-to-cook-section')
 //buttons
 const favoriteRecipesButton = document.querySelector('#favoritesButton');
 const clearButton = document.querySelector('.clear-button');
@@ -51,6 +52,23 @@ const hide = (element) => {
 const show = (element) => {
   element.classList.remove('hidden')
 };
+
+const showMealsToCook = () => {
+  hide(favoriteRecipeSection)
+  hide(singleRecipeSection)
+  hide(allRecipesSection)
+  show(mealsToCookSection)
+  filter = currentUser
+  pageTitle.innerHTML = 'Meals to Cook';
+  const displayMealsToCook = currentUser.favoriteRecipes.forEach(recipe => {
+    return mealsToCookSection.innerHTML += `
+    <div class='recipe'>
+        <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
+        <h5>${recipe.name}</h5>
+        </div>` 
+      });
+      return displayMealsToCook
+}
 
 const showFavoriteRecipes = () => {
   favoriteRecipeSection.innerHTML = ''
