@@ -23,17 +23,16 @@ const singleRecipeSection = document.querySelector('.single-recipe');
 const filteredRecipesSection = document.querySelector('#filter-recipes-section');
 const filterBox = document.querySelector('.side-nav');
 //buttons
-const favoriteRecipesButton = document.querySelector('favorites')
+const favoriteRecipesButton = document.querySelector('#favoritesButton');
 const clearButton = document.querySelector('.clear-button');
 const searchInput = document.querySelector('#userInput');
 const allRecipesButton = document.querySelector('.recipies');
 
 //global variables 
 let tagList = [];
-let isClicked = false;
-var currentUser;
-let filter;
+let currentUser = users[Math.floor(Math.random() * users.length)];
 const cookBook = new Cookbook(recipes)
+let filter = cookBook
 
 //reusable functions 
 const hide = (element) => {
@@ -44,12 +43,29 @@ const show = (element) => {
   element.classList.remove('hidden')
 }
 
-searchInput.addEventListener('input', (e) => {
-  searchRecipes(e)
-})
+const showFavoriteRecipes = () => {
+  allRecipesSection.innerHTML = ''
+  filter = currentUser
+  
+}
 
-const searchRecipes = (e) => {
+favoriteRecipesButton.addEventListener("click", () => {
+  showFavoriteRecipes()
+
+});
+
+console.log(favoriteRecipesButton)
+
+
+
+
+
+
+searchInput.addEventListener('input', (e) => {
+
   let input = e.target.value
+
+  searchInput.addEventListener('input', (e) => {
 
   if (input && input.trim().length > 0) {
     input = input.trim().toLowerCase()
@@ -65,10 +81,12 @@ const searchRecipes = (e) => {
       return acc
     }, '')
 
-  } else {
-    console.log('Input is invalid')
-  }
-}
+    } else {
+      console.log('Input is invalid')
+    }
+  })
+})
+
 
 clearButton.addEventListener("click", () => {
   searchInput.value = ''
@@ -109,14 +127,6 @@ const clickRecipe = (event) => {
     `
 }
 
-const randomUser = () => {
-  currentUser = users[Math.floor(Math.random() * users.length)];
-  return currentUser
-}
-
-console.log(currentUser);
-
-
 
 const showFilteredRecipes = () => {
     const filteredRecipes =  cookBook.filterByTags
@@ -136,15 +146,9 @@ const showFilteredRecipes = () => {
 // event listeners
 
 window.addEventListener('load', function () {
-  filter = cookBook
   displayRecipes();
-  randomUser();
 });
 
-
-// favoriteRecipesButton.addEventListener('click', function() {
-  
-// });
 
 
 allRecipesSection.addEventListener('click', clickRecipe);
