@@ -22,38 +22,44 @@ const users = usersData.map(user => {
 // sections 
 const allRecipesSection = document.querySelector('.all-recipes-section');
 const singleRecipeSection = document.querySelector('.single-recipe');
-const filteredRecipesSection = document.querySelector('#filter-recipes-section');
 const filterBox = document.querySelector('.side-nav');
+const favoriteRecipeSection = document.querySelector('.my-favorites-section')
 //buttons
 const favoriteRecipesButton = document.querySelector('#favoritesButton');
 const clearButton = document.querySelector('.clear-button');
 const searchInput = document.querySelector('#userInput');
 const allRecipesButton = document.querySelector('.recipies');
-const addToFavoritesBtn = document.querySelector('.favorite-button')
-const addToPlanner = document.querySelector('.add-meal-button')
+const yourGroceryListSectionButton = document.querySelector('.grocery-list');
+const addToFavoritesBtn = document.querySelector('.favorite-button');
+const addToPlanner = document.querySelector('.add-meal-button');
+const pageTitle = document.querySelector('.page-title');
 
 
 
 //global variables 
 let tagList = [];
 let currentUser = users[Math.floor(Math.random() * users.length)];
-const cookBook = new Cookbook(recipes)
-let filter = cookBook
+
+const cookBook = new Cookbook(recipes);
+let filter = cookBook;
 
 //reusable functions 
 const hide = (element) => {
   element.classList.add('hidden')
-}
+};
 
 const show = (element) => {
   element.classList.remove('hidden')
-}
+};
 
 const showFavoriteRecipes = () => {
-  allRecipesSection.innerHTML = ''
+  favoriteRecipeSection.innerHTML = ''
+  hide(allRecipesSection)
+  hide(singleRecipeSection)
   filter = currentUser
+  pageTitle.innerHTML = 'Your Favorite Recipes';
   const displayFavoriteRecipes = currentUser.favoriteRecipes.forEach(recipe => {
-    return allRecipesSection.innerHTML += `
+    return favoriteRecipeSection.innerHTML += `
     <div class='recipe'>
         <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
         <h5>${recipe.name}</h5>
@@ -63,43 +69,53 @@ const showFavoriteRecipes = () => {
       
     }
     
-    favoriteRecipesButton.addEventListener("click", () => {
-      showFavoriteRecipes()
-      
-    });
+favoriteRecipesButton.addEventListener("click", () => {
+  showFavoriteRecipes()
+  hide(allRecipesSection)
+  hide(singleRecipeSection)
+  show(favoriteRecipeSection)
+
+  });
     
     
     searchInput.addEventListener('input', (e) => {
       
       let input = e.target.value
       
-      searchInput.addEventListener('input', (e) => {
+      
         
         if (input && input.trim().length > 0) {
-          // checkboxes.forEach(checkbox => {
-          //     checkbox.disabled = true;
-          // })
 
           input = input.trim().toLowerCase()
+
+          if(filter === cookBook){
+
+            allRecipesSection.innerHTML = filter.filterByKeyWord(input).reduce((acc, recipe) => {
+              acc += `
+              <div class='recipe'>
+              <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
+              <h5>${recipe.name}</h5>
+              </div> 
+              `
+              return acc
+            }, '')
+          } else {
+            favoriteRecipeSection.innerHTML = filter.filterByKeyWord(input).reduce((acc, recipe) => {
+              acc += `
+              <div class='recipe'>
+              <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
+              <h5>${recipe.name}</h5>
+              </div> 
+              `
+              return acc
+            }, '')
+
+          }
           
-          allRecipesSection.innerHTML = filter.filterByKeyWord(input).reduce((acc, recipe) => {
-            acc += `
-            <div class='recipe'>
-            <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
-            <h5>${recipe.name}</h5>
-            </div> 
-            `
-            return acc
-          }, '')
         } else {
-          // checkboxes.forEach(checkbox => {
-            
-          //     checkbox.disabled = false;
-            
-          // })
+        
         }
       })
-    })
     
     
     clearButton.addEventListener("click", () => {
@@ -125,11 +141,13 @@ const showFavoriteRecipes = () => {
     }
     
     const clickRecipe = (event) => { 
-      
+      console.log(event.target.id)
       if( event.target.name !== undefined){
+        hide(favoriteRecipeSection)
         hide(allRecipesSection)
         show(singleRecipeSection)
         const findRecipeId =  recipes.find( ( { id} ) => id == event.target.id)
+        console.log(findRecipeId,'!!!!!!!!')
         const recipeInstructions = findRecipeId.instructions.reduce((acc, instruction) => {
           acc += `<li>${instruction.instruction}</li>`
           return acc
@@ -158,6 +176,7 @@ const showFavoriteRecipes = () => {
       const filteredRecipes =  filter.filterByTags
       (tagList).reduce((acc,recipe) => {
         allRecipesSection.innerHTML = ``
+        pageTitle.innerHTML = `Filtered Recipes`
         acc += `
         <div class='recipe'>
         <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
@@ -173,15 +192,24 @@ const showFavoriteRecipes = () => {
     
     window.addEventListener('load', function () {
       displayRecipes();
+
+      
     });
     
-    allRecipesButton.addEventListener('click', () =>{
-      allRecipesSection.innerHTML = '';
+    allRecipesButton.addEventListener('click', () => {
       filter = cookBook
+      pageTitle.innerHTML = 'All Recipes'
+      hide(singleRecipeSection)
+      hide(favoriteRecipeSection)
+      show(allRecipesSection)
       displayRecipes()
     });
     
     allRecipesSection.addEventListener('click', clickRecipe);
+
+    favoriteRecipeSection.addEventListener('click',clickRecipe);
+
+
     const checkboxes = document.querySelectorAll('input[type=checkbox][name=tag]')
     
     checkboxes.forEach(checkbox => {
@@ -214,13 +242,14 @@ const showFavoriteRecipes = () => {
       })
     }
   });
-
-    });
-
-addToFavoritesBtn.addEventListener('click', () => {
-  currentUser.addToFavorites()
 });
-addToPlanner.addEventListener('click', () => {
-  currentUser.addToPlanner()
+
+yourGroceryListSectionButton.addEventListener('click', () => {
+  hide(allRecipesSection)
+  hide(favoriteRecipeSection)
+  hide(singleRecipeSection)
+  pageTitle.innerHTML = 'Grocery List'
 });
-    
+
+
+

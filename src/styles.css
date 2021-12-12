@@ -157,7 +157,8 @@ main {
 }
 
 /* all recipes */
-.all-recipes-section {
+.all-recipes-section,
+.my-favorites-section {
 height: 100%;
 display: flex;
 flex-wrap: wrap;
