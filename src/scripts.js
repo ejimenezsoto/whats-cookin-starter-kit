@@ -29,6 +29,8 @@ const favoriteRecipesButton = document.querySelector('#favoritesButton');
 const clearButton = document.querySelector('.clear-button');
 const searchInput = document.querySelector('#userInput');
 const allRecipesButton = document.querySelector('.recipies');
+const addToFavoritesBtn = document.querySelector('.favorite-button')
+const addToPlanner = document.querySelector('.add-meal-button')
 
 
 
@@ -139,7 +141,8 @@ const showFavoriteRecipes = () => {
         }, '');
         
         singleRecipeSection.innerHTML = `
-        <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
+        <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> <button class='favorite-button'><img class="favorite-image" src="./images/like.png"  alt="favorite"> </button>
+        <button class='add-meal-button'><img class="add-image" src="./images/plus.png"  alt="add"> </button> </div>
         <div class="ingredient-instructions-section">${recipeInstructions} </div>
         <div class="ingredient-list"><p> ${ingredientList} </p> </div>
         <div class="total-cost"> <h1>$${findRecipeId.costOfIngredients()} </div> 
@@ -212,4 +215,12 @@ const showFavoriteRecipes = () => {
     }
   });
 
+    });
+
+addToFavoritesBtn.addEventListener('click', () => {
+  currentUser.addToFavorites()
 });
+addToPlanner.addEventListener('click', () => {
+  currentUser.addToPlanner()
+});
+    
