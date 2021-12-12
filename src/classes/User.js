@@ -1,9 +1,37 @@
+import Recipe from './Recipe';
+
+var first = new Recipe(67853,"https://spoonacular.com/recipeImages/678353-556x370.jpg",[
+    {
+        "id": 1009016,
+        "quantity": {
+            "amount": 1.5,
+            "unit": "cups"
+        }
+    },
+    {
+        "id": 9003,
+        "quantity": {
+            "amount": 2,
+            "unit": ""
+        }
+    }
+    ],[
+        {
+            "instruction": "Season the pork chops with salt and pepper and grill or pan fry over medium high heat until cooked, about 3-5 minutes per side. (If grilling, baste the chops in the maple dijon apple cider sauce as you grill.)Meanwhile, mix the remaining ingredients except the apple slices, bring to a simmer and cook until the sauce thickens, about 2-5 minutes.Grill or saute the apple slices until just tender but still crisp.Toss the pork chops and apple slices in the maple dijon apple cider sauce and enjoy!",
+            "number": 1
+        }
+        ],"Maple Dijon Apple Cider Grilled Pork Chops",[
+            "lunch",
+            "main course",
+            "main dish",
+            "dinner"
+            ])
 class User {
     constructor(name, id, pantry) {
         this.name = name;
         this.id = id;
         this.pantry = pantry;
-        this.favoriteRecipes = [];
+        this.favoriteRecipes = [first];
         this.recipesToCook = [];
         this.filteredFavoriteRecipes = [];
     }

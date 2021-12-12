@@ -46,7 +46,15 @@ const show = (element) => {
 const showFavoriteRecipes = () => {
   allRecipesSection.innerHTML = ''
   filter = currentUser
-  
+  const displayFavoriteRecipes = currentUser.favoriteRecipes.forEach(recipe => {
+    return allRecipesSection.innerHTML += `
+        <div class='recipe'>
+        <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
+        <h5>${recipe.name}</h5>
+        </div>` 
+  });
+  return displayFavoriteRecipes
+
 }
 
 favoriteRecipesButton.addEventListener("click", () => {
