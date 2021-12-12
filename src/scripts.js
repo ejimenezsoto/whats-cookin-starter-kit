@@ -2,6 +2,8 @@ import './styles.css';
 import apiCalls from './apiCalls';
 import Cookbook from './classes/Cookbook';
 import './images/cooking.png'
+import './images/like.png'
+import './images/plus.png'
 import Recipe from './classes/Recipe';
 import recipeData from './data/recipes.js'
 import User from './classes/User';
@@ -106,8 +108,12 @@ const displayRecipes = () => {
   const allRecipies = cookBook.recipes.forEach(recipe => {
     return allRecipesSection.innerHTML += `
         <div class='recipe'>
-        <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
-        <h5>${recipe.name}</h5>
+          <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
+          <div class= 'name-and-favorite'>
+            <h5>${recipe.name}</h5>
+            <img class="favorite-image" src="./images/like.png"  alt="favorite">
+            <img class="add-image" src="./images/plus.png"  alt="add">
+          </div>
         </div>` 
   });
   return allRecipies;
