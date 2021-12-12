@@ -158,7 +158,8 @@ main {
 
 /* all recipes */
 .all-recipes-section,
-.my-favorites-section {
+.my-favorites-section,
+.meal-to.cook.section {
 height: 100%;
 display: flex;
 flex-wrap: wrap;
