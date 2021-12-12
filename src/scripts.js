@@ -137,7 +137,7 @@ const clickRecipe = (event) => {
 
 
 const showFilteredRecipes = () => {
-    const filteredRecipes =  cookBook.filterByTags
+    const filteredRecipes =  filter.filterByTags
     (tagList).reduce((acc,recipe) => {
         allRecipesSection.innerHTML = ``
         acc += `
@@ -178,10 +178,15 @@ checkboxes.forEach(checkbox => {
           checkbox.disabled = true;
         }
       })
-    } else if (!this.checked) {
+    } else if (!this.checked && filter === cookBook) {
       cookBook.filteredRecipes = []
       allRecipesSection.innerHTML = ''
       displayRecipes()
+      checkboxes.forEach(checkbox => {
+        checkbox.disabled = false
+      })
+    } else {
+      showFavoriteRecipes()
       checkboxes.forEach(checkbox => {
         checkbox.disabled = false
       })
