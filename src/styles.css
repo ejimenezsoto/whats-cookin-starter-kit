@@ -112,16 +112,6 @@ height: 100%;
 display: flex;
 flex-wrap: wrap;
 }
-.filter-recipes-section{
- 
-}
-.row {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 20%;
-  flex-wrap: wrap;
-}
 
 .recipe {
 height: 20vh;

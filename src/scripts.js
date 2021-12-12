@@ -64,12 +64,6 @@ favoriteRecipesButton.addEventListener("click", () => {
 
 });
 
-console.log(favoriteRecipesButton)
-
-
-
-
-
 
 searchInput.addEventListener('input', (e) => {
 
@@ -87,10 +81,8 @@ searchInput.addEventListener('input', (e) => {
       <h5>${recipe.name}</h5>
       </div> 
       `
-
       return acc
     }, '')
-
     } else {
       console.log('Input is invalid')
     }
@@ -119,26 +111,32 @@ const displayRecipes = () => {
   return allRecipies;
 }
 
-const clickRecipe = (event) => {  
-  hide(allRecipesSection)
-  show(singleRecipeSection)
-  const findRecipeId =  recipes.find( ( { id} ) => id == event.target.id)
-  const recipeInstructions = findRecipeId.instructions.reduce((acc, instruction) => {
-    acc += `<li>${instruction.instruction}</li>`
-    return acc
-  }, '' )
-
-  const ingredientList  = findRecipeId.listIngredients().reduce((acc, ingredient) => {
-    acc += `<li>${ingredient}</li>`
-    return acc
-  }, '');
-
-  singleRecipeSection.innerHTML = `
-            <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
-            <div class="ingredient-instructions-section">${recipeInstructions} </div>
-            <div class="ingredient-list"><p> ${ingredientList} </p> </div>
-            <div class="total-cost"> <h1>$${findRecipeId.costOfIngredients()} </div> 
-    `
+const clickRecipe = (event) => { 
+  
+  if( event.target.name !== undefined){
+    hide(allRecipesSection)
+    show(singleRecipeSection)
+    const findRecipeId =  recipes.find( ( { id} ) => id == event.target.id)
+    const recipeInstructions = findRecipeId.instructions.reduce((acc, instruction) => {
+      acc += `<li>${instruction.instruction}</li>`
+      return acc
+    }, '' )
+  
+    const ingredientList  = findRecipeId.listIngredients().reduce((acc, ingredient) => {
+      acc += `<li>${ingredient}</li>`
+      return acc
+    }, '');
+  
+    singleRecipeSection.innerHTML = `
+              <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
+              <div class="ingredient-instructions-section">${recipeInstructions} </div>
+              <div class="ingredient-list"><p> ${ingredientList} </p> </div>
+              <div class="total-cost"> <h1>$${findRecipeId.costOfIngredients()} </div> 
+      `
+  } else {
+    console.log('clicking outside')
+  }
+  
 }
 
 
@@ -162,7 +160,6 @@ const showFilteredRecipes = () => {
 window.addEventListener('load', function () {
   displayRecipes();
 });
-
 
 
 allRecipesSection.addEventListener('click', clickRecipe);
