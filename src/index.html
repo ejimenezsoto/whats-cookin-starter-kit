@@ -9,13 +9,13 @@
   </head>
   <body>
     <nav class="top-nav">
-      <button class="clear-button">CLEAR</button>
       <input type="text"  id="userInput" placeholder="Search for ingredients or name" >
+      <button class="clear-button">CLEAR</button>
       <div class="nav-buttons">
         <h3 class="whats-cookin-title">Whats Cookin'<img class="whats-cooking-img" src="./images/cooking.png" alt="Frying pan">
         </h3>
-        <button class="recipies">All Recipies</button>
-        <button class="favorites">My Favorite Recipies</button>
+        <button id="recipesButton" class="recipies">All Recipies</button>
+        <button id="favoritesButton" class="favorites">My Favorite Recipies</button>
         <button class="grocery-list">Your Grocery List</button>
         <button class="planner">Meal PLan</button>
       </div>
@@ -83,13 +83,26 @@
             <label for='$spread'>Spread</label>
         </nav>
         <section class="section-titles">
-          <h1 class="all-recipes-title">All Recipes</h1>
+          <h1 class="page-title"></h1>
           <p class="show-recipies"></p>
           <section class="all-recipes-section row">
-
+            <div class="recipe hidden" id="recipe"></div>
           </section>
-        <section class="single-recipe hidden">
+        <section class="single-recipe">
           
+          
+
+        </section>
+        <section class="favorite-meal-buttons">
+          <button class='favorite-button '><img class="favorite-image" id="favorite-button" src="./images/like.png"  alt="favorite"> </button>
+          <button class='add-meal-button'><img class="add-image" src="./images/plus.png" id="add-meal-button" alt="add"> </button>
+        </section>
+
+        <section class="my-favorites-section">
+
+        </section>
+        <section class="meals-to-cook-section">
+        
         </section>
 
         <section class="filter-recipes-section" id='filter-recipes-section'>

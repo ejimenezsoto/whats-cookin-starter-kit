@@ -1,9 +1,46 @@
-/* elements */
-* {
-  margin: 0;
-  border: 1px solid;
-  border-color: crimson;
-};
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
 
 .hidden {
   display: none!important;
@@ -63,18 +100,31 @@ main {
   display: flex;
   justify-content: flex-end;
   width: 100%;
-  height: 12%;
+  height: 5vh;
+  align-items: center;
 };
 
 .nav-buttons {
   display: flex;
   justify-content: space-around;
   width: 85%;
-  height: 100%;
+  height: 5vh;
+  align-items: center;
 }
 
-.search {
-  width: 15%;
+.clear-button {
+  margin-left: 1em;
+  display: flex;
+  align-items: center;
+  border-radius: 3vh;
+  background-color: transparent;
+  height: 3vh;
+}
+
+#userInput {
+  margin-left: 1em;
+  height: 2vh;
+
 }
 
 /* main title and recipes title */
@@ -107,25 +157,16 @@ main {
 }
 
 /* all recipes */
-.all-recipes-section {
+.all-recipes-section,
+.my-favorites-section,
+.meal-to.cook.section {
 height: 100%;
 display: flex;
 flex-wrap: wrap;
 }
-.filter-recipes-section{
-  height: 100%;
-display: flex;
-flex-wrap: wrap;
-}
-.row {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: 20%;
-}
 
 .recipe {
-height: 15vh;
+height: 20vh;
 width: 15vw;
 margin: 10px;
 display: flex;
@@ -136,6 +177,29 @@ justify-content: center;
 .recipe-image{
   height: auto;
   width: auto;
+}
+
+.favorite-image {
+ height: 2vh;
+ width: 2vw;
+}
+
+.add-image {
+  height: 2vh;
+  width: 2vw;
+}
+.name-and-favorite {
+  display: flex;
+}
+
+.favorite-button,
+.add-meal-button{
+  border: none;
+  background-color: transparent;
+}
+
+.recipe-name{
+  font-size: small;
 }
 
 /* single recipe section  */
