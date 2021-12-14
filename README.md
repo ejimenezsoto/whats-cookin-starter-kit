@@ -1,5 +1,5 @@
 # What's Cookin'?
-
+![App Demo](https://github.com/ejimenezsoto/whats-cookin-starter-kit/blob/main/src/images/whats%20cookin%20gif.gif)
 ## Abstract
 
 Welcome to our meal planning website. This website allows users to look through a list of recipes in order to take the struggle out of meal planning. Once on the site, a user can filter recipes by name/ingredient/type, store their favorite recipes for later, and view specific recipe info (instructions, ingredients, cost). Follow the instructions bellow to experience 'What's Cookin'' for yourself.
