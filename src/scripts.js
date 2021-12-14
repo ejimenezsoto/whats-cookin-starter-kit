@@ -48,35 +48,17 @@ let filter = cookBook;
 
 //reusable functions 
 const hide = (element) => {
-  element.classList.add('hidden')
+element.classList.add('hidden')
 };
 
 const show = (element) => {
   element.classList.remove('hidden')
 };
 
-const showMealsToCook = () => {
-  hide(favoriteRecipeSection)
-  hide(singleRecipeSection)
-  hide(allRecipesSection)
-  show(mealsToCookSection)
-  filter = currentUser
-  pageTitle.innerHTML = 'Meals to Cook';
-  const displayMealsToCook = currentUser.favoriteRecipes.forEach(recipe => {
-    return mealsToCookSection.innerHTML += `
-    <div class='recipe'>
-        <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
-        <h5>${recipe.name}</h5>
-        </div>` 
-      });
-      return displayMealsToCook
-}
-
 const showFavoriteRecipes = () => {
   favoriteRecipeSection.innerHTML = ''
   hide(allRecipesSection)
   hide(singleRecipeSection)
-  hide(favoriteMealButtons)
   filter = currentUser
   pageTitle.innerHTML = 'Your Favorite Recipes';
   const displayFavoriteRecipes = currentUser.favoriteRecipes.forEach(recipe => {
@@ -130,6 +112,8 @@ clearButton.addEventListener("click", () => {
     })
     
 const displayRecipes = () => {
+  hide(singleRecipeSection)
+  hide(favoriteRecipeSection)
   const allRecipies = cookBook.recipes.forEach(recipe => {
     return allRecipesSection.innerHTML += `
       <div class='recipe'>
@@ -143,13 +127,11 @@ const displayRecipes = () => {
 }
 
 const clickRecipe = (event) => {
-  console.log(event.target)
   if (event.target.name !== undefined) {
     hide(favoriteRecipeSection)
     hide(allRecipesSection)
     hide(mealsToCookSection)
     show(singleRecipeSection)
-    show(favoriteMealButtons)
     const findRecipeId = recipes.find(({ id }) => id == event.target.id)
     currentRecipe = findRecipeId
     const recipeInstructions = findRecipeId.instructions.reduce((acc, instruction) => {
@@ -162,9 +144,15 @@ const clickRecipe = (event) => {
     }, '');
     singleRecipeSection.innerHTML = `
     <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
+    <div class="favorite-meal-buttons">
+    <button class='favorite-button '><img class="favorite-image" id="favorite-button" src="./images/like.png"  alt="favorite"> </button>
+    <button class='add-meal-button'><img class="add-image" src="./images/plus.png" id="add-meal-button" alt="add"> </button>
+    <div class="total-cost"> <h1 class="price">$${findRecipeId.costOfIngredients()}</h1></div> 
+    </div>
+    <div class="ingredient-instructions">
     <div class="ingredient-instructions-section">${recipeInstructions} </div>
     <div class="ingredient-list"><p> ${ingredientList} </p> </div>
-    <div class="total-cost"> <h1>$${findRecipeId.costOfIngredients()} </div> 
+    </div>
     `
   } else {
     console.log('clicking outside')
@@ -198,7 +186,6 @@ allRecipesButton.addEventListener('click', () => {
   pageTitle.innerHTML = 'All Recipes'
   hide(singleRecipeSection)
   hide(favoriteRecipeSection)
-  hide(favoriteMealButtons)
   show(allRecipesSection)
   displayRecipes()
 });
@@ -245,7 +232,6 @@ const showMealPlan = () => {
   hide(allRecipesSection)
   hide(singleRecipeSection)
   show(mealsToCookSection)
-  hide(favoriteMealButtons)
   filter = currentUser
   const displayMealsToCook = currentUser.recipesToCook.forEach(recipe => {
     return mealsToCookSection.innerHTML += `
@@ -263,21 +249,21 @@ yourGroceryListSectionButton.addEventListener('click', () => {
   hide(allRecipesSection)
   hide(favoriteRecipeSection)
   hide(singleRecipeSection)
-  hide(favoriteMealButtons)
   
   pageTitle.innerHTML = 'Grocery List'
 });
 
-favoriteMealButtons.addEventListener('click', () => {
-  
+singleRecipeSection.addEventListener('click', (event) => {
   if(event.target.id === 'add-meal-button'){
     currentUser.addToCook(currentRecipe)
-    console.log(currentUser.recipesToCook)
   } else if(event.target.id === 'favorite-button'){
     currentUser.addToFavorites(currentRecipe)
   }
-  
 })
+
+
+
+
 
 
 
