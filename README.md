@@ -1,22 +1,38 @@
-# What's Cookin'? Starter Kit 
+# What's Cookin'?
 
-The details of this project are outlined in the <a href="https://frontend.turing.edu/projects/What%27sCookin-PartOne.html" target="\__blank">project spec</a>.
+## Abstract
 
-## Set Up 
+Welcome to our meal planning website. This website allows users to look through a list of recipes in order to take the struggle out of meal planning. Once on the site, a user can filter recipes by name/ingredient/type, store their favorite recipes for later, and view specific recipe info (instructions, ingredients, cost). Follow the instructions bellow to experience 'What's Cookin'' for yourself.
 
-1. Within your group, decide on one person to have the project repository on their Github account. This person will *fork* this repository - on the top right corner of the page, click the fork button. 
-2. All group members should then clone down the forked repository (make sure that everyone is added as a collaborator as well). Since you don't want your project to be named "whats-cookin-starter-kit", add an optional argument after the repo url when cloning. The command should look like this: `git clone [remote-address] [what you want to name the repo]`.
-3. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` or `npm i` to install project dependencies.
-4. Run `npm start` and visit `localhost:8080`
-5. Make sure both members of your team are collaborators on the forked repo.
+## Instructions for Loading on Your Device
 
-## Testing 
+1. Clone this repo
+```bash
+git clone (git@github.com:ejimenezsoto/whats-cookin-starter-kit.git)
+```
+2. 'cd' into the repo
+3. In your terminal load the required dependencies 
+```bash
+npm install
+```
+4. In your terminal run 
+```bash
+npm start
+```
+6. Finally, in your browser navigate [here](http://localhost:8080/) 
 
-Mocha and chai are already set up, with a boilerplate test for you. 
+## Technologies Used
 
-## Linting Your Code 
+-JavaScript
+-HTML
+-CSS
+-Mocha
+-Chai
+-Node.js
+-Webpack
 
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit, but that's ok - the linter is still running successfully.
-
-Your linter will look only at the JavaScript files you have within the src and the test directories.
+A Turing School of Software and Design group project, brought to you by...
+- [Enzo Jimenez Soto](https://github.com/ejimenezsoto)
+- [Jacob Quintana](https://github.com/Jayquintana)
+- [Kai Kuller](https://github.com/kavakai)
 
