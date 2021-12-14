@@ -32,7 +32,7 @@ npm start
 -Webpack
 
 A Turing School of Software and Design group project, brought to you by...
-[Enzo Jimenez Soto](https://github.com/ejimenezsoto)
-[Jacob Quintana](https://github.com/Jayquintana)
-[Kai Kuller](https://github.com/kavakai)
+- [Enzo Jimenez Soto](https://github.com/ejimenezsoto)
+- [Jacob Quintana](https://github.com/Jayquintana)
+- [Kai Kuller](https://github.com/kavakai)
 
