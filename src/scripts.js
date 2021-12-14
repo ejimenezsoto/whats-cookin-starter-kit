@@ -147,6 +147,7 @@ const clickRecipe = (event) => {
   if (event.target.name !== undefined) {
     hide(favoriteRecipeSection)
     hide(allRecipesSection)
+    hide(mealsToCookSection)
     show(singleRecipeSection)
     show(favoriteMealButtons)
     const findRecipeId = recipes.find(({ id }) => id == event.target.id)
