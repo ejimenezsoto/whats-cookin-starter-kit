@@ -9,16 +9,6 @@ import recipeData from './data/recipes.js'
 import User from './classes/User';
 import usersData from './data/users';
 
-
-
-const recipes = recipeData.map(recipe => {
-    return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags)
-});
-
-const users = usersData.map(user => {
-  return new User(user.name, user.id, user.pantry)
-})
-
 // sections 
 const allRecipesSection = document.querySelector('.all-recipes-section');
 const singleRecipeSection = document.querySelector('.single-recipe');
@@ -40,15 +30,24 @@ const yourGroceryListSectionButton = document.querySelector('.grocery-list');
 const mealsToCookButton = document.querySelector('.planner')
 
 
-//global variables 
+//global variables *****************************
+const recipes = recipeData.map(recipe => {
+  return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags)
+});
+
+const users = usersData.map(user => {
+  return new User(user.name, user.id, user.pantry)
+});
+
+const cookBook = new Cookbook(recipes);
+
 let tagList = [];
 let currentUser = users[Math.floor(Math.random() * users.length)];
 let currentRecipe;
 
-const cookBook = new Cookbook(recipes);
 let filter = cookBook;
 
-//reusable functions 
+//reusable functions ***************************
 const hide = (element) => {
 element.classList.add('hidden')
 };
@@ -56,6 +55,23 @@ element.classList.add('hidden')
 const show = (element) => {
   element.classList.remove('hidden')
 };
+
+
+// Event Hnadlers *******************************
+const displayRecipes = () => {
+  hide(singleRecipeSection)
+  hide(favoriteRecipeSection)
+  const allRecipies = cookBook.recipes.forEach(recipe => {
+    return allRecipesSection.innerHTML += `
+      <div class='recipe'>
+      <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
+      <div class= 'name-and-favorite'>
+      <p class='recipe-name'>${recipe.name}</p>
+      </div>
+      </div>`
+  });
+  return allRecipies;
+}; 
 
 const showFavoriteRecipes = () => {
   favoriteRecipeSection.innerHTML = ''
@@ -99,31 +115,7 @@ const populateSearch = (e) => {
       }, '')
     }
   }
-}
-
-searchInput.addEventListener('input', (e) => {
-  populateSearch(e)
-});
-
-clearButton.addEventListener("click", () => {
-      searchInput.value = ''
-      displayRecipes()
-    });
-    
-const displayRecipes = () => {
-  hide(singleRecipeSection)
-  hide(favoriteRecipeSection)
-  const allRecipies = cookBook.recipes.forEach(recipe => {
-    return allRecipesSection.innerHTML += `
-      <div class='recipe'>
-      <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
-      <div class= 'name-and-favorite'>
-      <p class='recipe-name'>${recipe.name}</p>
-      </div>
-      </div>`
-  });
-  return allRecipies;
-}
+};
 
 const clickRecipe = (event) => {
   if (event.target.name !== undefined) {
@@ -156,8 +148,7 @@ const clickRecipe = (event) => {
   } else {
     console.log('clicking outside')
   }
-}
-
+};
 
 const showFilteredRecipes = () => {
   const filteredRecipes = filter.filterByTags(tagList).reduce((acc, recipe) => {
@@ -172,64 +163,39 @@ const showFilteredRecipes = () => {
     return acc
   }, '');
   allRecipesSection.innerHTML = filteredRecipes
-}
-    
-    // event listeners
-    
-window.addEventListener('load', function () {
-  displayRecipes();
-});
+};
 
-favoriteRecipesButton.addEventListener("click", () => {
-  showFavoriteRecipes()
-  hide(allRecipesSection)
-  hide(singleRecipeSection)
-  show(favoriteRecipeSection)
-});
-    
-allRecipesButton.addEventListener('click', () => {
-  filter = cookBook
-  pageTitle.innerHTML = 'All Recipes'
-  hide(singleRecipeSection)
-  hide(favoriteRecipeSection)
-  show(allRecipesSection)
-  displayRecipes()
-});
-    
-allRecipesSection.addEventListener('click', clickRecipe);
-favoriteRecipeSection.addEventListener('click', clickRecipe);
-
-checkboxes.forEach(checkbox => {
-  checkbox.addEventListener('change', function () {
-  document.querySelectorAll('.checkbox').checked = true;
-    document.querySelectorAll('.checkbox').checked = false;
-    if (this.checked) {
-      tagList = Array.from(checkboxes)
-      .filter(i => i.checked)
-      .map(i => i.id)
-      showFilteredRecipes()
-      checkboxes.forEach(checkbox => {
-        if (!checkbox.checked) {
-          checkbox.disabled = true;
-        }
-      })
-    } else if (!this.checked && filter === cookBook) {
-      cookBook.filteredRecipes = []
-      allRecipesSection.innerHTML = ''
-      displayRecipes()
-      checkboxes.forEach(checkbox => {
-        checkbox.disabled = false
-      })
-    } else {
-      showFavoriteRecipes()
-      checkboxes.forEach(checkbox => {
-        checkbox.disabled = false
-      })
-    }
+const filterByCheckBoxes = () => {
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+      document.querySelectorAll('.checkbox').checked = true;
+      document.querySelectorAll('.checkbox').checked = false;
+      if (this.checked) {
+        tagList = Array.from(checkboxes)
+          .filter(i => i.checked)
+          .map(i => i.id)
+        showFilteredRecipes()
+        checkboxes.forEach(checkbox => {
+          if (!checkbox.checked) {
+            checkbox.disabled = true;
+          }
+        })
+      } else if (!this.checked && filter === cookBook) {
+        cookBook.filteredRecipes = []
+        allRecipesSection.innerHTML = ''
+        displayRecipes()
+        checkboxes.forEach(checkbox => {
+          checkbox.disabled = false
+        })
+      } else {
+        showFavoriteRecipes()
+        checkboxes.forEach(checkbox => {
+          checkbox.disabled = false
+        })
+      }
+    });
   });
-});
-
-
+};
 
 const showMealPlan = () => {
   mealsToCookSection.innerHTML = '';
@@ -242,28 +208,66 @@ const showMealPlan = () => {
     <div class='recipe'>
         <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
         <h5>${recipe.name}</h5>
-        </div>` 
-      });
-      return displayMealsToCook
-}
+        </div>`
+  });
+  return displayMealsToCook
+};
 
-mealsToCookButton.addEventListener('click', showMealPlan)
+const addSingleRecipe = (event) => {
+  if (event.target.id === 'add-meal-button') {
+    currentUser.addToCook(currentRecipe)
+  } else if (event.target.id === 'favorite-button') {
+    currentUser.addToFavorites(currentRecipe)
+  }
+};
+  
+  // event listeners ***********************************************
+
+allRecipesSection.addEventListener('click', clickRecipe);
+favoriteRecipeSection.addEventListener('click', clickRecipe);
+mealsToCookButton.addEventListener('click', showMealPlan);
+
+    
+window.addEventListener('load', function () {
+  displayRecipes();
+  filterByCheckBoxes()
+});
+
+favoriteRecipesButton.addEventListener("click", () => {
+  showFavoriteRecipes()
+  hide(allRecipesSection)
+  hide(singleRecipeSection)
+  show(favoriteRecipeSection)
+});
+
+searchInput.addEventListener('input', (e) => {
+  populateSearch(e)
+});
+
+clearButton.addEventListener("click", () => {
+  searchInput.value = ''
+  displayRecipes()
+});
+    
+allRecipesButton.addEventListener('click', () => {
+  filter = cookBook
+  pageTitle.innerHTML = 'All Recipes'
+  hide(singleRecipeSection)
+  hide(favoriteRecipeSection)
+  show(allRecipesSection)
+  displayRecipes()
+});
 
 yourGroceryListSectionButton.addEventListener('click', () => {
   hide(allRecipesSection)
   hide(favoriteRecipeSection)
   hide(singleRecipeSection)
-  
   pageTitle.innerHTML = 'Grocery List'
 });
 
 singleRecipeSection.addEventListener('click', (event) => {
-  if(event.target.id === 'add-meal-button'){
-    currentUser.addToCook(currentRecipe)
-  } else if(event.target.id === 'favorite-button'){
-    currentUser.addToFavorites(currentRecipe)
-  }
-})
+  addSingleRecipe(event)
+});
 
 
 
