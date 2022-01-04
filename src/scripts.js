@@ -5,24 +5,25 @@ import './images/cooking.png'
 import './images/like.png'
 import './images/plus.png'
 import Recipe from './classes/Recipe';
-import recipeData from './data/recipes.js'
+// import recipeData from './data/recipes.js'
 import User from './classes/User';
-import usersData from './data/users';
+// import usersData from './data/users';
+import { userData, recipesData, ingredientData } from './apiCalls';
 
-// sections 
+// html sections 
 const allRecipesSection = document.querySelector('.all-recipes-section');
 const singleRecipeSection = document.querySelector('.single-recipe');
 const favoriteRecipeSection = document.querySelector('.my-favorites-section')
 const mealsToCookSection = document.querySelector('.meals-to-cook-section')
 
-//title
+// html titles
 const pageTitle = document.querySelector('.page-title');
 
-//inputs
+// html inputs
 const checkboxes = document.querySelectorAll('input[type=checkbox][name=tag]')
 const searchInput = document.querySelector('#userInput');
 
-//buttons
+// html buttons
 const favoriteRecipesButton = document.querySelector('#favoritesButton');
 const clearButton = document.querySelector('.clear-button');
 const allRecipesButton = document.querySelector('.recipies');
@@ -30,22 +31,33 @@ const yourGroceryListSectionButton = document.querySelector('.grocery-list');
 const mealsToCookButton = document.querySelector('.planner')
 
 
-//global variables *****************************
-const recipes = recipeData.map(recipe => {
-  return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags)
-});
 
-const users = usersData.map(user => {
-  return new User(user.name, user.id, user.pantry)
-});
-
-const cookBook = new Cookbook(recipes);
+//global variables ***************************** 
 
 let tagList = [];
-let currentUser = users[Math.floor(Math.random() * users.length)];
 let currentRecipe;
+let recipes;
+let users;
+let cookBook;
+let filter;
+let currentUser;
 
-let filter = cookBook;
+// fetch apis *************************************
+Promise.all([userData, recipesData, ingredientData])
+.then(data => {
+  recipes = data[1].recipeData.map(recipe => {
+    return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags, data[2].ingredientsData)
+  });
+  users = data[0].usersData.map(user => {
+    return new User(user.name, user.id, user.pantry)
+  });
+
+  console.log(data[2].ingredientsData);
+  cookBook = new Cookbook(recipes);
+  filter = cookBook;
+  currentUser = users[Math.floor(Math.random() * users.length)];
+})
+.catch(error => console.log('Oooops. Something is wrong', error))
 
 //reusable functions ***************************
 const hide = (element) => {
@@ -229,12 +241,17 @@ mealsToCookButton.addEventListener('click', showMealPlan);
 
     
 window.addEventListener('load', function () {
-  displayRecipes();
-  filterByCheckBoxes()
+  setTimeout(() => {
+    displayRecipes();
+    filterByCheckBoxes()
+    
+  }, 2000)
 });
 
 favoriteRecipesButton.addEventListener("click", () => {
   showFavoriteRecipes()
+  hide(clearButton)
+  
   hide(allRecipesSection)
   hide(singleRecipeSection)
   show(favoriteRecipeSection)
@@ -246,6 +263,7 @@ searchInput.addEventListener('input', (e) => {
 
 clearButton.addEventListener("click", () => {
   searchInput.value = ''
+  allRecipesSection.innerHTML = ''
   displayRecipes()
 });
     

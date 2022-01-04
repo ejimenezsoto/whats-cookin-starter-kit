@@ -1,4 +1,16 @@
 // Your fetch requests will live here!
 
+const userData =
+  fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users')
+    .then(response => response.json())
 
-console.log('I will be a fetch request!');
+const recipesData =
+  fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes')
+    .then(response => response.json())
+
+const ingredientData =
+  fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients')
+    .then(response => response.json())
+
+
+export { userData, recipesData, ingredientData };
