@@ -1,20 +1,20 @@
 
-var ingredientsData = require('../data/ingredients');
 
 class Recipe {
-  constructor(id, image, ingredients, instructions, name, tags) {
+  constructor(id, image, ingredients, instructions, name, tags, ingredientsData) {
     this.id = id;
     this.image = image;
     this.ingredients = ingredients;
     this.instructions = instructions;
     this.name = name;
     this.tags = tags;
+    this.ingredientsData = ingredientsData;
   }
   listIngredients() {
     const ingredientIds = this.ingredients.map(ingredient => ingredient.id);
 
     const ingredientDataObjs = ingredientIds.map(ingredientId => {
-      return ingredientsData.find( ( { id } ) => id === ingredientId);
+      return this.ingredientsData.find( ( { id } ) => id === ingredientId);
     });
 
     const ingredientNames = ingredientDataObjs.map(ingredient => ingredient.name);
@@ -29,7 +29,7 @@ class Recipe {
     const ingredientIds = this.ingredients.map(ingredient => ingredient.id);
 
     const ingredientDataObjs = ingredientIds.map(ingredientId => {
-      return ingredientsData.find( ( { id } ) => id === ingredientId);
+      return this.ingredientsData.find( ( { id } ) => id === ingredientId);
     });
 
     const ingredientCost = ingredientDataObjs.map(ingredient => ingredient.estimatedCostInCents);
