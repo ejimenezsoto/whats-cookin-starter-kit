@@ -1,14 +1,29 @@
-import Recipe from './Recipe';
 
 class User {
-    constructor(name, id, pantry) {
+    constructor(name, id, pantry,ingredientsData) {
         this.name = name;
         this.id = id;
         this.pantry = pantry;
         this.favoriteRecipes = [];
         this.recipesToCook = [];
         this.filteredFavoriteRecipes = [];
+        this.listOfIngredients = []
+        this.ingredientsData = ingredientsData
     }
+    listIngredients() {
+        const ingredientIds = this.pantry.map(ingredient => [ingredient.ingredient,ingredient.amount]);
+        
+        const ingredientDataObjs = ingredientIds.map(ingredientId => {
+          return [this.ingredientsData.find( ( { id } ) => id === ingredientId[0]), ingredientId[1]];
+        });
+        console.log(ingredientDataObjs)
+
+        const ingredientNames = ingredientDataObjs.map(ingredient => [ingredient[0].name, ingredient[1]]); 
+        console.log(ingredientNames)
+        
+        return ingredientNames;
+      }
+
 
     addToFavorites(recipe) {
         if (this.favoriteRecipes.includes(recipe)) {
@@ -61,4 +76,5 @@ class User {
         return filteredWithoutDuplicates
     }
 }
+
 export default User

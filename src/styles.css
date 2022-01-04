@@ -87,11 +87,13 @@ main {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+
 }
 
 .tag-container {
   width: 30%;
-  height: 5%;
+  height: 10%;
+
 }
 
 /* top navigation */
@@ -270,3 +272,14 @@ display: flex;
   flex-direction: row;
   justify-content: center;
 }
+
+.turing-add{
+  height: 20%;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+
+

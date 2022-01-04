@@ -13,8 +13,11 @@ import { userData, recipesData, ingredientData } from './apiCalls';
 // html sections 
 const allRecipesSection = document.querySelector('.all-recipes-section');
 const singleRecipeSection = document.querySelector('.single-recipe');
-const favoriteRecipeSection = document.querySelector('.my-favorites-section')
-const mealsToCookSection = document.querySelector('.meals-to-cook-section')
+const favoriteRecipeSection = document.querySelector('.my-favorites-section');
+const mealsToCookSection = document.querySelector('.meals-to-cook-section');
+const tagNavSection = document.querySelector('.side-nav');
+const pantrySection = document.querySelector('.pantry-section');
+const pantryTable = document.querySelector('.pantry-table');
 
 // html titles
 const pageTitle = document.querySelector('.page-title');
@@ -28,7 +31,7 @@ const favoriteRecipesButton = document.querySelector('#favoritesButton');
 const clearButton = document.querySelector('.clear-button');
 const allRecipesButton = document.querySelector('.recipies');
 const yourGroceryListSectionButton = document.querySelector('.grocery-list');
-const mealsToCookButton = document.querySelector('.planner')
+const mealsToCookButton = document.querySelector('.planner');
 
 
 
@@ -49,13 +52,12 @@ Promise.all([userData, recipesData, ingredientData])
     return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags, data[2].ingredientsData)
   });
   users = data[0].usersData.map(user => {
-    return new User(user.name, user.id, user.pantry)
+    return new User(user.name, user.id, user.pantry,data[2].ingredientsData)
   });
-
-  console.log(data[2].ingredientsData);
   cookBook = new Cookbook(recipes);
   filter = cookBook;
   currentUser = users[Math.floor(Math.random() * users.length)];
+  currentUser.listIngredients()
 })
 .catch(error => console.log('Oooops. Something is wrong', error))
 
@@ -86,6 +88,8 @@ const displayRecipes = () => {
 }; 
 
 const showFavoriteRecipes = () => {
+
+  console.log(currentUser.listIngredients(), '<<<<<<<<<Pantry')
   favoriteRecipeSection.innerHTML = ''
   hide(allRecipesSection)
   hide(singleRecipeSection)
@@ -232,6 +236,22 @@ const addSingleRecipe = (event) => {
     currentUser.addToFavorites(currentRecipe)
   }
 };
+
+const showPantrySection = () => {
+  // DISABLE PANTRY BUTTON IF ON PANTRY SECTION
+  
+  const pantryList = currentUser.listIngredients().forEach(ingredient => {
+    pantryTable.innerHTML += `
+      <tr class='ingredient-table'>
+        <td>${ingredient[0]}</td>
+        <td>${ingredient[1]}</td>
+      </tr>
+    `
+  })
+  return pantryList
+}
+
+
   
   // event listeners ***********************************************
 
@@ -255,6 +275,8 @@ favoriteRecipesButton.addEventListener("click", () => {
   hide(allRecipesSection)
   hide(singleRecipeSection)
   show(favoriteRecipeSection)
+  hide(searchInput)
+  hide(tagNavSection)
 });
 
 searchInput.addEventListener('input', (e) => {
@@ -262,9 +284,11 @@ searchInput.addEventListener('input', (e) => {
 });
 
 clearButton.addEventListener("click", () => {
-  searchInput.value = ''
-  allRecipesSection.innerHTML = ''
-  displayRecipes()
+    if(window.getComputedStyle(tagNavSection).display === 'none'){
+      show(tagNavSection)
+    } else {
+      hide(tagNavSection)
+    }
 });
     
 allRecipesButton.addEventListener('click', () => {
@@ -274,17 +298,29 @@ allRecipesButton.addEventListener('click', () => {
   hide(favoriteRecipeSection)
   show(allRecipesSection)
   displayRecipes()
+  show(clearButton)
+  show(searchInput)
+  hide(tagNavSection)
 });
 
 yourGroceryListSectionButton.addEventListener('click', () => {
   hide(allRecipesSection)
   hide(favoriteRecipeSection)
   hide(singleRecipeSection)
-  pageTitle.innerHTML = 'Grocery List'
+  pageTitle.innerHTML = 'Pantry'
+  hide(clearButton)
+  hide(searchInput)
+  hide(tagNavSection)
+  show(pantrySection)
+  showPantrySection()
+
+
 });
 
 singleRecipeSection.addEventListener('click', (event) => {
   addSingleRecipe(event)
+  hide(clearButton)
+  hide(tagNavSection)
 });
 
 
