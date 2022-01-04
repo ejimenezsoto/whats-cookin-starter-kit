@@ -59,14 +59,6 @@ Promise.all([userData, recipesData, ingredientData])
 })
 .catch(error => console.log('Oooops. Something is wrong', error))
 
-// const timeOut = () => { setTimeout(() => {
-//   console.log(recipes);
-//   console.log(users);
-//   console.log(cookBook);
-// }, 2000)
-// }
-
-// timeOut()
 //reusable functions ***************************
 const hide = (element) => {
 element.classList.add('hidden')
@@ -258,6 +250,8 @@ window.addEventListener('load', function () {
 
 favoriteRecipesButton.addEventListener("click", () => {
   showFavoriteRecipes()
+  hide(clearButton)
+  
   hide(allRecipesSection)
   hide(singleRecipeSection)
   show(favoriteRecipeSection)
@@ -269,6 +263,7 @@ searchInput.addEventListener('input', (e) => {
 
 clearButton.addEventListener("click", () => {
   searchInput.value = ''
+  allRecipesSection.innerHTML = ''
   displayRecipes()
 });
     
