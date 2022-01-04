@@ -14,18 +14,18 @@
   <body>
     <nav class="top-nav">
       <input type="text"  id="userInput" placeholder="Search for ingredients or name" >
-      <button class="clear-button">CLEAR</button>
+      <button class="clear-button">Advanced Search</button>
       <div class="nav-buttons">
         <h3 class="whats-cookin-title">Whats Cookin'</h3>
         <button id="recipesButton" class="recipies">All Recipies</button>
         <button id="favoritesButton" class="favorites">My Favorite Recipies</button>
-        <button class="grocery-list">Your Grocery List</button>
+        <button class="grocery-list">Pantry</button>
         <button class="planner">Meal PLan</button>
       </div>
     </nav>
     <div class="main-section">   
       <main>
-        <nav class="side-nav">
+        <nav class="side-nav hidden">
           <div class="tag-container">
             <input class="checkbox" type="checkbox" id='antipasti' name='tag'>
             <label for='antipasti'>Antipasti</label>
@@ -97,6 +97,14 @@
         <section class="meals-to-cook-section">
         </section>
         <section class="filter-recipes-section" id='filter-recipes-section'>
+        </section>
+        <section class="pantry-section">
+          <table class="pantry-table">
+            <tr>
+             <th>Ingredient</th>
+             <th>Units</th>
+            </tr>
+          </table>
         </section>
       </section>
       </main>
