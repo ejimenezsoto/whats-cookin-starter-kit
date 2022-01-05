@@ -5,10 +5,11 @@ import './images/cooking.png'
 import './images/like.png'
 import './images/plus.png'
 import Recipe from './classes/Recipe';
-// import recipeData from './data/recipes.js'
 import User from './classes/User';
-// import usersData from './data/users';
 import { userData, recipesData, ingredientData } from './apiCalls';
+import Pantry from './classes/Pantry';
+
+
 
 // html sections 
 const allRecipesSection = document.querySelector('.all-recipes-section');
@@ -44,6 +45,8 @@ let users;
 let cookBook;
 let filter;
 let currentUser;
+let pantry;
+
 
 // fetch apis *************************************
 Promise.all([userData, recipesData, ingredientData])
@@ -52,12 +55,19 @@ Promise.all([userData, recipesData, ingredientData])
     return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags, data[2].ingredientsData)
   });
   users = data[0].usersData.map(user => {
-    return new User(user.name, user.id, user.pantry,data[2].ingredientsData)
+    return new User(user.name, user.id, user.pantry, data[2].ingredientsData)
   });
   cookBook = new Cookbook(recipes);
   filter = cookBook;
   currentUser = users[Math.floor(Math.random() * users.length)];
-  currentUser.listIngredients()
+
+  console.log(currentUser.pantry);
+  pantry = new Pantry(currentUser.pantry, data[2].ingredientsData);
+
+  console.log(pantry);
+  
+
+
 })
 .catch(error => console.log('Oooops. Something is wrong', error))
 
