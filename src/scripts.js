@@ -218,6 +218,7 @@ const showMealPlan = () => {
   hide(allRecipesSection)
   hide(singleRecipeSection)
   show(mealsToCookSection)
+  hide(pantrySection)
   filter = currentUser
   const displayMealsToCook = currentUser.recipesToCook.forEach(recipe => {
     return mealsToCookSection.innerHTML += `
@@ -239,12 +240,13 @@ const addSingleRecipe = (event) => {
 
 const showPantrySection = () => {
   // DISABLE PANTRY BUTTON IF ON PANTRY SECTION
+  pantryTable.innerHTML = ''
   
   const pantryList = currentUser.listIngredients().forEach(ingredient => {
     pantryTable.innerHTML += `
       <tr class='ingredient-table'>
         <td>${ingredient[0]}</td>
-        <td>${ingredient[1]}</td>
+        <td>${ingredient[1]} units</td>
       </tr>
     `
   })
@@ -271,7 +273,7 @@ window.addEventListener('load', function () {
 favoriteRecipesButton.addEventListener("click", () => {
   showFavoriteRecipes()
   hide(clearButton)
-  
+  hide(pantrySection)
   hide(allRecipesSection)
   hide(singleRecipeSection)
   show(favoriteRecipeSection)
@@ -289,6 +291,8 @@ clearButton.addEventListener("click", () => {
     } else {
       hide(tagNavSection)
     }
+    currentUser.checkPantry()
+    
 });
     
 allRecipesButton.addEventListener('click', () => {
@@ -301,6 +305,7 @@ allRecipesButton.addEventListener('click', () => {
   show(clearButton)
   show(searchInput)
   hide(tagNavSection)
+  hide(pantrySection)
 });
 
 yourGroceryListSectionButton.addEventListener('click', () => {
@@ -313,7 +318,8 @@ yourGroceryListSectionButton.addEventListener('click', () => {
   hide(tagNavSection)
   show(pantrySection)
   showPantrySection()
-
+  
+  
 
 });
 
@@ -321,6 +327,7 @@ singleRecipeSection.addEventListener('click', (event) => {
   addSingleRecipe(event)
   hide(clearButton)
   hide(tagNavSection)
+  hide(pantrySection)
 });
 
 

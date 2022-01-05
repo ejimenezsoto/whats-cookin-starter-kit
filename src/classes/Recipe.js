@@ -9,18 +9,20 @@ class Recipe {
     this.name = name;
     this.tags = tags;
     this.ingredientsData = ingredientsData;
+    this.listOfRecipeIngredients = [];
   }
   listIngredients() {
-    const ingredientIds = this.ingredients.map(ingredient => ingredient.id);
-
+    const ingredientIds = this.ingredients.map(ingredient => [ingredient.id, ingredient.quantity.amount]);
+    
     const ingredientDataObjs = ingredientIds.map(ingredientId => {
-      return this.ingredientsData.find( ( { id } ) => id === ingredientId);
+      return [this.ingredientsData.find( ( { id } ) => id === ingredientId[0]), ingredientId[1]];
     });
-
-    const ingredientNames = ingredientDataObjs.map(ingredient => ingredient.name);
-
+    
+    const ingredientNames = ingredientDataObjs.map(ingredient => {
+      this.listOfRecipeIngredients.push(ingredient[0].name, ingredient[1])
+    });
+    
     return ingredientNames;
-
   }
 
   costOfIngredients() {
