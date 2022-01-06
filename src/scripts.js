@@ -31,7 +31,7 @@ const searchInput = document.querySelector('#userInput');
 const favoriteRecipesButton = document.querySelector('#favoritesButton');
 const clearButton = document.querySelector('.clear-button');
 const allRecipesButton = document.querySelector('.recipies');
-const yourGroceryListSectionButton = document.querySelector('.grocery-list');
+const pantryButton = document.querySelector('.pantry-button');
 const mealsToCookButton = document.querySelector('.planner');
 
 
@@ -55,18 +55,19 @@ Promise.all([userData, recipesData, ingredientData])
     return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags, data[2].ingredientsData)
   });
   users = data[0].usersData.map(user => {
-    return new User(user.name, user.id, user.pantry, data[2].ingredientsData)
+    return new User(user.name, user.id, pantry = new Pantry(user.pantry, data[2].ingredientsData), data[2].ingredientsData)
   });
+
   cookBook = new Cookbook(recipes);
   filter = cookBook;
   currentUser = users[Math.floor(Math.random() * users.length)];
-
+  // pantry = new Pantry(currentUser.pantry, data[2].ingredientsData, currentUser.recipesToCook );
   console.log(currentUser.pantry);
-  pantry = new Pantry(currentUser.pantry, data[2].ingredientsData);
+  currentUser.pantry.listIngredientsNameAndAmount()
+  console.log(currentUser.pantry.listOfPantryIngredients);
 
-  console.log(pantry);
-  
-
+  displayRecipes();
+  filterByCheckBoxes();
 
 })
 .catch(error => console.log('Oooops. Something is wrong', error))
@@ -155,8 +156,10 @@ const clickRecipe = (event) => {
       acc += `<li>${instruction.instruction}</li>`
       return acc
     }, '')
-    const ingredientList = findRecipeId.listIngredients().reduce((acc, ingredient) => {
-      acc += `<li>${ingredient}</li>`
+    currentRecipe.listIngredients()
+    const ingredientList = currentRecipe.listOfRecipeIngredients.reduce((acc, ingredient) => {
+      console.log(ingredient);
+      acc += `<li>${ingredient.name} Amount: ${ingredient.amount}</li>`
       return acc
     }, '');
     singleRecipeSection.innerHTML = `
@@ -171,6 +174,8 @@ const clickRecipe = (event) => {
         <div class="ingredient-list"><p> ${ingredientList} </p> </div>
       </div>
     `
+
+    console.log(ingredientList);
   } else {
     console.log('clicking outside')
   }
@@ -224,6 +229,7 @@ const filterByCheckBoxes = () => {
 };
 
 const showMealPlan = () => {
+  pageTitle.innerHTML = 'Meals to cook'
   mealsToCookSection.innerHTML = '';
   hide(allRecipesSection)
   hide(singleRecipeSection)
@@ -250,7 +256,7 @@ const addSingleRecipe = (event) => {
 
 const showPantrySection = () => {
   // DISABLE PANTRY BUTTON IF ON PANTRY SECTION
-  pantryTable.innerHTML = ''
+  pantryTable.innerHTML = ``
   
   const pantryList = currentUser.listIngredients().forEach(ingredient => {
     pantryTable.innerHTML += `
@@ -269,16 +275,8 @@ const showPantrySection = () => {
 
 allRecipesSection.addEventListener('click', clickRecipe);
 favoriteRecipeSection.addEventListener('click', clickRecipe);
+mealsToCookSection.addEventListener('click', clickRecipe);
 mealsToCookButton.addEventListener('click', showMealPlan);
-
-    
-window.addEventListener('load', function () {
-  setTimeout(() => {
-    displayRecipes();
-    filterByCheckBoxes()
-    
-  }, 2000)
-});
 
 favoriteRecipesButton.addEventListener("click", () => {
   showFavoriteRecipes()
@@ -318,11 +316,12 @@ allRecipesButton.addEventListener('click', () => {
   hide(pantrySection)
 });
 
-yourGroceryListSectionButton.addEventListener('click', () => {
+pantryButton.addEventListener('click', () => {
+  pageTitle.innerHTML = 'Pantry'
+  hide(mealsToCookSection)
   hide(allRecipesSection)
   hide(favoriteRecipeSection)
   hide(singleRecipeSection)
-  pageTitle.innerHTML = 'Pantry'
   hide(clearButton)
   hide(searchInput)
   hide(tagNavSection)
@@ -335,7 +334,6 @@ yourGroceryListSectionButton.addEventListener('click', () => {
 
 singleRecipeSection.addEventListener('click', (event) => {
   addSingleRecipe(event)
-  hide(clearButton)
   hide(tagNavSection)
   hide(pantrySection)
 });
