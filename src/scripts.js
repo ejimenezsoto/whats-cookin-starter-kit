@@ -153,8 +153,6 @@ const clickRecipe = (event) => {
     show(singleRecipeSection)
     const findRecipeId = recipes.find(({ id }) => id == event.target.id)
     currentRecipe = findRecipeId
-    
-    console.log(currentUser.pantry.checkPantry());
     const recipeInstructions = findRecipeId.instructions.reduce((acc, instruction) => {
       acc += `<li>${instruction.instruction}</li>`
       return acc
@@ -196,6 +194,9 @@ const mealsToCookSingleRecipe = (event) => {
       return acc
     }, '')
     currentRecipe.listIngredients()
+    console.log(currentRecipe.listOfRecipeIngredients);
+    currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients)
+    console.log(currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients));
     const ingredientList = findRecipeId.listOfRecipeIngredients.reduce((acc, ingredient) => {
       acc += `<li>${ingredient.name} Amount: ${ingredient.amount}</li>`
       return acc
