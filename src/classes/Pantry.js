@@ -56,12 +56,22 @@ class Pantry {
       }
         return acc
     }, {})
+    console.log(filterThroughPantry, "yooo");
 
     const pantryKeys = Object.keys(filterThroughPantry)
 
+    console.log(recipeIngredients, 'recipestuff');
+    const filterRecipes = recipeIngredients.reduce((acc, recipe) => {
+      if(!acc[recipe.name]) {
+        acc[recipe.name] = recipe.amount
+      }
+      return acc
+    }, {})
+console.log(filterRecipes, "ayoooo");
     pantryKeys.forEach((key)=> {
 
     })
+
   }
 }
 
