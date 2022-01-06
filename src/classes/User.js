@@ -11,18 +11,6 @@ class User {
         this.ingredientsData = ingredientsData
         this.missingIngredients = []
     }
-    listIngredients() {
-        const ingredientIds = this.pantry.map(ingredient => [ingredient.ingredient,ingredient.amount]);
-        
-        const ingredientDataObjs = ingredientIds.map(ingredientId => {
-        return [this.ingredientsData.find( ( { id } ) => id === ingredientId[0]), ingredientId[1]];
-    });
-
-    const ingredientNames = ingredientDataObjs.map(ingredient => {
-        this.listOfIngredients.push([ingredient[0].name,ingredient[1]])
-    }); 
-    return this.listOfIngredients;
-}
 
     addToFavorites(recipe) {
         if (this.favoriteRecipes.includes(recipe)) {
