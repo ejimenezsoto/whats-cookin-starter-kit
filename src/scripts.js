@@ -145,6 +145,7 @@ const populateSearch = (e) => {
 };
 
 const clickRecipe = (event) => {
+  singleRecipeSection.innerHTML = ''
   if (event.target.name !== undefined) {
     hide(favoriteRecipeSection)
     hide(allRecipesSection)
@@ -152,13 +153,14 @@ const clickRecipe = (event) => {
     show(singleRecipeSection)
     const findRecipeId = recipes.find(({ id }) => id == event.target.id)
     currentRecipe = findRecipeId
+    
+    console.log(currentUser.pantry.checkPantry());
     const recipeInstructions = findRecipeId.instructions.reduce((acc, instruction) => {
       acc += `<li>${instruction.instruction}</li>`
       return acc
     }, '')
     currentRecipe.listIngredients()
     const ingredientList = currentRecipe.listOfRecipeIngredients.reduce((acc, ingredient) => {
-      console.log(ingredient);
       acc += `<li>${ingredient.name} Amount: ${ingredient.amount}</li>`
       return acc
     }, '');
@@ -174,12 +176,46 @@ const clickRecipe = (event) => {
         <div class="ingredient-list"><p> ${ingredientList} </p> </div>
       </div>
     `
-
-    console.log(ingredientList);
   } else {
     console.log('clicking outside')
   }
 };
+
+
+const mealsToCookSingleRecipe = (event) => {
+  singleRecipeSection.innerHTML = ''
+  if (event.target.name !== undefined) {
+    hide(favoriteRecipeSection)
+    hide(allRecipesSection)
+    hide(mealsToCookSection)
+    show(singleRecipeSection)
+    const findRecipeId = recipes.find(({ id }) => id == event.target.id)
+    currentRecipe = findRecipeId
+    const recipeInstructions = findRecipeId.instructions.reduce((acc, instruction) => {
+      acc += `<li>${instruction.instruction}</li>`
+      return acc
+    }, '')
+    currentRecipe.listIngredients()
+    const ingredientList = findRecipeId.listOfRecipeIngredients.reduce((acc, ingredient) => {
+      acc += `<li>${ingredient.name} Amount: ${ingredient.amount}</li>`
+      return acc
+    }, '');
+    singleRecipeSection.innerHTML = `
+      <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
+      <div class="favorite-meal-buttons">
+        <button class='favorite-button '><img class="favorite-image" id="favorite-button" src="./images/like.png"  alt="favorite"> </button>
+        <button class='add-meal-button'><img class="add-image" src="./images/plus.png" id="add-meal-button" alt="add"> </button>
+        <div class="total-cost"> <h1 class="price">$${findRecipeId.costOfIngredients()}</h1></div> 
+      </div>
+      <div class="ingredient-instructions">
+        <div class="ingredient-instructions-section">${recipeInstructions} </div>
+        <div class="ingredient-list"><p> ${ingredientList} </p> </div>
+      </div>
+    `
+  } else {
+    console.log('clicking outside')
+  }
+}
 
 const showFilteredRecipes = () => {
   const filteredRecipes = filter.filterByTags(tagList).reduce((acc, recipe) => {
@@ -275,7 +311,7 @@ const showPantrySection = () => {
 
 allRecipesSection.addEventListener('click', clickRecipe);
 favoriteRecipeSection.addEventListener('click', clickRecipe);
-mealsToCookSection.addEventListener('click', clickRecipe);
+mealsToCookSection.addEventListener('click', mealsToCookSingleRecipe);
 mealsToCookButton.addEventListener('click', showMealPlan);
 
 favoriteRecipesButton.addEventListener("click", () => {
