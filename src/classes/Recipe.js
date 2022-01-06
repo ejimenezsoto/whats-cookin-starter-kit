@@ -21,7 +21,6 @@ class Recipe {
     const ingredientNames = ingredientDataObjs.map(ingredient => {
       return this.listOfRecipeIngredients.push({ name: ingredient[0].name, amount: ingredient[1] }) 
     });
-    console.log(this.listOfRecipeIngredients);
   }
 
 
