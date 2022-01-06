@@ -60,7 +60,6 @@ class User {
                 }
             })
         })
-
         const filteredWithoutDuplicates = [... new Map(filtered.map(recipe => [recipe.id, recipe])).values()]
         return filteredWithoutDuplicates
     }

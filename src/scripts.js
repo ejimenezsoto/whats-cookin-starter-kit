@@ -61,11 +61,7 @@ Promise.all([userData, recipesData, ingredientData])
   cookBook = new Cookbook(recipes);
   filter = cookBook;
   currentUser = users[Math.floor(Math.random() * users.length)];
-  // pantry = new Pantry(currentUser.pantry, data[2].ingredientsData, currentUser.recipesToCook );
-  console.log(currentUser.pantry);
   currentUser.pantry.listIngredientsNameAndAmount()
-  console.log(currentUser.pantry.listOfPantryIngredients);
-
   displayRecipes();
   filterByCheckBoxes();
 
@@ -100,7 +96,7 @@ const displayRecipes = () => {
 
 const showFavoriteRecipes = () => {
 
-  console.log(currentUser.listIngredients(), '<<<<<<<<<Pantry')
+
   favoriteRecipeSection.innerHTML = ''
   hide(allRecipesSection)
   hide(singleRecipeSection)
@@ -194,13 +190,19 @@ const mealsToCookSingleRecipe = (event) => {
       return acc
     }, '')
     currentRecipe.listIngredients()
-    console.log(currentRecipe.listOfRecipeIngredients);
     currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients)
-    console.log(currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients));
     const ingredientList = findRecipeId.listOfRecipeIngredients.reduce((acc, ingredient) => {
       acc += `<li>${ingredient.name} Amount: ${ingredient.amount}</li>`
       return acc
     }, '');
+
+    const missingIngredientsList = currentUser.pantry.listOfMissingIngredients.reduce((acc,ingredient) => {
+      console.log(ingredient)
+      acc += `<li>${ingredient.name} Amount: ${ingredient.amount}</li>`
+      return acc
+    },'')
+
+    console.log(missingIngredientsList,'LIST')
     singleRecipeSection.innerHTML = `
       <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
       <div class="favorite-meal-buttons">
@@ -212,6 +214,8 @@ const mealsToCookSingleRecipe = (event) => {
         <div class="ingredient-instructions-section">${recipeInstructions} </div>
         <div class="ingredient-list"><p> ${ingredientList} </p> </div>
       </div>
+      <h1>***MISSING INGREDIENTS***</h1>
+      <p> ${missingIngredientsList} </p>
     `
   } else {
     console.log('clicking outside')
@@ -295,11 +299,11 @@ const showPantrySection = () => {
   // DISABLE PANTRY BUTTON IF ON PANTRY SECTION
   pantryTable.innerHTML = ``
   
-  const pantryList = currentUser.listIngredients().forEach(ingredient => {
+  const pantryList = currentUser.pantry.listOfPantryIngredients.forEach(ingredient => {
     pantryTable.innerHTML += `
       <tr class='ingredient-table'>
-        <td>${ingredient[0]}</td>
-        <td>${ingredient[1]} units</td>
+        <td>${ingredient.name}</td>
+        <td>${ingredient.amount} units</td>
       </tr>
     `
   })
@@ -324,6 +328,7 @@ favoriteRecipesButton.addEventListener("click", () => {
   show(favoriteRecipeSection)
   hide(searchInput)
   hide(tagNavSection)
+  console.log('click')
 });
 
 searchInput.addEventListener('input', (e) => {

@@ -23,34 +23,22 @@ class Recipe {
     });
   }
 
-
-
   costOfIngredients() {
     const ingredientAmount = this.ingredients.map(ingredient => ingredient.quantity.amount);
-
     const ingredientIds = this.ingredients.map(ingredient => ingredient.id);
-
     const ingredientDataObjs = ingredientIds.map(ingredientId => {
       return this.ingredientsData.find( ( { id } ) => id === ingredientId);
     });
-
     const ingredientCost = ingredientDataObjs.map(ingredient => ingredient.estimatedCostInCents);
-
     const totalCost = ingredientAmount.reduce( ( acc, amount, i ) => {
-
       const total = acc + amount * ingredientCost[i];
-
       return total / 100;
-
     });
-
     return totalCost.toFixed(2);
   }
 
-
   returnInstructions() {
     const instructions = this.instructions.map(instruction => instruction.instruction);
-
     return instructions;
         
   }
