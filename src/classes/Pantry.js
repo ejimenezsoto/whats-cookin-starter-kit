@@ -49,7 +49,19 @@ class Pantry {
 
   // }
 
-  checkPantry(currentRecipe) { 
+  checkPantry(recipeIngredients) { 
+    const filterThroughPantry = this.listOfPantryIngredients.reduce((acc, ingredient)=> {
+      if(!acc[ingredient.name]) {
+        acc[ingredient.name] = ingredient.amount
+      }
+        return acc
+    }, {})
+
+    const pantryKeys = Object.keys(filterThroughPantry)
+
+    pantryKeys.forEach((key)=> {
+
+    })
   }
 }
 
