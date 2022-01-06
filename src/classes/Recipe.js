@@ -12,45 +12,33 @@ class Recipe {
     this.listOfRecipeIngredients = [];
   }
   listIngredients() {
+    this.listOfRecipeIngredients = [];
     const ingredientIds = this.ingredients.map(ingredient => [ingredient.id, ingredient.quantity.amount]);
-    
+
     const ingredientDataObjs = ingredientIds.map(ingredientId => {
-      return [this.ingredientsData.find( ( { id } ) => id === ingredientId[0]), ingredientId[1]];
+      return [this.ingredientsData.find(({ id }) => id === ingredientId[0]), ingredientId[1]];
     });
-    
     const ingredientNames = ingredientDataObjs.map(ingredient => {
-      this.listOfRecipeIngredients.push(ingredient[0].name, ingredient[1])
+      return this.listOfRecipeIngredients.push({ name: ingredient[0].name, amount: ingredient[1] }) 
     });
-    
-    return ingredientNames;
   }
 
   costOfIngredients() {
     const ingredientAmount = this.ingredients.map(ingredient => ingredient.quantity.amount);
-
     const ingredientIds = this.ingredients.map(ingredient => ingredient.id);
-
     const ingredientDataObjs = ingredientIds.map(ingredientId => {
       return this.ingredientsData.find( ( { id } ) => id === ingredientId);
     });
-
     const ingredientCost = ingredientDataObjs.map(ingredient => ingredient.estimatedCostInCents);
-
     const totalCost = ingredientAmount.reduce( ( acc, amount, i ) => {
-
       const total = acc + amount * ingredientCost[i];
-
       return total / 100;
-
     });
-
     return totalCost.toFixed(2);
   }
 
-
   returnInstructions() {
     const instructions = this.instructions.map(instruction => instruction.instruction);
-
     return instructions;
         
   }
