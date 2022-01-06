@@ -12,14 +12,14 @@ class Recipe {
     this.listOfRecipeIngredients = [];
   }
   listIngredients() {
+    this.listOfRecipeIngredients = [];
     const ingredientIds = this.ingredients.map(ingredient => [ingredient.id, ingredient.quantity.amount]);
 
     const ingredientDataObjs = ingredientIds.map(ingredientId => {
       return [this.ingredientsData.find(({ id }) => id === ingredientId[0]), ingredientId[1]];
     });
-
     const ingredientNames = ingredientDataObjs.map(ingredient => {
-      return this.listOfRecipeIngredients.push({ name: ingredient[0].name, amount: ingredient[1] })
+      return this.listOfRecipeIngredients.push({ name: ingredient[0].name, amount: ingredient[1] }) 
     });
     console.log(this.listOfRecipeIngredients);
   }
