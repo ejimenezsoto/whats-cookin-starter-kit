@@ -1,13 +1,16 @@
 
+
 class Pantry {
   constructor(ingredients, ingredientsData) {
     this.ingredients = ingredients;
     this.ingredientsData = ingredientsData;
     this.listOfPantryIngredients = [];
     this.listOfMissingIngredients = [];
+    this.listOfRecipeIngredients = [];
   }
 
   listIngredientsNameAndAmount() {
+    this.listOfPantryIngredients = [];
     const ingredientIds = this.ingredients.map(ingredient => [ingredient.ingredient, ingredient.amount]);
 
     const ingredientDataObjs = ingredientIds.map(ingredientId => {
@@ -21,6 +24,7 @@ class Pantry {
 
   checkPantry(recipeIngredients) { 
     this.listOfMissingIngredients = [];
+    this.listOfRecipeIngredients = recipeIngredients
     const filterThroughPantry = this.listOfPantryIngredients.reduce((acc, ingredient)=> {
       if(!acc[ingredient.name]) {
         acc[ingredient.name] = ingredient.amount
@@ -47,31 +51,80 @@ class Pantry {
       pantryKeys.forEach(pantryIngredient => {
         if(recipeIngredient === pantryIngredient && filterThroughPantry[pantryIngredient] < filterRecipes[recipeIngredient]){
           console.log('NOPT ENOUGH')
-          this.listOfMissingIngredients.push({name: recipeIngredient,amount: filterRecipes[recipeIngredient] -  filterThroughPantry[pantryIngredient]})
+          this.listOfMissingIngredients.push({name: recipeIngredient,amount: filterRecipes[recipeIngredient] -  filterThroughPantry[pantryIngredient],id:filterThroughPantry[pantryIngredient.id]})
         }
       })
     })
-    console.log(this.listOfMissingIngredients,'MISSING INGREDIENTS')
+    console.log(this.listOfRecipeIngredients,'RECIPE INGRE')
     return this.listOfMissingIngredients
   }
 
-  addMissingIngredients(){
-
-    this.listOfMissingIngredients.forEach(ingredient => {
-
-    })
-
-    let url = 'http://localhost:3001/api/v1/users';
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify
-    })
-  }
-
-  cookRecipe(){
+  addMissingIngredients(currentUser){
     
+    this.listOfMissingIngredients.forEach(ingredient => {
+     
+      let url = 'http://localhost:3001/api/v1/users';
+      let ingredientData = {"userID": currentUser.id,
+                            "ingredientID": ingredient.amount[1],
+                            "ingredientModification": ingredient.amount[0]
+                            }
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(ingredientData),
+        headers: {
+                'Content-Type': 'application/json'
+        }
+      })
+        .then(response => console.log(response.json()))
+        .catch(err => console.log(err))
+    })
+    this.getNewIngredients(currentUser)
+
   }
-}
+
+  getNewIngredients(currentUser){
+    const userData =
+    fetch('http://localhost:3001/api/v1/users')
+      .then(response => response.json())
+  
+      Promise.all([userData])
+      .then(data => {
+        let users = data[0]
+        users.forEach(user => {
+          if(user.id === currentUser.id){
+            currentUser.pantry.ingredients = user.pantry
+          }
+        })
+        this.listIngredientsNameAndAmount()
+      })
+  }
+
+  cookRecipe(currentUser){
+    this.listOfRecipeIngredients.forEach(ingredient => {
+     
+      let url = 'http://localhost:3001/api/v1/users';
+     
+     ingredient.amount *= -1
+      let ingredientData = {"userID": currentUser.id,
+                            "ingredientID": ingredient.id,
+                            "ingredientModification": ingredient.amount
+                            }
+                            console.log(ingredientData)
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(ingredientData),
+        headers: {
+                'Content-Type': 'application/json'
+        }
+      })
+        .then(response => console.log(response.json()))
+        .catch(err => console.log(err))
+    })
+    this.getNewIngredients(currentUser)
+    console.log(this.listOfPantryIngredients,'AFTER')
+  }
+  }
+
 
 
 module.exports = Pantry

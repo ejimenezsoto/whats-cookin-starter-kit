@@ -57,6 +57,7 @@ Promise.all([userData, recipesData, ingredientData])
   users = data[0].map(user => {
     return new User(user.name, user.id, pantry = new Pantry(user.pantry, data[2]), data[2])
   });
+  
 
   cookBook = new Cookbook(recipes);
   filter = cookBook;
@@ -64,6 +65,7 @@ Promise.all([userData, recipesData, ingredientData])
   currentUser.pantry.listIngredientsNameAndAmount()
   displayRecipes();
   filterByCheckBoxes();
+ 
 
 })
 .catch(error => console.log('Oooops. Something is wrong', error))
@@ -96,7 +98,7 @@ const displayRecipes = () => {
 
 const showFavoriteRecipes = () => {
 
-
+  currentUser.pantry.cookRecipe(currentUser)
   favoriteRecipeSection.innerHTML = ''
   hide(allRecipesSection)
   hide(singleRecipeSection)
@@ -305,6 +307,8 @@ const showPantrySection = () => {
       </tr>
     `
   })
+  // CREATE ADD MISSING INGREDIENTS FUNCTION AND BUTTON
+  currentUser.pantry.addMissingIngredients(currentUser)
   return pantryList
 }
 
