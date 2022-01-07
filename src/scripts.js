@@ -51,11 +51,11 @@ let pantry;
 // fetch apis *************************************
 Promise.all([userData, recipesData, ingredientData])
 .then(data => {
-  recipes = data[1].recipeData.map(recipe => {
-    return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags, data[2].ingredientsData)
+  recipes = data[1].map(recipe => {
+    return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags, data[2])
   });
-  users = data[0].usersData.map(user => {
-    return new User(user.name, user.id, pantry = new Pantry(user.pantry, data[2].ingredientsData), data[2].ingredientsData)
+  users = data[0].map(user => {
+    return new User(user.name, user.id, pantry = new Pantry(user.pantry, data[2]), data[2])
   });
 
   cookBook = new Cookbook(recipes);
@@ -197,12 +197,10 @@ const mealsToCookSingleRecipe = (event) => {
     }, '');
 
     const missingIngredientsList = currentUser.pantry.listOfMissingIngredients.reduce((acc,ingredient) => {
-      console.log(ingredient)
-      acc += `<li>${ingredient.name} Amount: ${ingredient.amount}</li>`
+      acc += `<li>${ingredient.name} Amount: ${ingredient.amount[0]}</li>`
       return acc
     },'')
 
-    console.log(missingIngredientsList,'LIST')
     singleRecipeSection.innerHTML = `
       <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
       <div class="favorite-meal-buttons">
@@ -341,8 +339,6 @@ clearButton.addEventListener("click", () => {
     } else {
       hide(tagNavSection)
     }
-    currentUser.checkPantry()
-    
 });
     
 allRecipesButton.addEventListener('click', () => {
