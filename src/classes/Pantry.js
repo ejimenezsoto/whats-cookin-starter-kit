@@ -101,9 +101,8 @@ class Pantry {
 
   cookRecipe(currentUser){
     this.listOfRecipeIngredients.forEach(ingredient => {
-     
       let url = 'http://localhost:3001/api/v1/users';
-     
+
      ingredient.amount *= -1
       let ingredientData = {"userID": currentUser.id,
                             "ingredientID": ingredient.id,

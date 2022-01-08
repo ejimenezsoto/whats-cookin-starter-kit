@@ -25,7 +25,7 @@ class Cookbook {
     const filtered = filterByName.slice()
 
     const filterByIngredients = this.recipes.forEach(recipe => {
-      const list = recipe.listIngredients().map(ingredient => {
+      const list = recipe.listIngredientsNames().map(ingredient => {
         return ingredient.toLowerCase()
       })
 

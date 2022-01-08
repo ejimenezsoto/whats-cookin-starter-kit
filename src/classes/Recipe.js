@@ -21,7 +21,18 @@ class Recipe {
     const ingredientNames = ingredientDataObjs.map(ingredient => {
       return this.listOfRecipeIngredients.push({ name: ingredient[0].name, amount: ingredient[1], id:ingredient[0].id }) 
     });
-    
+  }
+
+  listIngredientsNames()  {
+    const ingredientIds = this.ingredients.map(ingredient => ingredient.id);
+
+    const ingredientDataObjs = ingredientIds.map(ingredientId => {
+      return this.ingredientsData.find(({ id }) => id === ingredientId);
+    });
+
+    const ingredientNames = ingredientDataObjs.map(ingredient => ingredient.name);
+
+    return ingredientNames;
   }
 
   costOfIngredients() {

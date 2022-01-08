@@ -4,6 +4,8 @@ import Cookbook from './classes/Cookbook';
 import './images/cooking.png'
 import './images/like.png'
 import './images/plus.png'
+import './images/menu.png'
+import './images/shopping-cart.png'
 import Recipe from './classes/Recipe';
 import User from './classes/User';
 import { userData, recipesData, ingredientData } from './apiCalls';
@@ -97,8 +99,6 @@ const displayRecipes = () => {
 }; 
 
 const showFavoriteRecipes = () => {
-
-  currentUser.pantry.cookRecipe(currentUser)
   favoriteRecipeSection.innerHTML = ''
   hide(allRecipesSection)
   hide(singleRecipeSection)
@@ -206,8 +206,8 @@ const mealsToCookSingleRecipe = (event) => {
     singleRecipeSection.innerHTML = `
       <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
       <div class="favorite-meal-buttons">
-        <button class='favorite-button '><img class="favorite-image" id="favorite-button" src="./images/like.png"  alt="favorite"> </button>
-        <button class='add-meal-button'><img class="add-image" src="./images/plus.png" id="add-meal-button" alt="add"> </button>
+        <button class='shopping-cart-button'><img class="shopping-cart-img" id="shoppingCart"src="./images/shopping-cart.png" alt="shopping Cart"> </button>
+        <button class='cook-button'><img class="cook-img" src="./images/cooking.png" id="cookImg" alt="Cooking Img"> </button>
         <div class="total-cost"> <h1 class="price">$${findRecipeId.costOfIngredients()}</h1></div> 
       </div>
       <div class="ingredient-instructions">
@@ -219,6 +219,22 @@ const mealsToCookSingleRecipe = (event) => {
     `
   } else {
     console.log('clicking outside')
+  }
+}
+
+const addMissingIngredients = (event) => {
+  if (event.target.id === 'shoppingCart') {
+    currentUser.pantry.addMissingIngredients(currentUser)
+  } else {
+    console.log('didnt hit shopping cart');
+  }
+}
+
+const cookMeal = (event) => {
+  if (event.target.id === 'cookImg') {
+    currentUser.pantry.cookRecipe(currentUser)
+  } else {
+    console.log('didnt hit');
   }
 }
 
@@ -296,7 +312,6 @@ const addSingleRecipe = (event) => {
 };
 
 const showPantrySection = () => {
-  // DISABLE PANTRY BUTTON IF ON PANTRY SECTION
   pantryTable.innerHTML = ``
   
   const pantryList = currentUser.pantry.listOfPantryIngredients.forEach(ingredient => {
@@ -307,8 +322,6 @@ const showPantrySection = () => {
       </tr>
     `
   })
-  // CREATE ADD MISSING INGREDIENTS FUNCTION AND BUTTON
-  currentUser.pantry.addMissingIngredients(currentUser)
   return pantryList
 }
 
@@ -318,8 +331,12 @@ const showPantrySection = () => {
 
 allRecipesSection.addEventListener('click', clickRecipe);
 favoriteRecipeSection.addEventListener('click', clickRecipe);
-mealsToCookSection.addEventListener('click', mealsToCookSingleRecipe);
 mealsToCookButton.addEventListener('click', showMealPlan);
+
+
+mealsToCookSection.addEventListener('click', (event) => {
+  mealsToCookSingleRecipe(event)
+});
 
 favoriteRecipesButton.addEventListener("click", () => {
   showFavoriteRecipes()
@@ -369,13 +386,16 @@ pantryButton.addEventListener('click', () => {
   hide(tagNavSection)
   show(pantrySection)
   showPantrySection()
-  
-  
+});
 
+mealsToCookSection.addEventListener('click', (event) => {
+  
 });
 
 singleRecipeSection.addEventListener('click', (event) => {
   addSingleRecipe(event)
+  addMissingIngredients(event)
+  cookMeal(event)
   hide(tagNavSection)
   hide(pantrySection)
 });
