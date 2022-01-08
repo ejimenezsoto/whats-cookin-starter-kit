@@ -221,6 +221,7 @@ const mealsToCookSingleRecipe = (event) => {
   } else {
     console.log('clicking outside')
   }
+}
   
 
 const showFilteredRecipes = () => {
