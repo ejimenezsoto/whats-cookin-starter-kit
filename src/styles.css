@@ -122,6 +122,21 @@ main {
   border-radius: 3vh;
   background-color: transparent;
   height: 3vh;
+  border: none;
+}
+
+.nav-img {
+  width: 100%;
+  height: 100%;
+}
+
+.search-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-lable {
+  margin-left: 8%;
 }
 
 #userInput {
@@ -208,6 +223,7 @@ justify-content: center;
 }
 .name-and-favorite {
   display: flex;
+  height: 80%;
 }
 
 .favorite-button,
@@ -218,6 +234,7 @@ justify-content: center;
 
 .recipe-name{
   font-size: small;
+
 }
 
 /* single recipe section  */

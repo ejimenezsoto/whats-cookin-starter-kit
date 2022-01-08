@@ -4,6 +4,8 @@ import Cookbook from './classes/Cookbook';
 import './images/cooking.png'
 import './images/like.png'
 import './images/plus.png'
+import './images/menu.png'
+import './images/shopping-cart.png'
 import Recipe from './classes/Recipe';
 import User from './classes/User';
 import { userData, recipesData, ingredientData } from './apiCalls';
@@ -204,10 +206,11 @@ const mealsToCookSingleRecipe = (event) => {
     singleRecipeSection.innerHTML = `
       <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
       <div class="favorite-meal-buttons">
-        <button class='favorite-button '><img class="favorite-image" id="favorite-button" src="./images/like.png"  alt="favorite"> </button>
-        <button class='add-meal-button'><img class="add-image" src="./images/plus.png" id="add-meal-button" alt="add"> </button>
+        <button class='shopping-cart-button'><img class="shopping-cart-img" id="shoppingCart"src="./images/shopping-cart.png" alt="shopping Cart"> </button>
+        <button class='cook-button'><img class="cook-img" src="./images/cooking.png" id="cookImg" alt="Cooking Img"> </button>
         <div class="total-cost"> <h1 class="price">$${findRecipeId.costOfIngredients()}</h1></div> 
       </div>
+
       <div class="ingredient-instructions">
         <div class="ingredient-instructions-section">${recipeInstructions} </div>
         <div class="ingredient-list"><p> ${ingredientList} </p> </div>
@@ -218,7 +221,7 @@ const mealsToCookSingleRecipe = (event) => {
   } else {
     console.log('clicking outside')
   }
-}
+  
 
 const showFilteredRecipes = () => {
   const filteredRecipes = filter.filterByTags(tagList).reduce((acc, recipe) => {
