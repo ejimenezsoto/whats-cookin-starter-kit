@@ -235,18 +235,6 @@ justify-content: center;
   font-size: small;
 }
 
-.view-single-recipe{
-  display: flex;
-  background-color: #A9A9A9;
-}
-
-.view-single-recipe:hover{
-  opacity: 50%;
-  cursor: pointer;
-  transform: scale(1.1);
-  transition: .5s;
-}
-
 /* single recipe section  */
 
 .single-recipe {
