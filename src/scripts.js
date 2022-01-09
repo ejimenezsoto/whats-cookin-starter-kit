@@ -59,18 +59,14 @@ Promise.all([userData, recipesData, ingredientData])
     users = data[0].map(user => {
       return new User(user.name, user.id, pantry = new Pantry(user.pantry, data[2]), data[2])
     });
-  
-
     cookBook = new Cookbook(recipes);
     filter = cookBook;
     currentUser = users[Math.floor(Math.random() * users.length)];
     currentUser.pantry.listIngredientsNameAndAmount()
     displayRecipes();
     filterByCheckBoxes();
- 
-
   })
-  .catch(error => console.log('Oooops. Something is wrong', error))
+  .catch(error => displayError(error))
 
 //reusable functions ***************************
 const hide = (element) => {
@@ -325,6 +321,10 @@ const addSingleRecipe = (event) => {
   } else if (event.target.id === 'favorite-button') {
     currentUser.addToFavorites(currentRecipe)
   }
+};
+
+const displayError = (error) => {
+  error === 422 ? pageTitle.innerHTML = "Sorry. Something went wrong. Try again" : pageTitle.innerHTML = "Sorry. Something went wrong. Try again"
 };
 
 
