@@ -65,7 +65,7 @@ class Pantry {
         }
       })
         .then(response => console.log(response.json()))
-        .catch(err => displayError(err))
+        .catch(err => domUpdates.displayError(err))
     })
     this.getNewIngredients(currentUser)
   }
@@ -102,7 +102,7 @@ class Pantry {
         }
       })
         .then(response => console.log(response.json()))
-        .catch(err => displayError(err))
+        .catch(err => domUpdates.displayError(err))
     })
     this.getNewIngredients(currentUser)
     console.log(this.listOfPantryIngredients,'AFTER')
