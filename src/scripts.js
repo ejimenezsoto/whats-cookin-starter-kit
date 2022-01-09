@@ -324,7 +324,10 @@ const addSingleRecipe = (event) => {
 };
 
 const displayError = (error) => {
-  error === 422 ? pageTitle.innerHTML = "Sorry. Something went wrong. Try again" : pageTitle.innerHTML = "Sorry. Something went wrong. Try again"
+  const sectionTitles = document.querySelector('.section-titles')
+  error === 422 ? pageTitle.innerHTML = `
+  <h1 class="error-msg">Sorry. Something went wrong. Try again</h1>` : pageTitle.innerHTML = `
+  <h1 class="error-msg">Sorry. Something went wrong. Try again</h1>`
 };
 
 

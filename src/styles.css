@@ -152,12 +152,19 @@ margin-left: 1em;
   width: 100%;
 }
 
-.page-title {
+.page-title,
+.error-msg {
   font-family: 'Oswald', sans-serif;
   text-align: center;
   font-size: 40px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.error-msg {
+  color: red;
+  justify-content: center;
+  display: flex;
 }
 
 .main-section {
@@ -183,6 +190,14 @@ margin-left: 1em;
   text-align: center;
   font-size: 30px;
 }
+
+/* .error-msg {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 800;
+  color: red;
+  display: flex;
+  align-content: center;
+} */
 
 /* all recipes */
 .all-recipes-section,
