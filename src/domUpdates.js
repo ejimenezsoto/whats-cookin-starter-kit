@@ -6,9 +6,11 @@ const show = (element) => {
     element.classList.remove('hidden')
 };
 
+const pageTitle = document.querySelector('.page-title');
+
 const domUpdates = {
 
-    displayRecipes = () => {
+    displayRecipes(){
         hide(singleRecipeSection)
         hide(favoriteRecipeSection)
         const allRecipies = cookBook.recipes.forEach(recipe => {
@@ -23,7 +25,7 @@ const domUpdates = {
         return allRecipies;
     },
     
-    showFavoriteRecipes = () => {
+    showFavoriteRecipes() {
         favoriteRecipeSection.innerHTML = ''
         hide(allRecipesSection)
         hide(singleRecipeSection)
@@ -39,7 +41,7 @@ const domUpdates = {
         return displayFavoriteRecipes
     },
 
-    populateSearch = (e) => {
+    populateSearch(e){
         let input = e.target.value
         if (input && input.trim().length > 0) {
             input = input.trim().toLowerCase()
@@ -67,7 +69,7 @@ const domUpdates = {
         }
     },
 
-    clickRecipe = (event) => {
+    clickRecipe(event){
         console.log('it worked')
         singleRecipeSection.innerHTML = ''
         if (event.target.id) {
@@ -103,7 +105,7 @@ const domUpdates = {
         }
     },
 
-    mealsToCookSingleRecipe = (event) => {
+    mealsToCookSingleRecipe(event){
         singleRecipeSection.innerHTML = ''
         if (event.target.id) {
             hide(favoriteRecipeSection)
@@ -145,7 +147,7 @@ const domUpdates = {
         }
     },
 
-    showFilteredRecipes = () => {
+    showFilteredRecipes(){
         const filteredRecipes = filter.filterByTags(tagList).reduce((acc, recipe) => {
             allRecipesSection.innerHTML = ``
             pageTitle.innerHTML = `Filtered Recipes`
@@ -160,7 +162,7 @@ const domUpdates = {
         allRecipesSection.innerHTML = filteredRecipes
     },
 
-    showMealPlan = () => {
+    showMealPlan(){
         pageTitle.innerHTML = 'Meals to cook'
         mealsToCookSection.innerHTML = '';
         hide(allRecipesSection)
@@ -178,7 +180,7 @@ const domUpdates = {
         return displayMealsToCook
     },
 
-    showPantrySection = () => {
+    showPantrySection(){
         pantryTable.innerHTML = ``
         const pantryList = currentUser.pantry.listOfPantryIngredients.forEach(ingredient => {
             pantryTable.innerHTML += `
@@ -190,7 +192,7 @@ const domUpdates = {
         return pantryList
     },
 
-    displayError = (error) => {
+    displayError(error){
         const sectionTitles = document.querySelector('.section-titles')
         error === 422 ? pageTitle.innerHTML = `
         <h1 class="error-msg">Sorry. Something went wrong. Try again</h1>` : pageTitle.innerHTML = `

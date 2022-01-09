@@ -10,7 +10,7 @@ import Recipe from './classes/Recipe';
 import User from './classes/User';
 import { userData, recipesData, ingredientData } from './apiCalls';
 import Pantry from './classes/Pantry';
-import { domUpdates } from './domUpdates';
+import domUpdates from './domUpdates';
 
 
 
