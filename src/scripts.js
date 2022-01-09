@@ -106,7 +106,7 @@ const showFavoriteRecipes = () => {
   pageTitle.innerHTML = 'Your Favorite Recipes';
   const displayFavoriteRecipes = currentUser.favoriteRecipes.forEach(recipe => {
     return favoriteRecipeSection.innerHTML += `
-    <div class='recipe' tabindex="0">
+    <div class='recipe' id='${recipe.id}' tabindex="0">
         <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
         <h5>${recipe.name}</h5>
         </div>` 
@@ -121,7 +121,7 @@ const populateSearch = (e) => {
     if (filter === cookBook) {
       allRecipesSection.innerHTML = filter.filterByKeyWord(input).reduce((acc, recipe) => {
         acc += `
-              <div class='recipe' tabindex="0">
+              <div class='recipe' id='${recipe.id}' tabindex="0">
               <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
               <h5>${recipe.name}</h5>
               </div> 
@@ -131,7 +131,7 @@ const populateSearch = (e) => {
     } else {
       favoriteRecipeSection.innerHTML = filter.filterByKeyWord(input).reduce((acc, recipe) => {
         acc += `
-        <div class='recipe' tabindex="0">
+        <div class='recipe' id='${recipe.id} tabindex="0">
         <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
         <h5>${recipe.name}</h5>
         </div> 
@@ -164,8 +164,8 @@ const clickRecipe = (event) => {
     singleRecipeSection.innerHTML = `
       <div class="single-recipe-img" tabindex="0"> <img src="${findRecipeId.image}" alt=""> </div>
       <div class="favorite-meal-buttons">
-        <button class='favorite-button '><img class="favorite-image" id="favorite-button" src="./images/like.png"  alt="favorite"> </button>
-        <button class='add-meal-button'><img class="add-image" src="./images/plus.png" id="add-meal-button" alt="add"> </button>
+        <button class='favorite-button' id="favorite-button"><img class="favorite-image" id="favorite-button" src="./images/like.png"  alt="favorite"> </button>
+        <button class='add-meal-button' id="add-meal-button"><img class="add-image" src="./images/plus.png" id="add-meal-button" alt="add"> </button>
         <div class="total-cost"> <h1 class="price">$${findRecipeId.costOfIngredients()}</h1></div> 
       </div>
       <div class="ingredient-instructions">
@@ -181,7 +181,7 @@ const clickRecipe = (event) => {
 
 const mealsToCookSingleRecipe = (event) => {
   singleRecipeSection.innerHTML = ''
-  if (event.target.name !== undefined) {
+  if (event.target.id) {
     hide(favoriteRecipeSection)
     hide(allRecipesSection)
     hide(mealsToCookSection)
@@ -205,7 +205,7 @@ const mealsToCookSingleRecipe = (event) => {
     },'')
 
     singleRecipeSection.innerHTML = `
-      <div class="single-recipe-img"> <img src="${findRecipeId.image}" alt=""> </div>
+      <div class="single-recipe-img" > <img src="${findRecipeId.image}" alt=""> </div>
       <div class="favorite-meal-buttons" tabindex="0">
         <button class='shopping-cart-button'><img class="shopping-cart-img" id="shoppingCart"src="./images/shopping-cart.png" alt="shopping Cart"> </button>
         <button class='cook-button'><img class="cook-img" src="./images/cooking.png" id="cookImg" alt="Cooking Img"> </button>
@@ -228,7 +228,7 @@ const showFilteredRecipes = () => {
     allRecipesSection.innerHTML = ``
     pageTitle.innerHTML = `Filtered Recipes`
     acc += `
-    <div class='recipe' tabindex="0">
+    <div class='recipe' id='${recipe.id}' tabindex="0">
     <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
     <h5>${recipe.name}</h5>
     </div>
@@ -248,7 +248,7 @@ const showMealPlan = () => {
   filter = currentUser
   const displayMealsToCook = currentUser.recipesToCook.forEach(recipe => {
     return mealsToCookSection.innerHTML += `
-    <div class='recipe' tabindex="0">
+    <div class='recipe' id='${recipe.id}' tabindex="0">
         <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
         <h5>${recipe.name}</h5>
         </div>`
@@ -334,18 +334,26 @@ const addSingleRecipe = (event) => {
 allRecipesSection.addEventListener('click', (event) => {
   clickRecipe(event)
 });
+
 allRecipesSection.addEventListener('keydown', (event) => {
-  console.log(event.target.name, 'event')
   if (event.which === 13) {
     clickRecipe(event)
   } else {
     console.log('outside')
   }
-
 });   
 favoriteRecipeSection.addEventListener('click', (event) => {
   clickRecipe(event)
 });
+
+favoriteRecipeSection.addEventListener('keydown', (event) => {
+  if (event.which === 13) {
+    clickRecipe(event)
+  } else {
+    console.log('outside')
+  }
+});
+ 
 mealsToCookButton.addEventListener('click', showMealPlan);
 
 
@@ -403,8 +411,12 @@ pantryButton.addEventListener('click', () => {
   showPantrySection()
 });
 
-mealsToCookSection.addEventListener('click', (event) => {
-  
+mealsToCookSection.addEventListener('keydown', (event) => {
+  if (event.which === 13) {
+    mealsToCookSingleRecipe(event)
+  } else {
+    console.log('outside')
+  }
 });
 
 singleRecipeSection.addEventListener('click', (event) => {
@@ -414,6 +426,19 @@ singleRecipeSection.addEventListener('click', (event) => {
   hide(tagNavSection)
   hide(pantrySection)
 });
+
+// singleRecipeSection.addEventListener('keydown', (event) => {
+//   console.log(event.target.id, 'shop')
+//   if (event.which === 13) {
+//     addSingleRecipe(event)
+//     addMissingIngredients(event)
+//     cookMeal(event)
+//     hide(tagNavSection)
+//     hide(pantrySection)
+//   } else {
+//     console.log('outside')
+//   }
+// });   
 
 
 
