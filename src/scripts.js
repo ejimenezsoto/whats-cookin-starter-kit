@@ -88,11 +88,10 @@ const displayRecipes = () => {
   hide(favoriteRecipeSection)
   const allRecipies = cookBook.recipes.forEach(recipe => {
     return allRecipesSection.innerHTML += `
-      <div class='recipe' tabindex="0" >
+      <div class='recipe' id='${recipe.id}' tabindex="0" >
       <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
       <div class= 'name-and-favorite'>
       <p class='recipe-name'>${recipe.name}</p>
-      <button class='view-single-recipe' id='${recipe.id}'>View More</button>
       </div>
       </div>`
   });
@@ -144,8 +143,9 @@ const populateSearch = (e) => {
 };
 
 const clickRecipe = (event) => {
+  console.log('it worked')
   singleRecipeSection.innerHTML = ''
-  if (event.target.name !== undefined) {
+  if (event.target.id) {
     hide(favoriteRecipeSection)
     hide(allRecipesSection)
     hide(mealsToCookSection)
@@ -335,8 +335,8 @@ allRecipesSection.addEventListener('click', (event) => {
   clickRecipe(event)
 });
 allRecipesSection.addEventListener('keydown', (event) => {
-  console.log('yes?')
-  if (event.keyCode === 13) {
+  console.log(event.target.name, 'event')
+  if (event.which === 13) {
     clickRecipe(event)
   } else {
     console.log('outside')
