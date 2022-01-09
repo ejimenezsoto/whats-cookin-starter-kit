@@ -52,29 +52,29 @@ let pantry;
 
 // fetch apis *************************************
 Promise.all([userData, recipesData, ingredientData])
-.then(data => {
-  recipes = data[1].map(recipe => {
-    return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags, data[2])
-  });
-  users = data[0].map(user => {
-    return new User(user.name, user.id, pantry = new Pantry(user.pantry, data[2]), data[2])
-  });
+  .then(data => {
+    recipes = data[1].map(recipe => {
+      return new Recipe(recipe.id, recipe.image, recipe.ingredients, recipe.instructions, recipe.name, recipe.tags, data[2])
+    });
+    users = data[0].map(user => {
+      return new User(user.name, user.id, pantry = new Pantry(user.pantry, data[2]), data[2])
+    });
   
 
-  cookBook = new Cookbook(recipes);
-  filter = cookBook;
-  currentUser = users[Math.floor(Math.random() * users.length)];
-  currentUser.pantry.listIngredientsNameAndAmount()
-  displayRecipes();
-  filterByCheckBoxes();
+    cookBook = new Cookbook(recipes);
+    filter = cookBook;
+    currentUser = users[Math.floor(Math.random() * users.length)];
+    currentUser.pantry.listIngredientsNameAndAmount()
+    displayRecipes();
+    filterByCheckBoxes();
  
 
-})
-.catch(error => console.log('Oooops. Something is wrong', error))
+  })
+  .catch(error => console.log('Oooops. Something is wrong', error))
 
 //reusable functions ***************************
 const hide = (element) => {
-element.classList.add('hidden')
+  element.classList.add('hidden')
 };
 
 const show = (element) => {
@@ -92,6 +92,7 @@ const displayRecipes = () => {
       <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
       <div class= 'name-and-favorite'>
       <p class='recipe-name'>${recipe.name}</p>
+      <button class='view-single-recipe' id='${recipe.id}'>View More</button>
       </div>
       </div>`
   });
@@ -110,9 +111,9 @@ const showFavoriteRecipes = () => {
         <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
         <h5>${recipe.name}</h5>
         </div>` 
-      });
-      return displayFavoriteRecipes
-  };
+  });
+  return displayFavoriteRecipes
+};
 
 const populateSearch = (e) => {
   let input = e.target.value
@@ -222,6 +223,54 @@ const mealsToCookSingleRecipe = (event) => {
   }
 }
 
+const showFilteredRecipes = () => {
+  const filteredRecipes = filter.filterByTags(tagList).reduce((acc, recipe) => {
+    allRecipesSection.innerHTML = ``
+    pageTitle.innerHTML = `Filtered Recipes`
+    acc += `
+    <div class='recipe' tabindex="0">
+    <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
+    <h5>${recipe.name}</h5>
+    </div>
+    `
+    return acc
+  }, '');
+  allRecipesSection.innerHTML = filteredRecipes
+};
+
+const showMealPlan = () => {
+  pageTitle.innerHTML = 'Meals to cook'
+  mealsToCookSection.innerHTML = '';
+  hide(allRecipesSection)
+  hide(singleRecipeSection)
+  show(mealsToCookSection)
+  hide(pantrySection)
+  filter = currentUser
+  const displayMealsToCook = currentUser.recipesToCook.forEach(recipe => {
+    return mealsToCookSection.innerHTML += `
+    <div class='recipe' tabindex="0">
+        <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
+        <h5>${recipe.name}</h5>
+        </div>`
+  });
+  return displayMealsToCook
+};
+
+const showPantrySection = () => {
+  pantryTable.innerHTML = ``
+  
+  const pantryList = currentUser.pantry.listOfPantryIngredients.forEach(ingredient => {
+    pantryTable.innerHTML += `
+      <tr class='ingredient-table'>
+        <td>${ingredient.name}</td>
+        <td>${ingredient.amount} units</td>
+      </tr>
+    `
+  })
+  return pantryList
+}
+
+
 const addMissingIngredients = (event) => {
   if (event.target.id === 'shoppingCart') {
     currentUser.pantry.addMissingIngredients(currentUser)
@@ -237,21 +286,6 @@ const cookMeal = (event) => {
     console.log('didnt hit');
   }
 }
-
-const showFilteredRecipes = () => {
-  const filteredRecipes = filter.filterByTags(tagList).reduce((acc, recipe) => {
-    allRecipesSection.innerHTML = ``
-    pageTitle.innerHTML = `Filtered Recipes`
-    acc += `
-    <div class='recipe' tabindex="0">
-    <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
-    <h5>${recipe.name}</h5>
-    </div>
-    `
-    return acc
-  }, '');
-  allRecipesSection.innerHTML = filteredRecipes
-};
 
 const filterByCheckBoxes = () => {
   checkboxes.forEach(checkbox => {
@@ -285,24 +319,6 @@ const filterByCheckBoxes = () => {
   });
 };
 
-const showMealPlan = () => {
-  pageTitle.innerHTML = 'Meals to cook'
-  mealsToCookSection.innerHTML = '';
-  hide(allRecipesSection)
-  hide(singleRecipeSection)
-  show(mealsToCookSection)
-  hide(pantrySection)
-  filter = currentUser
-  const displayMealsToCook = currentUser.recipesToCook.forEach(recipe => {
-    return mealsToCookSection.innerHTML += `
-    <div class='recipe' tabindex="0">
-        <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
-        <h5>${recipe.name}</h5>
-        </div>`
-  });
-  return displayMealsToCook
-};
-
 const addSingleRecipe = (event) => {
   if (event.target.id === 'add-meal-button') {
     currentUser.addToCook(currentRecipe)
@@ -311,26 +327,25 @@ const addSingleRecipe = (event) => {
   }
 };
 
-const showPantrySection = () => {
-  pantryTable.innerHTML = ``
-  
-  const pantryList = currentUser.pantry.listOfPantryIngredients.forEach(ingredient => {
-    pantryTable.innerHTML += `
-      <tr class='ingredient-table'>
-        <td>${ingredient.name}</td>
-        <td>${ingredient.amount} units</td>
-      </tr>
-    `
-  })
-  return pantryList
-}
-
 
   
-  // event listeners ***********************************************
+// event listeners ***********************************************
 
-allRecipesSection.addEventListener('click', clickRecipe);
-favoriteRecipeSection.addEventListener('click', clickRecipe);
+allRecipesSection.addEventListener('click', (event) => {
+  clickRecipe(event)
+});
+allRecipesSection.addEventListener('keydown', (event) => {
+  console.log('yes?')
+  if (event.keyCode === 13) {
+    clickRecipe(event)
+  } else {
+    console.log('outside')
+  }
+
+});   
+favoriteRecipeSection.addEventListener('click', (event) => {
+  clickRecipe(event)
+});
 mealsToCookButton.addEventListener('click', showMealPlan);
 
 
@@ -355,11 +370,11 @@ searchInput.addEventListener('input', (e) => {
 });
 
 clearButton.addEventListener("click", () => {
-    if(window.getComputedStyle(tagNavSection).display === 'none'){
-      show(tagNavSection)
-    } else {
-      hide(tagNavSection)
-    }
+  if(window.getComputedStyle(tagNavSection).display === 'none'){
+    show(tagNavSection)
+  } else {
+    hide(tagNavSection)
+  }
 });
     
 allRecipesButton.addEventListener('click', () => {
