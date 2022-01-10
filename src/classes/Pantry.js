@@ -5,54 +5,65 @@ class Pantry {
     this.listOfPantryIngredients = [];
     this.listOfMissingIngredients = [];
     this.listOfRecipeIngredients = [];
+    
   }
 
   listIngredientsNameAndAmount() {
     this.listOfPantryIngredients = [];
+    this.listOfMissingIngredients = [];
     const ingredientIds = this.ingredients.map(ingredient => [ingredient.ingredient, ingredient.amount]);
     const ingredientDataObjs = ingredientIds.map(ingredientId => {
       return [this.ingredientsData.find(({ id }) => id === ingredientId[0]), ingredientId[1]]
     });
     const ingredientNames = ingredientDataObjs.map(ingredient => {
-      return this.listOfPantryIngredients.push({name: ingredient[0].name, amount: ingredient[1], id:ingredient[0].id})
+      if(ingredient.amount !== 0){
+        return this.listOfPantryIngredients.push({name: ingredient[0].name, amount: ingredient[1], id:ingredient[0].id})
+      }
+      
     });
   }
 
-  checkPantry(recipeIngredients) { 
+  checkPantry(recipeIngredients) {
     this.listOfMissingIngredients = [];
+    this.listIngredientsNameAndAmount()
     this.listOfRecipeIngredients = recipeIngredients
+   
     const filterThroughPantry = this.listOfPantryIngredients.reduce((acc, ingredient)=> {
-      if(!acc[ingredient.name]) {
+      if(!acc[ingredient.name] && ingredient.amount !== 0) {
         acc[ingredient.name] = ingredient.amount
       }
         return acc
     }, {})
+    console.log(recipeIngredients,'RECIPE INGREDIENTS')
+
     const filterRecipes = recipeIngredients.reduce((acc, recipe) => {
       if(!acc[recipe.name]) {
         acc[recipe.name] = [recipe.amount,recipe.id]
       }
       return acc
     }, {})
-    console.log(filterRecipes,'filter recipes')
     const pantryKeys = Object.keys(filterThroughPantry);
     const recipeKeys = Object.keys(filterRecipes);
+
     recipeKeys.forEach(recipeIngredient => {
       if(!pantryKeys.includes(recipeIngredient)){
         this.listOfMissingIngredients.push({name: recipeIngredient,amount:filterRecipes[recipeIngredient]})
       } 
       pantryKeys.forEach(pantryIngredient => {
         if(recipeIngredient === pantryIngredient && filterThroughPantry[pantryIngredient] < filterRecipes[recipeIngredient]){
-          console.log('NOPT ENOUGH')
+          
           this.listOfMissingIngredients.push({name: recipeIngredient,amount: filterRecipes[recipeIngredient] -  filterThroughPantry[pantryIngredient],id:filterThroughPantry[pantryIngredient.id]})
         }
       })
     })
-    console.log(this.listOfRecipeIngredients,'RECIPE INGRE')
+
     return this.listOfMissingIngredients
   }
 
   addMissingIngredients(currentUser) {
+    
     this.listOfMissingIngredients.forEach(ingredient => {
+     
       let ingredientData = {"userID": currentUser.id,
                             "ingredientID": ingredient.amount[1],
                             "ingredientModification": ingredient.amount[0]
@@ -67,8 +78,14 @@ class Pantry {
         .then(response => console.log(response.json()))
         .catch(err => console.log(err))
     })
-    this.getNewIngredients(currentUser)
+    setTimeout(() => {
+      this.getNewIngredients(currentUser)
+
+    },500)
+    
   }
+
+  
 
   getNewIngredients(currentUser){
     const userData =
@@ -80,11 +97,22 @@ class Pantry {
         users.forEach(user => {
           if(user.id === currentUser.id){
             currentUser.pantry.ingredients = user.pantry
+            
           }
         })
-        this.listIngredientsNameAndAmount()
+        
       })
+
+      setTimeout(() => {
+    
+        this.listIngredientsNameAndAmount()
+        
+  
+      },500)
+
   }
+
+  
 
   cookRecipe(currentUser){
     this.listOfRecipeIngredients.forEach(ingredient => {
@@ -93,7 +121,7 @@ class Pantry {
                             "ingredientID": ingredient.id,
                             "ingredientModification": ingredient.amount
                             }
-                            console.log(ingredientData)
+                            
       fetch('http://localhost:3001/api/v1/users', {
         method: 'POST',
         body: JSON.stringify(ingredientData),
@@ -104,8 +132,15 @@ class Pantry {
         .then(response => console.log(response.json()))
         .catch(err => console.log(err))
     })
-    this.getNewIngredients(currentUser)
-    console.log(this.listOfPantryIngredients,'AFTER')
+   
+    setTimeout(() => {
+    
+      this.getNewIngredients(currentUser)
+
+    },500)
+    
+
+   
   }
 };
 
