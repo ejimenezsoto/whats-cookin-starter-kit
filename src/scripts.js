@@ -266,6 +266,8 @@ const showMealPlan = () => {
   hide(singleRecipeSection)
   show(mealsToCookSection)
   hide(pantrySection)
+  hide(favoriteRecipeSection)
+  hide(searchInput)
   filter = currentUser
   const displayMealsToCook = currentUser.recipesToCook.forEach(recipe => {
     return mealsToCookSection.innerHTML += `
@@ -457,22 +459,7 @@ singleRecipeSection.addEventListener('click', (event) => {
   cookMeal(event)
   hide(tagNavSection)
   hide(pantrySection)
-  hide(favoriteRecipesButton)
-  
-});
-
-// singleRecipeSection.addEventListener('keydown', (event) => {
-//   console.log(event.target.id, 'shop')
-//   if (event.which === 13) {
-//     addSingleRecipe(event)
-//     addMissingIngredients(event)
-//     cookMeal(event)
-//     hide(tagNavSection)
-//     hide(pantrySection)
-//   } else {
-//     console.log('outside')
-//   }
-// });   
+});  
 
 
 
