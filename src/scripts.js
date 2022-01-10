@@ -103,18 +103,7 @@ const show = (element) => {
 };
 
 
-// Event Hnadlers *******************************
-
-const closeModual = (event ,modal) => {
-    const closeButton = document.getElementById("closeButton")
-    if (event.target.id === closeButton) {
-    closeButton.addEventListener('click', () => {
-      console.log('hii');
-      modal.style.display = "none";
-    })
-  }
-
-}
+// Event Hnadlers ******************************
 
 
 const addMissingIngredients = (event) => {
@@ -130,15 +119,18 @@ const cookMeal = (event) => {
     currentUser.pantry.cookRecipe(currentUser)
     currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients)
     domUpdates.showPantrySection(showPantryDiv, currentUser);
-  } else {
-    console.log('Not enough ingredients');
+  } else if(event.target.id === 'cookImg') {
     const modal = document.getElementById("myModal");
-    if (window.getComputedStyle(modal).display === 'none') {
-    modal.style.display = "block";
-      console.log('pop', modal.style.display);
-    } else if (window.getComputedStyle(modal).display === 'block') {
-        modal.style.display = "none";
-    }
+    if (window.getComputedStyle(modal).display === 'none' ) {
+      modal.style.display = "block";
+    } 
+  }
+}
+
+const closeWindow = (event) => {
+  if (event.target.id === 'closeButton') {
+    const modal = document.getElementById("myModal");
+    modal.style.display = "none";
   }
 }
 
@@ -358,6 +350,7 @@ mealsToCookSection.addEventListener('keydown', (event) => {
 mealSingleRecipe.addEventListener('click', (event) => {
   addMissingIngredients(event)
   cookMeal(event)
+  closeWindow(event)
   hide(tagNavSection)
   hide(pantrySection)
 });   
