@@ -47,13 +47,12 @@ showFavoriteRecipes(
     return displayFavoriteRecipes;
 },
 
-    popUp(error, instructions) {
+    popUp(error, instructions, className) {
     return  `
-<div id="myModal" class="modal">
+    <div id= ${className} class="modal">
     <div class="modal-content">
     <div class="modal-header">
     <span class="close" id="closeButton">&times;</span>
-    <h2 class="title">Oops Something Went Wrong</h2>
     </div>
     <div class="modal-body">
     <p>${error}</p>
@@ -68,13 +67,14 @@ populateSearch(
     filter,
     cookBook,
     allRecipesSection,
-    favoriteRecipeSection
+    favoriteRecipeSection,
+    pageTitle
 ) {
     let input = e.target.value;
     if (input && input.trim().length > 0) {
     input = input.trim().toLowerCase();
-    if (filter === cookBook) {
-        allRecipesSection.innerHTML = filter
+    
+        const filterSearch = allRecipesSection.innerHTML = filter
         .filterByKeyWord(input)
         .reduce((acc, recipe) => {
             acc += `
@@ -85,20 +85,15 @@ populateSearch(
             `;
             return acc;
         }, "");
-    } else {
-        favoriteRecipeSection.innerHTML = filter
-        .filterByKeyWord(input)
-        .reduce((acc, recipe) => {
-            acc += `
-        <div class='recipe' id='${recipe.id} tabindex="0">
-        <img class="recipe-image" src="${recipe.image}" id='${recipe.id}' alt="${recipe.name}">
-        <h5>${recipe.name}</h5>
-        </div> 
-        `;
-            return acc;
-        }, "");
+
+        if (filterSearch !== '') {
+            pageTitle.innerHTML = 'All Recipes'
+        return filterSearch
+        } else {
+            pageTitle.innerHTML = 'No Recipes Found'
+        }
     }
-    }
+    
 },
 
 displaySingleRecipe(
@@ -136,7 +131,6 @@ displaySingleRecipe(
         <div class="ingredient-list"><p> ${ingredientList} </p> </div>
     </div>
     `;
-    console.log(currentRecipe, "im a recipe");
 },
 
 mealsToCookSingleRecipe(
@@ -157,7 +151,6 @@ mealsToCookSingleRecipe(
     show(mealSingleRecipe);
     const findRecipeId = recipes.find(({ id }) => id == event.target.id);
     currentRecipe = findRecipeId;
-    console.log(currentRecipe, "Current recipe");
     const recipeInstructions = findRecipeId.instructions.reduce(
         (acc, instruction) => {
         acc += `<li>${instruction.instruction}</li>`;
@@ -182,7 +175,6 @@ mealsToCookSingleRecipe(
         },
         ""
         );
-    console.log(currentUser.pantry.listOfMissingIngredients);
     const pantryList = currentUser.pantry.listOfPantryIngredients.reduce(
         (acc, ingredient) => {
         if (ingredient.amount !== 0) {
@@ -210,7 +202,8 @@ mealsToCookSingleRecipe(
     </div>
     <h1>***MISSING INGREDIENTS***</h1>
     <p> ${missingIngredientsList} </p>
-    ${this.popUp(`You Are Missing ${missingIngredientsList}`, 'Click the shopping cart to add ingredients')}
+    ${this.popUp(`You Are Missing ${missingIngredientsList}`, 'Click the shopping cart to add ingredients', 'myModal')}
+    ${this.popUp(`You have added ${missingIngredientsList}`, 'Click the shopping cart to add ingredients', 'successModal')}
     <h1>***PANTRY***</h1>
 
     <div class='show-pantry'>
@@ -218,9 +211,7 @@ mealsToCookSingleRecipe(
     </div>
     
     `;
-    } else {
-    console.log("clicking outside");
-    }
+    } 
 },
 
 showFilteredRecipes(filter, allRecipesSection, pageTitle, tagList) {
