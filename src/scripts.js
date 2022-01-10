@@ -22,17 +22,17 @@ const mealsToCookSection = document.querySelector('.meals-to-cook-section');
 const tagNavSection = document.querySelector('.side-nav');
 const pantrySection = document.querySelector('.pantry-section');
 const pantryTable = document.querySelector('.pantry-table');
+const searchBox = document.querySelector('.search-box')
 
 // html titles
 const pageTitle = document.querySelector('.page-title');
 
 // html inputs
 const checkboxes = document.querySelectorAll('input[type=checkbox][name=tag]')
-const searchInput = document.querySelector('#userInput');
 
 // html buttons
 const favoriteRecipesButton = document.querySelector('#favoritesButton');
-const clearButton = document.querySelector('.clear-button');
+const clearButton = document.querySelector('.tag-button');
 const allRecipesButton = document.querySelector('.recipies');
 const pantryButton = document.querySelector('.pantry-button');
 const mealsToCookButton = document.querySelector('.planner');
@@ -152,7 +152,8 @@ const clickRecipe = (event) => {
     hide(allRecipesSection)
     hide(mealsToCookSection)
     show(singleRecipeSection)
-    
+    hide(searchBox)
+    hide(clearButton)
     const findRecipeId = recipes.find(({ id }) => id == event.target.id)
     currentRecipe = findRecipeId
     const recipeInstructions = findRecipeId.instructions.reduce((acc, instruction) => {
@@ -266,6 +267,8 @@ const showMealPlan = () => {
   hide(singleRecipeSection)
   show(mealsToCookSection)
   hide(pantrySection)
+  hide(favoriteRecipeSection)
+  hide(searchBox)
   filter = currentUser
   const displayMealsToCook = currentUser.recipesToCook.forEach(recipe => {
     return mealsToCookSection.innerHTML += `
@@ -398,13 +401,13 @@ favoriteRecipesButton.addEventListener("click", () => {
   hide(allRecipesSection)
   hide(singleRecipeSection)
   show(favoriteRecipeSection)
-  hide(searchInput)
+  hide(searchBox)
   hide(tagNavSection)
   
   console.log('click')
 });
 
-searchInput.addEventListener('input', (e) => {
+searchBox.addEventListener('input', (e) => {
   populateSearch(e)
 });
 
@@ -424,7 +427,7 @@ allRecipesButton.addEventListener('click', () => {
   show(allRecipesSection)
   displayRecipes()
   show(clearButton)
-  show(searchInput)
+  show(searchBox)
   hide(tagNavSection)
   hide(pantrySection)
 });
@@ -437,7 +440,7 @@ pantryButton.addEventListener('click', () => {
   hide(favoriteRecipeSection)
   hide(singleRecipeSection)
   hide(clearButton)
-  hide(searchInput)
+  hide(searchBox)
   hide(tagNavSection)
   show(pantrySection)
   showPantrySection(pantryTable)
@@ -457,22 +460,7 @@ singleRecipeSection.addEventListener('click', (event) => {
   cookMeal(event)
   hide(tagNavSection)
   hide(pantrySection)
-  hide(favoriteRecipesButton)
-  
-});
-
-// singleRecipeSection.addEventListener('keydown', (event) => {
-//   console.log(event.target.id, 'shop')
-//   if (event.which === 13) {
-//     addSingleRecipe(event)
-//     addMissingIngredients(event)
-//     cookMeal(event)
-//     hide(tagNavSection)
-//     hide(pantrySection)
-//   } else {
-//     console.log('outside')
-//   }
-// });   
+});  
 
 
 
