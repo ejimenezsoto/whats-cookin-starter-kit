@@ -7,6 +7,7 @@ import './images/plus.png'
 import './images/menu.png'
 import './images/shopping-cart.png'
 import './images/heart.png'
+import './images/check.png'
 import Recipe from './classes/Recipe';
 import User from './classes/User';
 import { userData, recipesData, ingredientData } from './apiCalls';
@@ -182,15 +183,21 @@ const filterByCheckBoxes = () => {
 const addSingleRecipe = (event) => {
   if (event.target.id === 'add-meal-button') {
     currentUser.addToCook(currentRecipe)
-    const addToMealPlanButton = document.querySelector('.add-meal-button')
-    hide(addToMealPlanButton)
+    const addMealImage = document.querySelector('.add-image')
+    
+    if (addMealImage.src === 'http://localhost:8080/images/plus.png') {
+      addMealImage.src = './images/check.png'
+    } else {
+      addMealImage.src = './images/plus.png'
+    }
+  
   } else if (event.target.id === 'favorite-button') {
-    console.log('hits');
+
     currentUser.addToFavorites(currentRecipe)
     const favoriteImage = document.querySelector('.favorite-image')
-    console.log(favoriteImage.src);
+
     if (favoriteImage.src === 'http://localhost:8080/images/like.png') {
-      console.log('hits pt2');
+
     favoriteImage.src = './images/heart.png'
     } else {
       favoriteImage.src = './images/like.png'
@@ -213,7 +220,8 @@ const clickRecipe = (event, heartImage) => {
       singleRecipeSection,
       currentRecipe,
       findRecipeId,
-      heartImage
+      heartImage, 
+      
     );
   }
 };
