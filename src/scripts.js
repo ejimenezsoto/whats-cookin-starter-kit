@@ -17,13 +17,15 @@ import domUpdates from './domUpdates';
 
 // html sections 
 const allRecipesSection = document.querySelector('.all-recipes-section');
-const singleRecipeSection = document.querySelector('.single-recipe');
+const singleRecipeSection = document.querySelector('.all-single-recipe');
 const favoriteRecipeSection = document.querySelector('.my-favorites-section');
 const mealsToCookSection = document.querySelector('.meals-to-cook-section');
 const tagNavSection = document.querySelector('.side-nav');
 const pantrySection = document.querySelector('.pantry-section');
 const pantryTable = document.querySelector('.pantry-table');
 const searchBox = document.querySelector('.search-box')
+const sectionTitles = document.querySelector('.section-titles')
+const mealSingleRecipe = document.querySelector(".meal-single-recipe")
 
 // html titles
 const pageTitle = document.querySelector('.page-title');
@@ -119,6 +121,20 @@ const cookMeal = (event) => {
     domUpdates.showPantrySection(showPantryDiv, currentUser);
   } else {
     console.log('Not enough ingredients');
+    hide(singleRecipeSection)
+    sectionTitles.innerHTML += `
+    <div id="myModal" class="modal">
+  <div class="modal-content">
+  <div class="modal-header">
+    <span class="close">&times;</span>
+    <h2 class="title">Oops Something Went Wrong</h2>
+  </div>
+  <div class="modal-body">
+    <p>looks like you dont have enough ingdredients!</p>
+    <p>Click the shopping cart to add ingredients</p>
+  </div>
+</div>
+</div>`
   }
 }
 
@@ -244,7 +260,7 @@ mealsToCookButton.addEventListener('click', () => {
 mealsToCookSection.addEventListener('click', (event) => {
   domUpdates.mealsToCookSingleRecipe(
     event,
-    singleRecipeSection,
+    mealSingleRecipe,
     favoriteRecipeSection,
     allRecipesSection,
     mealsToCookSection,
@@ -321,7 +337,7 @@ mealsToCookSection.addEventListener('keydown', (event) => {
   if (event.which === 13) {
     domUpdates.mealsToCookSingleRecipe(
       event,
-      singleRecipeSection,
+      mealSingleRecipe,
       favoriteRecipeSection,
       allRecipesSection,
       mealsToCookSection,
@@ -334,10 +350,15 @@ mealsToCookSection.addEventListener('keydown', (event) => {
   }
 });
 
-singleRecipeSection.addEventListener('click', (event) => {
-  addSingleRecipe(event)
+mealSingleRecipe.addEventListener('click', (event) => {
   addMissingIngredients(event)
   cookMeal(event)
+  hide(tagNavSection)
+  hide(pantrySection)
+});   
+
+singleRecipeSection.addEventListener('click', (event) => {
+  addSingleRecipe(event)
   hide(tagNavSection)
   hide(pantrySection)
 });  
