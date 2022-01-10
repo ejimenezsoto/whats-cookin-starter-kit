@@ -178,6 +178,25 @@ const addSingleRecipe = (event) => {
 };
 }
 
+const clickRecipe = (event) => {
+  singleRecipeSection.innerHTML = ''
+  if (event.target.id) {
+    hide(favoriteRecipeSection)
+    hide(allRecipesSection)
+    hide(mealsToCookSection)
+    show(singleRecipeSection)
+    hide(searchBox)
+    hide(clearButton)
+    const findRecipeId = recipes.find(({ id }) => id == event.target.id)
+    currentRecipe = findRecipeId;
+    domUpdates.displaySingleRecipe(
+      singleRecipeSection,
+      currentRecipe,
+      findRecipeId
+    );
+  }
+};
+
 
 
 
@@ -185,63 +204,23 @@ const addSingleRecipe = (event) => {
 // event listeners ***********************************************
 
 allRecipesSection.addEventListener('click', (event) => {
-  domUpdates.clickRecipe(
-    event,
-    singleRecipeSection,
-    favoriteRecipeSection,
-    allRecipesSection,
-    mealsToCookSection,
-    searchBox,
-    clearButton,
-    currentRecipe,
-    recipes
-  );
+    clickRecipe(event);
 });
 
 allRecipesSection.addEventListener('keydown', (event) => {
   if (event.which === 13) {
-    domUpdates.clickRecipe(
-      event,
-      singleRecipeSection,
-      favoriteRecipeSection,
-      allRecipesSection,
-      mealsToCookSection,
-      searchBox,
-      clearButton,
-      currentRecipe,
-      recipes
-    );
+    clickRecipe(event);
   } else {
     console.log('outside')
   }
 });   
 favoriteRecipeSection.addEventListener('click', (event) => {
-  domUpdates.clickRecipe(
-    event,
-    singleRecipeSection,
-    favoriteRecipeSection,
-    allRecipesSection,
-    mealsToCookSection,
-    searchBox,
-    clearButton,
-    currentRecipe,
-    recipes
-  );
+    clickRecipe(event);
 });
 
 favoriteRecipeSection.addEventListener('keydown', (event) => {
   if (event.which === 13) {
-    domUpdates.clickRecipe(
-      event,
-      singleRecipeSection,
-      favoriteRecipeSection,
-      allRecipesSection,
-      mealsToCookSection,
-      searchBox,
-      clearButton,
-      currentRecipe,
-      recipes
-    );
+    clickRecipe(event);
   } else {
     console.log('outside')
   }
@@ -270,7 +249,8 @@ mealsToCookSection.addEventListener('click', (event) => {
     allRecipesSection,
     mealsToCookSection,
     currentRecipe,
-    currentUser
+    currentUser,
+    recipes
   );
   
 });
@@ -346,7 +326,8 @@ mealsToCookSection.addEventListener('keydown', (event) => {
       allRecipesSection,
       mealsToCookSection,
       currentRecipe,
-      currentUser
+      currentUser,
+      recipes
     );
   } else {
     console.log('outside')
