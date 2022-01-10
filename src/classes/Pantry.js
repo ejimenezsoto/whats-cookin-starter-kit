@@ -13,9 +13,11 @@ class Pantry {
     const ingredientDataObjs = ingredientIds.map(ingredientId => {
       return [this.ingredientsData.find(({ id }) => id === ingredientId[0]), ingredientId[1]]
     });
+    
     const ingredientNames = ingredientDataObjs.map(ingredient => {
       return this.listOfPantryIngredients.push({name: ingredient[0].name, amount: ingredient[1], id:ingredient[0].id})
     });
+
   }
 
   checkPantry(recipeIngredients) { 

@@ -179,6 +179,39 @@ const clickRecipe = (event) => {
 };
 
 
+const displaySingleRecipe = (event) => {
+  singleRecipeSection.innerHTML = `
+      <div class="single-recipe-img" tabindex="0"> <img src="${findRecipeId.image}" alt=""> </div>
+      <div class="favorite-meal-buttons">
+        <button class='favorite-button' id="favorite-button"><img class="favorite-image" id="favorite-button" src="./images/like.png"  alt="favorite"> </button>
+        <button class='add-meal-button' id="add-meal-button"><img class="add-image" src="./images/plus.png" id="add-meal-button" alt="add"> </button>
+        <div class="total-cost"> <h1 class="price">$${findRecipeId.costOfIngredients()}</h1></div> 
+      </div>
+      <div class="ingredient-instructions">
+        <div class="ingredient-instructions-section">${recipeInstructions} </div>
+        <div class="ingredient-list"><p> ${ingredientList} </p> </div>
+      </div>
+    `
+}
+
+const displayUpdatedRecipe = () => {
+  singleRecipeSection.innerHTML = `
+      <div class="single-recipe-img" tabindex="0"> <img src="${findRecipeId.image}" alt=""> </div>
+      <div class="favorite-meal-buttons">
+        <button class='favorite-button' id="favorite-button"><img class="favorite-image" id="favorite-button" src="./images/like.png"  alt="favorite"> </button>
+        <div class="total-cost"> <h1 class="price">$${findRecipeId.costOfIngredients()}</h1></div> 
+      </div>
+      <div class="ingredient-instructions">
+        <div class="ingredient-instructions-section">${recipeInstructions} </div>
+        <div class="ingredient-list"><p> ${ingredientList} </p> </div>
+      </div>
+    `
+
+}
+
+
+
+
 const mealsToCookSingleRecipe = (event) => {
   singleRecipeSection.innerHTML = ''
   if (event.target.id) {
@@ -427,18 +460,6 @@ singleRecipeSection.addEventListener('click', (event) => {
   hide(pantrySection)
 });
 
-// singleRecipeSection.addEventListener('keydown', (event) => {
-//   console.log(event.target.id, 'shop')
-//   if (event.which === 13) {
-//     addSingleRecipe(event)
-//     addMissingIngredients(event)
-//     cookMeal(event)
-//     hide(tagNavSection)
-//     hide(pantrySection)
-//   } else {
-//     console.log('outside')
-//   }
-// });   
 
 
 
