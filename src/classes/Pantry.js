@@ -68,15 +68,15 @@ class Pantry {
                             "ingredientID": ingredient.amount[1],
                             "ingredientModification": ingredient.amount[0]
                             }
-      fetch('http://localhost:3001/api/v1/users', {
-        method: 'POST',
+      fetch("http://localhost:3001/api/v1/users", {
+        method: "POST",
         body: JSON.stringify(ingredientData),
         headers: {
-                'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       })
-        .then(response => console.log(response.json()))
-        .catch(err => console.log(err))
+        .then((response) => console.log(response.json()))
+        .catch((err) => domUpdates.displayError(err, pageTitle));
     })
     setTimeout(() => {
       this.getNewIngredients(currentUser)
@@ -122,15 +122,15 @@ class Pantry {
                             "ingredientModification": ingredient.amount
                             }
                             
-      fetch('http://localhost:3001/api/v1/users', {
-        method: 'POST',
+      fetch("http://localhost:3001/api/v1/users", {
+        method: "POST",
         body: JSON.stringify(ingredientData),
         headers: {
-                'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       })
-        .then(response => console.log(response.json()))
-        .catch(err => console.log(err))
+        .then((response) => console.log(response.json()))
+        .catch((err) => domUpdates.displayError(err, pageTitle));
     })
    
     setTimeout(() => {
