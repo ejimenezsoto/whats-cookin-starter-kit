@@ -185,13 +185,20 @@ const addSingleRecipe = (event) => {
     const addToMealPlanButton = document.querySelector('.add-meal-button')
     hide(addToMealPlanButton)
   } else if (event.target.id === 'favorite-button') {
+    console.log('hits');
     currentUser.addToFavorites(currentRecipe)
     const favoriteImage = document.querySelector('.favorite-image')
+    console.log(favoriteImage.src);
+    if (favoriteImage.src === 'http://localhost:8080/images/like.png') {
+      console.log('hits pt2');
     favoriteImage.src = './images/heart.png'
+    } else {
+      favoriteImage.src = './images/like.png'
+    }
 };
 }
 
-const clickRecipe = (event) => {
+const clickRecipe = (event, heartImage) => {
   singleRecipeSection.innerHTML = ''
   if (event.target.id) {
     hide(favoriteRecipeSection)
@@ -205,7 +212,8 @@ const clickRecipe = (event) => {
     domUpdates.displaySingleRecipe(
       singleRecipeSection,
       currentRecipe,
-      findRecipeId
+      findRecipeId,
+      heartImage
     );
   }
 };
@@ -217,28 +225,29 @@ const clickRecipe = (event) => {
 // event listeners ***********************************************
 
 allRecipesSection.addEventListener('click', (event) => {
-    clickRecipe(event);
+  clickRecipe(event, './images/like.png');
 });
 
 allRecipesSection.addEventListener('keydown', (event) => {
   if (event.which === 13) {
-    clickRecipe(event);
+    clickRecipe(event, './images/like.png');
   } else {
     console.log('outside')
   }
 });   
 favoriteRecipeSection.addEventListener('click', (event) => {
-    clickRecipe(event);
+
+  clickRecipe(event, './images/heart.png');
 });
 
 favoriteRecipeSection.addEventListener('keydown', (event) => {
   if (event.which === 13) {
-    clickRecipe(event);
+    clickRecipe(event, './images/heart.png');
   } else {
     console.log('outside')
   }
 });
- 
+  
 mealsToCookButton.addEventListener('click', () => {
   domUpdates.showMealPlan(
     pageTitle,

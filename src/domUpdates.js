@@ -105,6 +105,7 @@ displaySingleRecipe(
     singleRecipeSection,
     currentRecipe,
     findRecipeId,
+    heartImage
 ) {
     const recipeInstructions = findRecipeId.instructions.reduce(
     (acc, instruction) => {
@@ -126,7 +127,7 @@ displaySingleRecipe(
         findRecipeId.image
     }" alt=""> </div>
     <div class="favorite-meal-buttons">
-        <button class='favorite-button' id="favorite-button"><img class="favorite-image" id="favorite-button" src="./images/like.png"  alt="favorite"> </button>
+        <button class='favorite-button' id="favorite-button"><img class="favorite-image" id="favorite-button" src=${heartImage}  alt="favorite"> </button>
         <button class='add-meal-button' id="add-meal-button"><img class="add-image" src="./images/plus.png" id="add-meal-button" alt="add"> </button>
         <div class="total-cost"> <h1 class="price">$${findRecipeId.costOfIngredients()}</h1></div> 
     </div>
