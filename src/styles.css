@@ -332,7 +332,7 @@ table, th, td {
 
 /* pop out css */
 .modal {
-  display: none; /* Hidden by default */
+  display: none; 
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;

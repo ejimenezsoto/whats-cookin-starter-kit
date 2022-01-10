@@ -1,4 +1,6 @@
 
+
+
 const domUpdates = {
 displayRecipes(
     singleRecipeSection,
@@ -44,6 +46,22 @@ showFavoriteRecipes(
     );
     return displayFavoriteRecipes;
 },
+
+    popUp(error, instructions) {
+    return  `
+<div id="myModal" class="modal">
+    <div class="modal-content">
+    <div class="modal-header">
+    <span class="close" id="closeButton">&times;</span>
+    <h2 class="title">Oops Something Went Wrong</h2>
+    </div>
+    <div class="modal-body">
+    <p>${error}</p>
+    <p>${instructions}</p>
+    </div>
+</div>
+</div>`
+    },
 
 populateSearch(
     e,
@@ -191,7 +209,7 @@ mealsToCookSingleRecipe(
     </div>
     <h1>***MISSING INGREDIENTS***</h1>
     <p> ${missingIngredientsList} </p>
-
+    ${this.popUp(`You Are Missing ${missingIngredientsList}`, 'Click the shopping cart to add ingredients')}
     <h1>***PANTRY***</h1>
 
     <div class='show-pantry'>

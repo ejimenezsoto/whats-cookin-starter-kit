@@ -105,10 +105,21 @@ const show = (element) => {
 
 // Event Hnadlers *******************************
 
+const closeModual = (event ,modal) => {
+    const closeButton = document.getElementById("closeButton")
+    if (event.target.id === closeButton) {
+    closeButton.addEventListener('click', () => {
+      console.log('hii');
+      modal.style.display = "none";
+    })
+  }
+
+}
 
 
 const addMissingIngredients = (event) => {
   if (event.target.id === 'shoppingCart') {
+    console.log();
     currentUser.pantry.addMissingIngredients(currentUser)
   }
 }
@@ -121,22 +132,16 @@ const cookMeal = (event) => {
     domUpdates.showPantrySection(showPantryDiv, currentUser);
   } else {
     console.log('Not enough ingredients');
-    hide(singleRecipeSection)
-    sectionTitles.innerHTML += `
-    <div id="myModal" class="modal">
-  <div class="modal-content">
-  <div class="modal-header">
-    <span class="close">&times;</span>
-    <h2 class="title">Oops Something Went Wrong</h2>
-  </div>
-  <div class="modal-body">
-    <p>looks like you dont have enough ingdredients!</p>
-    <p>Click the shopping cart to add ingredients</p>
-  </div>
-</div>
-</div>`
+    const modal = document.getElementById("myModal");
+    if (window.getComputedStyle(modal).display === 'none') {
+    modal.style.display = "block";
+      console.log('pop', modal.style.display);
+    } else if (window.getComputedStyle(modal).display === 'block') {
+        modal.style.display = "none";
+    }
   }
 }
+
 
 const filterByCheckBoxes = () => {
   checkboxes.forEach(checkbox => {
@@ -357,11 +362,15 @@ mealSingleRecipe.addEventListener('click', (event) => {
   hide(pantrySection)
 });   
 
+
+
 singleRecipeSection.addEventListener('click', (event) => {
   addSingleRecipe(event)
   hide(tagNavSection)
   hide(pantrySection)
 });  
+
+
 
 
 
