@@ -232,6 +232,13 @@ flex-direction: column;
     width: 50%;
     height: 50%;
     margin-right: 2em;
+    margin-left: 10em;
+}
+
+.h1-class {
+  font-size: 40px;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
 }
 
 /* single missing recipe section  */
@@ -303,6 +310,7 @@ table, th, td {
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
+  @include fontSize(20px);
 }
 
 /* The Close Button */

@@ -131,11 +131,11 @@ const domUpdates = {
     <div class="ingredient-instructions">
 
         <div class="ingredient-instructions-section">
-            <h1>Instructions</h1>
+            <h1 class="h1-class">Instructions</h1>
             ${recipeInstructions}
         </div>
         <div class="ingredient-list">
-            <h1>Ingredients</h1>
+            <h1 class="h1-class">Ingredients</h1>
             <p> ${ingredientList}</p>
          </div>
     </div>
@@ -214,12 +214,12 @@ const domUpdates = {
     <div class="ingredient-instructions">
         <div class="ingredient-instructions-section">
             <div>
-                <h1>Instructions</h1>
+                <h1 class="h1-class">Instructions</h1>
             </div>
             ${recipeInstructions}
         </div>
         <div class="ingredient-list">
-            <h1>Ingredients</h1>
+            <h1 class="h1-class">Ingredients</h1>
             <p> ${ingredientList}</p>
         </div>
     </div>
