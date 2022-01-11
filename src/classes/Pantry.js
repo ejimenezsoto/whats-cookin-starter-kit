@@ -27,7 +27,7 @@ class Pantry {
     this.listOfMissingIngredients = [];
     this.listIngredientsNameAndAmount()
     this.listOfRecipeIngredients = recipeIngredients
-   
+  
     const filterThroughPantry = this.listOfPantryIngredients.reduce((acc, ingredient)=> {
       if(!acc[ingredient.name] && ingredient.amount !== 0) {
         acc[ingredient.name] = ingredient.amount
@@ -61,9 +61,8 @@ class Pantry {
   }
 
   addMissingIngredients(currentUser) {
-    
     this.listOfMissingIngredients.forEach(ingredient => {
-     
+    
       let ingredientData = {"userID": currentUser.id,
                             "ingredientID": ingredient.amount[1],
                             "ingredientModification": ingredient.amount[0]
@@ -85,8 +84,6 @@ class Pantry {
     
   }
 
-  
-
   getNewIngredients(currentUser){
     const userData =
       fetch('http://localhost:3001/api/v1/users')
@@ -99,20 +96,13 @@ class Pantry {
             currentUser.pantry.ingredients = user.pantry
             
           }
-        })
-        
+        }) 
       })
-
       setTimeout(() => {
-    
         this.listIngredientsNameAndAmount()
-        
-  
       },500)
 
   }
-
-  
 
   cookRecipe(currentUser){
     this.listOfRecipeIngredients.forEach(ingredient => {
@@ -132,15 +122,12 @@ class Pantry {
         .then((response) => console.log(response.json()))
         .catch((err) => domUpdates.displayError(err, pageTitle));
     })
-   
+  
     setTimeout(() => {
     
       this.getNewIngredients(currentUser)
 
     },500)
-    
-
-   
   }
 };
 

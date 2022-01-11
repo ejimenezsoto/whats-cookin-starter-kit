@@ -7,6 +7,7 @@ import './images/plus.png'
 import './images/menu.png'
 import './images/shopping-cart.png'
 import './images/heart.png'
+import './images/check.png'
 import Recipe from './classes/Recipe';
 import User from './classes/User';
 import { userData, recipesData, ingredientData } from './apiCalls';
@@ -17,13 +18,15 @@ import domUpdates from './domUpdates';
 
 // html sections 
 const allRecipesSection = document.querySelector('.all-recipes-section');
-const singleRecipeSection = document.querySelector('.single-recipe');
+const singleRecipeSection = document.querySelector('.all-single-recipe');
 const favoriteRecipeSection = document.querySelector('.my-favorites-section');
 const mealsToCookSection = document.querySelector('.meals-to-cook-section');
 const tagNavSection = document.querySelector('.side-nav');
 const pantrySection = document.querySelector('.pantry-section');
 const pantryTable = document.querySelector('.pantry-table');
 const searchBox = document.querySelector('.search-box')
+const sectionTitles = document.querySelector('.section-titles')
+const mealSingleRecipe = document.querySelector(".meal-single-recipe")
 
 // html titles
 const pageTitle = document.querySelector('.page-title');
@@ -101,26 +104,51 @@ const show = (element) => {
 };
 
 
-// Event Hnadlers *******************************
-
+// Event Hnadlers ******************************
 
 
 const addMissingIngredients = (event) => {
   if (event.target.id === 'shoppingCart') {
+    document.querySelector('.cook-button').classList.remove('hidden')
+    const modal = document.getElementById("successModal");
+    if (window.getComputedStyle(modal).display === 'none') {
+      modal.style.display = "block";
+    } 
     currentUser.pantry.addMissingIngredients(currentUser)
   }
 }
 
 const cookMeal = (event) => {
+  console.log(currentUser.pantry.listOfMissingIngredients);
   if (event.target.id === 'cookImg' && currentUser.pantry.listOfMissingIngredients.length === 0) {
+    document.querySelector('.cook-button').classList.add('hidden')
     const showPantryDiv = document.querySelector('.show-pantry') 
     currentUser.pantry.cookRecipe(currentUser)
     currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients)
     domUpdates.showPantrySection(showPantryDiv, currentUser);
-  } else {
-    console.log('Not enough ingredients');
+    const modal = document.getElementById("successfulCookModal");
+    if (window.getComputedStyle(modal).display === 'none') {
+      modal.style.display = "block";
+    } 
+  } else if(event.target.id === 'cookImg') {
+    const modal = document.getElementById("myModal");
+    if (window.getComputedStyle(modal).display === 'none' ) {
+      modal.style.display = "block";
+    } 
   }
 }
+
+const closeWindow = (event) => {
+  if (event.target.id === 'closeButton') {
+    const modal = document.getElementById("myModal");
+    const successModal = document.getElementById("successModal");
+    const successfulCookmodal = document.getElementById("successfulCookModal");
+    modal.style.display = "none";
+    successModal.style.display = "none";
+    successfulCookmodal.style.display = "none";
+  }
+}
+
 
 const filterByCheckBoxes = () => {
   checkboxes.forEach(checkbox => {
@@ -169,18 +197,31 @@ const filterByCheckBoxes = () => {
 const addSingleRecipe = (event) => {
   if (event.target.id === 'add-meal-button') {
     currentUser.addToCook(currentRecipe)
-    const addToMealPlanButton = document.querySelector('.add-meal-button')
-    hide(addToMealPlanButton)
+    const addMealImage = document.querySelector('.add-image')
+    
+    if (addMealImage.src === 'http://localhost:8080/images/plus.png') {
+      addMealImage.src = './images/check.png'
+    } else {
+      addMealImage.src = './images/plus.png'
+    }
+  
   } else if (event.target.id === 'favorite-button') {
+
     currentUser.addToFavorites(currentRecipe)
     const favoriteImage = document.querySelector('.favorite-image')
+
+    if (favoriteImage.src === 'http://localhost:8080/images/like.png') {
+
     favoriteImage.src = './images/heart.png'
+    } else {
+      favoriteImage.src = './images/like.png'
+    }
 };
 }
 
-const clickRecipe = (event) => {
+const clickRecipe = (event, heartImage) => {
   singleRecipeSection.innerHTML = ''
-  if (event.target.id) {
+  if (event.target.id && event.target.id !== 'closeButton') {
     hide(favoriteRecipeSection)
     hide(allRecipesSection)
     hide(mealsToCookSection)
@@ -192,7 +233,9 @@ const clickRecipe = (event) => {
     domUpdates.displaySingleRecipe(
       singleRecipeSection,
       currentRecipe,
-      findRecipeId
+      findRecipeId,
+      heartImage, 
+      
     );
   }
 };
@@ -204,28 +247,26 @@ const clickRecipe = (event) => {
 // event listeners ***********************************************
 
 allRecipesSection.addEventListener('click', (event) => {
-    clickRecipe(event);
+  clickRecipe(event, './images/like.png');
+  closeWindow(event)
 });
 
 allRecipesSection.addEventListener('keydown', (event) => {
   if (event.which === 13) {
-    clickRecipe(event);
-  } else {
-    console.log('outside')
-  }
+    clickRecipe(event, './images/like.png');
+  } 
 });   
 favoriteRecipeSection.addEventListener('click', (event) => {
-    clickRecipe(event);
+
+  clickRecipe(event, './images/heart.png');
 });
 
 favoriteRecipeSection.addEventListener('keydown', (event) => {
   if (event.which === 13) {
-    clickRecipe(event);
-  } else {
-    console.log('outside')
+    clickRecipe(event, './images/heart.png');
   }
 });
- 
+  
 mealsToCookButton.addEventListener('click', () => {
   domUpdates.showMealPlan(
     pageTitle,
@@ -238,19 +279,21 @@ mealsToCookButton.addEventListener('click', () => {
     currentUser,
     singleRecipeSection
   );
+  hide(mealSingleRecipe)
 });
 
 
 mealsToCookSection.addEventListener('click', (event) => {
   domUpdates.mealsToCookSingleRecipe(
     event,
-    singleRecipeSection,
+    mealSingleRecipe,
     favoriteRecipeSection,
     allRecipesSection,
     mealsToCookSection,
     currentRecipe,
     currentUser,
-    recipes
+    recipes,
+
   );
   
 });
@@ -264,6 +307,7 @@ favoriteRecipesButton.addEventListener("click", () => {
     filter,
     pageTitle
   );
+  hide(mealSingleRecipe)
   hide(clearButton)
   hide(pantrySection)
   hide(allRecipesSection)
@@ -274,7 +318,7 @@ favoriteRecipesButton.addEventListener("click", () => {
 });
 
 searchBox.addEventListener('input', (e) => {
-  domUpdates.populateSearch(e, filter, cookBook, allRecipesSection, favoriteRecipeSection);
+  domUpdates.populateSearch(e, filter, cookBook, allRecipesSection, favoriteRecipeSection, pageTitle);
 });
 
 clearButton.addEventListener("click", () => {
@@ -287,6 +331,7 @@ clearButton.addEventListener("click", () => {
     
 allRecipesButton.addEventListener('click', () => {
   filter = cookBook
+  
   pageTitle.innerHTML = 'All Recipes'
   hide(singleRecipeSection)
   hide(favoriteRecipeSection)
@@ -314,6 +359,7 @@ pantryButton.addEventListener('click', () => {
   hide(searchBox)
   hide(tagNavSection)
   show(pantrySection)
+  hide(mealSingleRecipe)
   domUpdates.showPantrySection(pantryTable, currentUser);
 });
 
@@ -321,7 +367,7 @@ mealsToCookSection.addEventListener('keydown', (event) => {
   if (event.which === 13) {
     domUpdates.mealsToCookSingleRecipe(
       event,
-      singleRecipeSection,
+      mealSingleRecipe,
       favoriteRecipeSection,
       allRecipesSection,
       mealsToCookSection,
@@ -329,18 +375,26 @@ mealsToCookSection.addEventListener('keydown', (event) => {
       currentUser,
       recipes
     );
-  } else {
-    console.log('outside')
-  }
+  } 
 });
+
+mealSingleRecipe.addEventListener('click', (event) => {
+  addMissingIngredients(event)
+  cookMeal(event)
+  closeWindow(event)
+  hide(tagNavSection)
+  hide(pantrySection)
+});   
+
+
 
 singleRecipeSection.addEventListener('click', (event) => {
   addSingleRecipe(event)
-  addMissingIngredients(event)
-  cookMeal(event)
   hide(tagNavSection)
   hide(pantrySection)
 });  
+
+
 
 
 
