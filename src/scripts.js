@@ -119,12 +119,12 @@ const addMissingIngredients = (event) => {
 }
 
 const cookMeal = (event) => {
-  console.log(currentUser.pantry.listOfMissingIngredients);
   if (event.target.id === 'cookImg' && currentUser.pantry.listOfMissingIngredients.length === 0) {
     document.querySelector('.cook-button').classList.add('hidden')
     const showPantryDiv = document.querySelector('.show-pantry') 
     currentUser.pantry.cookRecipe(currentUser)
     currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients)
+    console.log(currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients));
     domUpdates.showPantrySection(showPantryDiv, currentUser);
     const modal = document.getElementById("successfulCookModal");
     if (window.getComputedStyle(modal).display === 'none') {

@@ -18,6 +18,7 @@ class Pantry {
     
     const ingredientNames = ingredientDataObjs.map(ingredient => {
       if(ingredient.amount !== 0){
+
         return this.listOfPantryIngredients.push({name: ingredient[0].name, amount: ingredient[1], id:ingredient[0].id})
       }
       
@@ -58,7 +59,7 @@ class Pantry {
         }
       })
     })
-
+    console.log(this.listOfMissingIngredients);
     return this.listOfMissingIngredients
   }
 
