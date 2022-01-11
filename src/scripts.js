@@ -109,6 +109,7 @@ const show = (element) => {
 
 const addMissingIngredients = (event) => {
   if (event.target.id === 'shoppingCart') {
+    document.querySelector('.cook-button').classList.remove('hidden')
     const modal = document.getElementById("successModal");
     if (window.getComputedStyle(modal).display === 'none') {
       modal.style.display = "block";
@@ -118,11 +119,17 @@ const addMissingIngredients = (event) => {
 }
 
 const cookMeal = (event) => {
+  console.log(currentUser.pantry.listOfMissingIngredients);
   if (event.target.id === 'cookImg' && currentUser.pantry.listOfMissingIngredients.length === 0) {
+    document.querySelector('.cook-button').classList.add('hidden')
     const showPantryDiv = document.querySelector('.show-pantry') 
     currentUser.pantry.cookRecipe(currentUser)
     currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients)
     domUpdates.showPantrySection(showPantryDiv, currentUser);
+    const modal = document.getElementById("successfulCookModal");
+    if (window.getComputedStyle(modal).display === 'none') {
+      modal.style.display = "block";
+    } 
   } else if(event.target.id === 'cookImg') {
     const modal = document.getElementById("myModal");
     if (window.getComputedStyle(modal).display === 'none' ) {
@@ -135,8 +142,10 @@ const closeWindow = (event) => {
   if (event.target.id === 'closeButton') {
     const modal = document.getElementById("myModal");
     const successModal = document.getElementById("successModal");
+    const successfulCookmodal = document.getElementById("successfulCookModal");
     modal.style.display = "none";
     successModal.style.display = "none";
+    successfulCookmodal.style.display = "none";
   }
 }
 
@@ -270,6 +279,7 @@ mealsToCookButton.addEventListener('click', () => {
     currentUser,
     singleRecipeSection
   );
+  hide(mealSingleRecipe)
 });
 
 

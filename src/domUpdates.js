@@ -203,7 +203,8 @@ mealsToCookSingleRecipe(
     <h1>***MISSING INGREDIENTS***</h1>
     <p> ${missingIngredientsList} </p>
     ${this.popUp(`You Are Missing ${missingIngredientsList}`, 'Click the shopping cart to add ingredients', 'myModal')}
-    ${this.popUp(`You have added ${missingIngredientsList}`, 'Click the shopping cart to add ingredients', 'successModal')}
+    ${this.popUp(`You have added these ingredients to your pantry ${missingIngredientsList}`, 'Click the pan to cook a meal!', 'successModal')}
+    ${this.popUp(`You have successfully cooked ${currentRecipe.name}`, '', 'successfulCookModal')}
     <h1>***PANTRY***</h1>
 
     <div class='show-pantry'>
@@ -280,7 +281,7 @@ showPantrySection(section, currentUser) {
 
 displayError(error, pageTitle) {
     pageTitle.innerHTML = `<h1 class="error-msg">${error.message}</h1>`
-},
+    },
 };
 
 const hide = (element) => {
