@@ -1,0 +1,12 @@
+@mixin flexDisplay($content) {
+    display: flex;
+    justify-content: $content;
+}
+
+@mixin fontSize($size) {
+    font-size: $size;
+}
+// @mixin size($height, $width) {
+//     heigth: $height;
+//     width: $width;
+// }

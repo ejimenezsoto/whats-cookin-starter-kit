@@ -1,4 +1,4 @@
-import './styles.css';
+import './index.scss';
 import apiCalls from './apiCalls';
 import Cookbook from './classes/Cookbook';
 import './images/cooking.png'
