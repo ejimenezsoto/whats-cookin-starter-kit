@@ -1,4 +1,5 @@
-import './styles.css';
+
+import './index.scss';
 import apiCalls from './apiCalls';
 import Cookbook from './classes/Cookbook';
 import './images/cooking.png'
@@ -29,24 +30,19 @@ const sectionTitles = document.querySelector('.section-titles')
 const mealSingleRecipe = document.querySelector(".meal-single-recipe")
 
 // html titles
-const pageTitle = document.querySelector('.page-title');
+const pageTitle = document.querySelector(".page-title");
 
 // html inputs
-const checkboxes = document.querySelectorAll('input[type=checkbox][name=tag]')
+const checkboxes = document.querySelectorAll("input[type=checkbox][name=tag]");
 
 // html buttons
-const favoriteRecipesButton = document.querySelector('#favoritesButton');
-const clearButton = document.querySelector('.tag-button');
-const allRecipesButton = document.querySelector('.recipies');
-const pantryButton = document.querySelector('.pantry-button');
-const mealsToCookButton = document.querySelector('.planner');
+const favoriteRecipesButton = document.querySelector("#favoritesButton");
+const clearButton = document.querySelector(".tag-button");
+const allRecipesButton = document.querySelector(".recipies");
+const pantryButton = document.querySelector(".pantry-button");
+const mealsToCookButton = document.querySelector(".planner");
 
-
-
-
-
-//global variables ***************************** 
-
+//global variables *****************************
 let tagList = [];
 let currentRecipe;
 let recipes;
@@ -55,7 +51,6 @@ let cookBook;
 let filter;
 let currentUser;
 let pantry;
-
 
 // fetch apis *************************************
 Promise.all([userData, recipesData, ingredientData])
@@ -96,50 +91,48 @@ Promise.all([userData, recipesData, ingredientData])
 
 //reusable functions ***************************
 const hide = (element) => {
-  element.classList.add('hidden')
+  element.classList.add("hidden");
 };
 
 const show = (element) => {
-  element.classList.remove('hidden')
+  element.classList.remove("hidden");
 };
-
 
 // Event Hnadlers ******************************
 
-
 const addMissingIngredients = (event) => {
-  if (event.target.id === 'shoppingCart') {
-    document.querySelector('.cook-button').classList.remove('hidden')
+  if (event.target.id === "shoppingCart") {
+    document.querySelector(".cook-button").classList.remove("hidden");
     const modal = document.getElementById("successModal");
-    if (window.getComputedStyle(modal).display === 'none') {
+    if (window.getComputedStyle(modal).display === "none") {
       modal.style.display = "block";
-    } 
-    currentUser.pantry.addMissingIngredients(currentUser)
+    }
+    currentUser.pantry.addMissingIngredients(currentUser);
   }
-}
+};
 
 const cookMeal = (event) => {
-  if (event.target.id === 'cookImg' && currentUser.pantry.listOfMissingIngredients.length === 0) {
-    document.querySelector('.cook-button').classList.add('hidden')
-    const showPantryDiv = document.querySelector('.show-pantry') 
-    currentUser.pantry.cookRecipe(currentUser)
-    currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients)
-    console.log(currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients));
-    domUpdates.showPantrySection(showPantryDiv, currentUser);
+
+  if (event.target.id === "cookImg" && currentUser.pantry.listOfMissingIngredients.length === 0) {
+    document.querySelector(".cook-button").classList.add("hidden");
+    const showPantryDiv = document.querySelector(".show-pantry");
+    currentUser.pantry.cookRecipe(currentUser);
+    currentUser.pantry.checkPantry(currentRecipe.listOfRecipeIngredients);
     const modal = document.getElementById("successfulCookModal");
-    if (window.getComputedStyle(modal).display === 'none') {
+    if (window.getComputedStyle(modal).display === "none") {
       modal.style.display = "block";
-    } 
-  } else if(event.target.id === 'cookImg') {
+      console.log('Worked')
+    }
+  } else if (event.target.id === "cookImg") {
     const modal = document.getElementById("myModal");
-    if (window.getComputedStyle(modal).display === 'none' ) {
+    if (window.getComputedStyle(modal).display === "none") {
       modal.style.display = "block";
-    } 
+    }
   }
-}
+};
 
 const closeWindow = (event) => {
-  if (event.target.id === 'closeButton') {
+  if (event.target.id === "closeButton") {
     const modal = document.getElementById("myModal");
     const successModal = document.getElementById("successModal");
     const successfulCookmodal = document.getElementById("successfulCookModal");
@@ -147,36 +140,40 @@ const closeWindow = (event) => {
     successModal.style.display = "none";
     successfulCookmodal.style.display = "none";
   }
-}
-
+};
 
 const filterByCheckBoxes = () => {
-  checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function () {
-      document.querySelectorAll('.checkbox').checked = true;
-      document.querySelectorAll('.checkbox').checked = false;
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      document.querySelectorAll(".checkbox").checked = true;
+      document.querySelectorAll(".checkbox").checked = false;
       if (this.checked) {
         tagList = Array.from(checkboxes)
-          .filter(i => i.checked)
-          .map(i => i.id)
-        domUpdates.showFilteredRecipes(filter, allRecipesSection, pageTitle, tagList);
-        checkboxes.forEach(checkbox => {
+          .filter((i) => i.checked)
+          .map((i) => i.id);
+        domUpdates.showFilteredRecipes(
+          filter,
+          allRecipesSection,
+          pageTitle,
+          tagList
+        );
+        checkboxes.forEach((checkbox) => {
           if (!checkbox.checked) {
             checkbox.disabled = true;
           }
-        })
+        });
       } else if (!this.checked && filter === cookBook) {
-        cookBook.filteredRecipes = []
-        allRecipesSection.innerHTML = ''
+        cookBook.filteredRecipes = [];
+        allRecipesSection.innerHTML = "";
         domUpdates.displayRecipes(
           singleRecipeSection,
           favoriteRecipeSection,
           allRecipesSection,
           cookBook
         );
-        checkboxes.forEach(checkbox => {
-          checkbox.disabled = false
-        })
+        checkboxes.forEach((checkbox) => {
+          checkbox.disabled = false;
+        });
       } else {
         domUpdates.showFavoriteRecipes(
           favoriteRecipeSection,
@@ -186,88 +183,79 @@ const filterByCheckBoxes = () => {
           filter,
           pageTitle
         );
-        checkboxes.forEach(checkbox => {
-          checkbox.disabled = false
-        })
+        checkboxes.forEach((checkbox) => {
+          checkbox.disabled = false;
+        });
       }
     });
   });
 };
 
 const addSingleRecipe = (event) => {
-  if (event.target.id === 'add-meal-button') {
-    currentUser.addToCook(currentRecipe)
-    const addMealImage = document.querySelector('.add-image')
-    
-    if (addMealImage.src === 'http://localhost:8080/images/plus.png') {
-      addMealImage.src = './images/check.png'
+  if (event.target.id === "add-meal-button") {
+    currentUser.addToCook(currentRecipe);
+    const addMealImage = document.querySelector(".add-image");
+
+    if (addMealImage.src === "http://localhost:8080/images/plus.png") {
+      addMealImage.src = "./images/check.png";
     } else {
-      addMealImage.src = './images/plus.png'
+      addMealImage.src = "./images/plus.png";
     }
-  
-  } else if (event.target.id === 'favorite-button') {
+  } else if (event.target.id === "favorite-button") {
+    currentUser.addToFavorites(currentRecipe);
+    const favoriteImage = document.querySelector(".favorite-image");
 
-    currentUser.addToFavorites(currentRecipe)
-    const favoriteImage = document.querySelector('.favorite-image')
-
-    if (favoriteImage.src === 'http://localhost:8080/images/like.png') {
-
-    favoriteImage.src = './images/heart.png'
+    if (favoriteImage.src === "http://localhost:8080/images/like.png") {
+      favoriteImage.src = "./images/heart.png";
     } else {
-      favoriteImage.src = './images/like.png'
+      favoriteImage.src = "./images/like.png";
     }
+  }
 };
-}
 
 const clickRecipe = (event, heartImage) => {
-  singleRecipeSection.innerHTML = ''
-  if (event.target.id && event.target.id !== 'closeButton') {
-    hide(favoriteRecipeSection)
-    hide(allRecipesSection)
-    hide(mealsToCookSection)
-    show(singleRecipeSection)
-    hide(searchBox)
-    hide(clearButton)
-    const findRecipeId = recipes.find(({ id }) => id == event.target.id)
+  singleRecipeSection.innerHTML = "";
+  if (event.target.id && event.target.id !== "closeButton") {
+    hide(favoriteRecipeSection);
+    hide(allRecipesSection);
+    hide(mealsToCookSection);
+    show(singleRecipeSection);
+    hide(searchBox);
+    hide(clearButton);
+    const findRecipeId = recipes.find(({ id }) => id == event.target.id);
     currentRecipe = findRecipeId;
     domUpdates.displaySingleRecipe(
       singleRecipeSection,
       currentRecipe,
       findRecipeId,
-      heartImage, 
-      
+      heartImage
     );
   }
 };
 
-
-
-
-  
 // event listeners ***********************************************
 
-allRecipesSection.addEventListener('click', (event) => {
-  clickRecipe(event, './images/like.png');
-  closeWindow(event)
+allRecipesSection.addEventListener("click", (event) => {
+  clickRecipe(event, "./images/like.png");
+  closeWindow(event);
 });
 
-allRecipesSection.addEventListener('keydown', (event) => {
+allRecipesSection.addEventListener("keydown", (event) => {
   if (event.which === 13) {
-    clickRecipe(event, './images/like.png');
-  } 
-});   
-favoriteRecipeSection.addEventListener('click', (event) => {
-
-  clickRecipe(event, './images/heart.png');
-});
-
-favoriteRecipeSection.addEventListener('keydown', (event) => {
-  if (event.which === 13) {
-    clickRecipe(event, './images/heart.png');
+    clickRecipe(event, "./images/like.png");
   }
 });
-  
-mealsToCookButton.addEventListener('click', () => {
+favoriteRecipeSection.addEventListener("click", (event) => {
+  clickRecipe(event, "./images/heart.png");
+});
+
+favoriteRecipeSection.addEventListener("keydown", (event) => {
+  if (event.which === 13) {
+    clickRecipe(event, "./images/heart.png");
+  }
+});
+
+mealsToCookButton.addEventListener("click", () => {
   domUpdates.showMealPlan(
     pageTitle,
     mealsToCookSection,
@@ -279,11 +267,10 @@ mealsToCookButton.addEventListener('click', () => {
     currentUser,
     singleRecipeSection
   );
-  hide(mealSingleRecipe)
+  hide(mealSingleRecipe);
 });
 
-
-mealsToCookSection.addEventListener('click', (event) => {
+mealsToCookSection.addEventListener("click", (event) => {
   domUpdates.mealsToCookSingleRecipe(
     event,
     mealSingleRecipe,
@@ -292,10 +279,8 @@ mealsToCookSection.addEventListener('click', (event) => {
     mealsToCookSection,
     currentRecipe,
     currentUser,
-    recipes,
-
+    recipes
   );
-  
 });
 
 favoriteRecipesButton.addEventListener("click", () => {
@@ -307,63 +292,70 @@ favoriteRecipesButton.addEventListener("click", () => {
     filter,
     pageTitle
   );
-  hide(mealSingleRecipe)
-  hide(clearButton)
-  hide(pantrySection)
-  hide(allRecipesSection)
-  hide(singleRecipeSection)
-  show(favoriteRecipeSection)
-  hide(searchBox)
-  hide(tagNavSection)
+  hide(mealSingleRecipe);
+  hide(clearButton);
+  hide(pantrySection);
+  hide(allRecipesSection);
+  hide(singleRecipeSection);
+  show(favoriteRecipeSection);
+  hide(searchBox);
+  hide(tagNavSection);
 });
 
-searchBox.addEventListener('input', (e) => {
-  domUpdates.populateSearch(e, filter, cookBook, allRecipesSection, favoriteRecipeSection, pageTitle);
+searchBox.addEventListener("input", (e) => {
+  domUpdates.populateSearch(
+    e,
+    filter,
+    cookBook,
+    allRecipesSection,
+    favoriteRecipeSection,
+    pageTitle
+  );
 });
 
 clearButton.addEventListener("click", () => {
-  if(window.getComputedStyle(tagNavSection).display === 'none'){
-    show(tagNavSection)
+  if (window.getComputedStyle(tagNavSection).display === "none") {
+    show(tagNavSection);
   } else {
-    hide(tagNavSection)
+    hide(tagNavSection);
   }
 });
-    
-allRecipesButton.addEventListener('click', () => {
-  filter = cookBook
-  
-  pageTitle.innerHTML = 'All Recipes'
-  hide(singleRecipeSection)
-  hide(favoriteRecipeSection)
-  show(allRecipesSection)
+
+allRecipesButton.addEventListener("click", () => {
+  filter = cookBook;
+
+  pageTitle.innerHTML = "All Recipes";
+  hide(singleRecipeSection);
+  hide(favoriteRecipeSection);
+  show(allRecipesSection);
   domUpdates.displayRecipes(
     singleRecipeSection,
     favoriteRecipeSection,
     allRecipesSection,
     cookBook
   );
-  show(clearButton)
-  show(searchBox)
-  hide(tagNavSection)
-  hide(pantrySection)
+  show(clearButton);
+  show(searchBox);
+  hide(tagNavSection);
+  hide(pantrySection);
 });
 
-pantryButton.addEventListener('click', () => {
-  pageTitle.innerHTML = 'Pantry'
-  const showPantryDiv = document.querySelector('.show-pantry') 
-  hide(mealsToCookSection)
-  hide(allRecipesSection)
-  hide(favoriteRecipeSection)
-  hide(singleRecipeSection)
-  hide(clearButton)
-  hide(searchBox)
-  hide(tagNavSection)
-  show(pantrySection)
-  hide(mealSingleRecipe)
-  domUpdates.showPantrySection(pantryTable, currentUser);
+pantryButton.addEventListener("click", () => {
+  pageTitle.innerHTML = "Pantry";
+  const showPantryDiv = document.querySelector(".show-pantry");
+  hide(mealsToCookSection);
+  hide(allRecipesSection);
+  hide(favoriteRecipeSection);
+  hide(singleRecipeSection);
+  hide(clearButton);
+  hide(searchBox);
+  hide(tagNavSection);
+  show(pantrySection);
+  hide(mealSingleRecipe);
+  domUpdates.showPantrySection(pantryTable,currentUser);
 });
 
-mealsToCookSection.addEventListener('keydown', (event) => {
+mealsToCookSection.addEventListener("keydown", (event) => {
   if (event.which === 13) {
     domUpdates.mealsToCookSingleRecipe(
       event,
@@ -375,30 +367,19 @@ mealsToCookSection.addEventListener('keydown', (event) => {
       currentUser,
       recipes
     );
-  } 
+  }
 });
 
-mealSingleRecipe.addEventListener('click', (event) => {
-  addMissingIngredients(event)
-  cookMeal(event)
-  closeWindow(event)
-  hide(tagNavSection)
-  hide(pantrySection)
-});   
+mealSingleRecipe.addEventListener("click", (event) => {
+  addMissingIngredients(event);
+  cookMeal(event);
+  closeWindow(event);
+  hide(tagNavSection);
+  hide(pantrySection);
+});
 
-
-
-singleRecipeSection.addEventListener('click', (event) => {
-  addSingleRecipe(event)
-  hide(tagNavSection)
-  hide(pantrySection)
-});  
-
-
-
-
-
-
-
-
-
+singleRecipeSection.addEventListener("click", (event) => {
+  addSingleRecipe(event);
+  hide(tagNavSection);
+  hide(pantrySection);
+});

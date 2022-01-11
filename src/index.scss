@@ -1,46 +1,6 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
+@import '_reset.scss';
+@import '_mixins.scss';
+@import '_variables.scss';
 
 .hidden {
   display: none!important;
@@ -54,7 +14,7 @@ body {
   height: 100%;
 }
 main {
-  background-color: #F5F5F5;
+  background-color: $mainBackgroundColor;
   display: flex;
   height: 100%;
   overflow: auto;
@@ -73,8 +33,7 @@ main {
 
 /* search bar and tags */
 .nav-search {
-  display: flex;
-  justify-content: flex-start;
+  @include flexDisplay(flex-start);
   flex-direction: column;
   width: 20%;
 };
@@ -84,8 +43,7 @@ main {
   height: 100%;
   margin-top: 0%;
   width: 30%;
-  display: flex;
-  justify-content: space-between;
+  @include flexDisplay(space-between);
   flex-wrap: wrap;
 
 }
@@ -100,23 +58,21 @@ main {
 
 .top-nav {
   background-color:#A9A9A9;
-  display: flex;
-  justify-content: flex-end;
+  @include flexDisplay(flex-end);
   width: 100%;
   height: 9vh;
   align-items: center;
 };
 
 .nav-buttons {
-  display: flex;
-  justify-content: space-around;
+  @include flexDisplay(space-around);
   width: 85%;
   height: 5vh;
   align-items: center;
 }
 
 .tag-button {
-margin-left: 1em;
+  margin-left: 1em;
   display: flex;
   align-items: center;
   border-radius: 3vh;
@@ -155,7 +111,7 @@ margin-left: 1em;
 .page-title {
   font-family: 'Oswald', sans-serif;
   text-align: center;
-  font-size: 40px;
+  @include fontSize(40px);
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -172,7 +128,7 @@ margin-left: 1em;
   font-family: 'Oswald', sans-serif;
   font-weight: 300;
   text-align: center;
-  font-size: 45px;
+  @include fontSize(45px);
   height: 100%;
   width: 25%;
 }
@@ -181,7 +137,7 @@ margin-left: 1em;
   height: 5%;
   width: 100%;
   text-align: center;
-  font-size: 30px;
+  @include fontSize(30px);
 }
 
 /* all recipes */
@@ -202,9 +158,8 @@ overflow: auto;
 height: 20vh;
 width: 15vw;
 margin: 10px;
-display: flex;
+@include flexDisplay(center);
 flex-direction: column;
-justify-content: center;
 }
 
 .recipe-image{
@@ -233,7 +188,7 @@ justify-content: center;
 }
 
 .recipe-name{
-  font-size: small;
+  @include fontSize(small);
 }
 
 /* single recipe section  */
@@ -247,28 +202,26 @@ justify-content: center;
 };
 
 .price {
-  font-size: 40px;
+  @include fontSize(40px);
   margin-left: 2em;
 }
 
 .ingredient-instructions {
-display: flex;
+  display: flex;
 }
 
 .single-recipe-img {
   height: 45%;
   width: 100%;
-  display: flex;
-  justify-content: center;
+  @include flexDisplay(center);
 }
 
 .ingredient-list,
 .instructions {
   height: 25vh;
   width: 50%;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
+  @include flexDisplay(center);
 }
 
 .ingredient-instructions-section {
@@ -279,6 +232,13 @@ display: flex;
     width: 50%;
     height: 50%;
     margin-right: 2em;
+    margin-left: 10em;
+}
+
+.h1-class {
+  font-size: 40px;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
 }
 
 /* single missing recipe section  */
@@ -317,9 +277,8 @@ display: flex;
 /* favorite meals buttons  */
 
 .favorite-meal-buttons{
-  display: flex;
   flex-direction: row;
-  justify-content: center;
+  @include flexDisplay(center);
 }
 
 .turing-add{
@@ -327,7 +286,7 @@ display: flex;
 }
 
 table, th, td {
-  border: 1px solid black;
+  border: 1px solid $black;
 }
 
 /* pop out css */
@@ -351,19 +310,20 @@ table, th, td {
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
+  @include fontSize(20px);
 }
 
 /* The Close Button */
 .close {
   color: #aaa;
   float: right;
-  font-size: 28px;
+  @include fontSize(28px);
   font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: $black;
   text-decoration: none;
   cursor: pointer;
 }
