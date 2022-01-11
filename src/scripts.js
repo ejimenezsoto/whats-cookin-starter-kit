@@ -112,6 +112,7 @@ const addMissingIngredients = (event) => {
 };
 
 const cookMeal = (event) => {
+
   if (event.target.id === "cookImg" && currentUser.pantry.listOfMissingIngredients.length === 0) {
     document.querySelector(".cook-button").classList.add("hidden");
     const showPantryDiv = document.querySelector(".show-pantry");

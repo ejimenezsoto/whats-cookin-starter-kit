@@ -20,6 +20,7 @@ class Pantry {
         ingredientId[1],
       ];
     });
+
     const ingredientNames = ingredientDataObjs.map((ingredient) => {
       if (ingredient.amount !== 0) {
         return this.listOfPantryIngredients.push({
@@ -29,6 +30,7 @@ class Pantry {
         });
       }
     });
+
   }
 
   checkPantry(recipeIngredients) {
@@ -76,6 +78,7 @@ class Pantry {
             id: filterThroughPantry[pantryIngredient.id],
           });
         }
+
       });
     });
 
