@@ -51,9 +51,12 @@ main {
 .tag-container {
   width: 30%;
   height: 10%;
-
 }
 
+.pantry-section {
+  display: flex;
+  justify-content: center;
+}
 /* top navigation */
 
 .top-nav {
