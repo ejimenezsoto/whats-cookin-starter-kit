@@ -27,7 +27,7 @@ class User {
         } else {
             this.recipesToCook.push(recipe)
         }
-        console.log(this.recipesToCook)
+
     };
 
     filterByTags(tagList) {
