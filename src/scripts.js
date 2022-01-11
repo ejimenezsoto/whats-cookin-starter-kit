@@ -1,30 +1,33 @@
-import "./styles.css";
-import apiCalls from "./apiCalls";
-import Cookbook from "./classes/Cookbook";
-import "./images/cooking.png";
-import "./images/like.png";
-import "./images/plus.png";
-import "./images/menu.png";
-import "./images/shopping-cart.png";
-import "./images/heart.png";
-import "./images/check.png";
-import Recipe from "./classes/Recipe";
-import User from "./classes/User";
-import { userData, recipesData, ingredientData } from "./apiCalls";
-import Pantry from "./classes/Pantry";
-import domUpdates from "./domUpdates";
 
-// html sections
-const allRecipesSection = document.querySelector(".all-recipes-section");
-const singleRecipeSection = document.querySelector(".all-single-recipe");
-const favoriteRecipeSection = document.querySelector(".my-favorites-section");
-const mealsToCookSection = document.querySelector(".meals-to-cook-section");
-const tagNavSection = document.querySelector(".side-nav");
-const pantrySection = document.querySelector(".pantry-section");
-const pantryTable = document.querySelector(".pantry-table");
-const searchBox = document.querySelector(".search-box");
-const sectionTitles = document.querySelector(".section-titles");
-const mealSingleRecipe = document.querySelector(".meal-single-recipe");
+import './index.scss';
+import apiCalls from './apiCalls';
+import Cookbook from './classes/Cookbook';
+import './images/cooking.png'
+import './images/like.png'
+import './images/plus.png'
+import './images/menu.png'
+import './images/shopping-cart.png'
+import './images/heart.png'
+import './images/check.png'
+import Recipe from './classes/Recipe';
+import User from './classes/User';
+import { userData, recipesData, ingredientData } from './apiCalls';
+import Pantry from './classes/Pantry';
+import domUpdates from './domUpdates';
+
+
+
+// html sections 
+const allRecipesSection = document.querySelector('.all-recipes-section');
+const singleRecipeSection = document.querySelector('.all-single-recipe');
+const favoriteRecipeSection = document.querySelector('.my-favorites-section');
+const mealsToCookSection = document.querySelector('.meals-to-cook-section');
+const tagNavSection = document.querySelector('.side-nav');
+const pantrySection = document.querySelector('.pantry-section');
+const pantryTable = document.querySelector('.pantry-table');
+const searchBox = document.querySelector('.search-box')
+const sectionTitles = document.querySelector('.section-titles')
+const mealSingleRecipe = document.querySelector(".meal-single-recipe")
 
 // html titles
 const pageTitle = document.querySelector(".page-title");
